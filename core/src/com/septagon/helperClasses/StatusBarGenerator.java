@@ -35,58 +35,58 @@ public class StatusBarGenerator
         barRenderer.setProjectionMatrix(camera.combined);
 
         //Render the health bar for all entities in the game
-        for(Engine e: engines){
-            renderHealthBarForAttacker(e);
-            renderWaterBarForEngine(e);
+        for(Engine fireEngine: engines){
+            renderHealthBarForAttacker(fireEngine);
+            renderWaterBarForEngine(fireEngine);
         }
-        for(Fortress f: fortresses){
-            renderHealthBarForAttacker(f);
+        for(Fortress fortress: fortresses){
+            renderHealthBarForAttacker(fortress);
         }
     }
 
     /**
      * Method called for each attacker which will render its health bar just above it
-     * @param a The Attacker which the health bar is being rendered for
+     * @param attacker The Attacker which the health bar is being rendered for
      */
-    private void renderHealthBarForAttacker(Attacker a){
+    private void renderHealthBarForAttacker(Attacker attacker){
         barRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         barRenderer.setColor(169.0f/255.0f, 169.0f/255.0f, 169.0f/255.0f, 1);
-        barRenderer.rect(a.getX() - 2, a.getY() + a.getHeight(), a.getWidth() + 4, 9);
+        barRenderer.rect(attacker.getX() - 2, attacker.getY() + attacker.getHeight(), attacker.getWidth() + 4, 9);
 
         //Work out whether the current health meter should show in red, yellow or green depending on health value
-        int healthBoundary1 = a.getMaxHealth() / 2;
-        int healthBoundary2 = a.getMaxHealth() / 4;
+        int healthBoundary1 = attacker.getMaxHealth() / 2;
+        int healthBoundary2 = attacker.getMaxHealth() / 4;
 
-        if(a.getHealth() >= healthBoundary1){
+        if(attacker.getHealth() >= healthBoundary1){
             barRenderer.setColor(Color.GREEN);
-        }else if(a.getHealth() >= healthBoundary2){
+        }else if(attacker.getHealth() >= healthBoundary2){
             barRenderer.setColor(Color.YELLOW);
         }else{
             barRenderer.setColor(Color.RED);
         }
 
         //Works out the size of the health bar and renderers it to the screen
-        float healthBarLength = ((float)a.getWidth() / (float)a.getMaxHealth()) * a.getHealth();
-        barRenderer.rect(a.getX(), a.getY() + a.getHeight() + 2, healthBarLength, 5);
+        float healthBarLength = ((float)attacker.getWidth() / (float)attacker.getMaxHealth()) * attacker.getHealth();
+        barRenderer.rect(attacker.getX(), attacker.getY() + attacker.getHeight() + 2, healthBarLength, 5);
 
         barRenderer.end();
     }
 
     /**
      * Method that is used to render the water meter for each engine just underneath the engine
-     * @param e The engine which the health bar is being rendered for
+     * @param fireEngine The engine which the health bar is being rendered for
      */
-    private void renderWaterBarForEngine(Engine e){
+    private void renderWaterBarForEngine(Engine fireEngine){
         barRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         barRenderer.setColor(169.0f/255.0f, 169.0f/255.0f, 169.0f/255.0f, 1);
-        barRenderer.rect(e.getX() - 2, e.getY() - 9, e.getWidth() + 4, 9);
+        barRenderer.rect(fireEngine.getX() - 2, fireEngine.getY() - 9, fireEngine.getWidth() + 4, 9);
 
         barRenderer.setColor(0.0f, 167.0f/255.0f, 190.0f/255.0f, 1.0f);
 
-        float waterBarLength = ((float)e.getWidth() / (float)e.getMaxVolume()) * e.getVolume();
-        barRenderer.rect(e.getX(), e.getY() - 7, waterBarLength, 5);
+        float waterBarLength = ((float)fireEngine.getWidth() / (float)fireEngine.getMaxVolume()) * fireEngine.getVolume();
+        barRenderer.rect(fireEngine.getX(), fireEngine.getY() - 7, waterBarLength, 5);
 
         barRenderer.end();
     }

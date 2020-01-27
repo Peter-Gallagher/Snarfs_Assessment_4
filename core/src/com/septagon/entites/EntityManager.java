@@ -46,8 +46,8 @@ public class EntityManager
      */
     public void initialise()
     {
-        for(Entity e: entities)
-            e.initialise();
+        for(Entity entity: entities)
+            entity.initialise();
     }
 
     /***
@@ -55,8 +55,8 @@ public class EntityManager
      */
     public void update()
     {
-        for(Entity e: entities)
-            e.update();
+        for(Entity entity: entities)
+            entity.update();
     }
 
     /***
@@ -64,8 +64,8 @@ public class EntityManager
      */
     public void render(SpriteBatch batch)
     {
-        for(Entity e: entities)
-            e.render(batch);
+        for(Entity entity: entities)
+            entity.render(batch);
     }
 
     //Getters

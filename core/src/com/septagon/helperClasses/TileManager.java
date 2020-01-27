@@ -24,9 +24,9 @@ public class TileManager {
      * Clear all the current moveable tiles
      */
     public void resetMovableTiles(){
-        for(Tile t: tiles)
+        for(Tile tile: tiles)
         {
-            t.setMovable(false);
+            tile.setMovable(false);
         }
     }
 
@@ -36,13 +36,13 @@ public class TileManager {
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
         //Set the tiles that currently have an engine on to be occupied
-        for (Engine e : engines)
+        for (Engine fireEngige : engines)
         {
-            for (Tile t : tiles)
+            for (Tile tile : tiles)
             {
-                if (t.getCol() == e.getCol() && t.getRow() == e.getRow())
+                if (tile.getCol() == fireEngige.getCol() && tile.getRow() == fireEngige.getRow())
                 {
-                    t.setOccupied(true);
+                    tile.setOccupied(true);
                     break;
                 }
             }
@@ -93,11 +93,11 @@ public class TileManager {
         }
 
         //Loops through all tiles to work out if they are water tiles, and if so makes them occupied
-        for (Tile t : tiles)
+        for (Tile tile : tiles)
         {
-            if (gameMap.checkIfWaterTile(t.getCol(), t.getRow()))
+            if (gameMap.checkIfWaterTile(tile.getCol(), tile.getRow()))
             {
-                t.setOccupied(true);
+                tile.setOccupied(true);
             }
         }
 
@@ -134,10 +134,10 @@ public class TileManager {
      */
     public Tile getTileAtLocation(int col, int row)
     {
-        for(Tile t: tiles)
+        for(Tile tile: tiles)
         {
-            if(t.getCol() == col && t.getRow() == row)
-                return t;
+            if(tile.getCol() == col && tile.getRow() == row)
+                return tile;
         }
         return null;
     }
@@ -145,6 +145,10 @@ public class TileManager {
     /***
      * Get the movable tiles for all the engines based on their positions
      */
+    //TODO
+    // this is the shitty movement
+
+
     public void setMovableTiles(Engine currentEngine){
         //Reset all moveable tiles from previous turn
         resetMovableTiles();

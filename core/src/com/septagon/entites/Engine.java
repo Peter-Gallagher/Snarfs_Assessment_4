@@ -33,11 +33,11 @@ public class Engine extends Vehicle
 
     /***
      * Checks if the engine is in range to fill and calls the fill method if it is
-     * @param s The Fire Station
+     * @param station The Fire Station
      */
-    public void ifInRangeFill(Station s){
+    public void ifInRangeFill(Station station){
         System.out.println("Checking if should fill");
-        if(this.col <= s.getCol() + s.getWidth()/Tile.TILE_SIZE && this.col > s.getCol() && this.row >= s.getRow()-5 && this.row <= s.getRow()-1){
+        if(this.col <= station.getCol() + station.getWidth()/Tile.TILE_SIZE && this.col > station.getCol() && this.row >= station.getRow()-5 && this.row <= station.getRow()-1){
             System.out.println("filling");
             this.volume = this.maxVolume;
             this.health = this.maxHealth;
@@ -55,14 +55,14 @@ public class Engine extends Vehicle
 
     /***
      * Checks if any of the corners of the engines range are in the body of the fortress or station
-     * @param e Entity that is being checked
+     * @param fireEngine Entity that is being checked
      * @return returns true if there is any overlap, false otherwise
      */
-    public Boolean checkForOverlap(Entity e){
+    public Boolean checkForOverlap(Entity fireEngine){
         for(int i=0; i<2; i++){
             for(int j=2; j<4; j++){
-                if (rangeCorners.get(i) >= e.getCol() && rangeCorners.get(i) < e.getCol() + (e.getWidth()/Tile.TILE_SIZE)
-                        && rangeCorners.get(j) >= e.getRow() && rangeCorners.get(j) < e.getRow() + (e.getHeight()/Tile.TILE_SIZE)){
+                if (rangeCorners.get(i) >= fireEngine.getCol() && rangeCorners.get(i) < fireEngine.getCol() + (fireEngine.getWidth()/Tile.TILE_SIZE)
+                        && rangeCorners.get(j) >= fireEngine.getRow() && rangeCorners.get(j) < fireEngine.getRow() + (fireEngine.getHeight()/Tile.TILE_SIZE)){
                     return true;
                 }
             }
@@ -72,17 +72,17 @@ public class Engine extends Vehicle
 
     /***
      * Method that will check if the Attacker is in range of the fortress and if so will damage it
-     * @param f The fortress we are currently checking the bounds/range of
+     * @param fortress The fortress we are currently checking the bounds/range of
      */
-    public void DamageFortressIfInRange(Fortress f){
+    public void DamageFortressIfInRange(Fortress fortress){
         this.setRangeCorners();
-        if(checkForOverlap(f)){
+        if(checkForOverlap(fortress)){
             if (this.volume >= this.damage){
                 this.fire();
-                f.takeDamage(this.damage);
-                GameState.bullets.add(new Bullet(this.x + 20, this.y + 10, f.x + 150, f.y + 50, true));
-                GameState.bullets.add(new Bullet(this.x, this.y, f.x + 150, f.y + 50, true));
-                GameState.bullets.add(new Bullet(this.x + 40, this.y + 20, f.x + 150, f.y + 50, true));
+                fortress.takeDamage(this.damage);
+                GameState.bullets.add(new Bullet(this.x + 20, this.y + 10, fortress.x + 150, fortress.y + 50, true));
+                GameState.bullets.add(new Bullet(this.x, this.y, fortress.x + 150, fortress.y + 50, true));
+                GameState.bullets.add(new Bullet(this.x + 40, this.y + 20, fortress.x + 150, fortress.y + 50, true));
             }
         }
 
