@@ -43,6 +43,7 @@ public class Game extends ApplicationAdapter
 		camera.position.set(0, 0, 0);
 		camera.update();
 
+		//TODO encapsulate in own function
 		//Load the font into the game loaded from our custom font file
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -59,6 +60,8 @@ public class Game extends ApplicationAdapter
 
 		//Set the current state of the game to be the GameState and 
 		//initialise this state
+
+		//TODO add an initialise state function for a given state, pass the state as parameter
 		stateManager.changeState(startState);
 		stateManager.initialise();
 	}
@@ -68,11 +71,13 @@ public class Game extends ApplicationAdapter
 	 * @param width The new width of the screen
 	 * @param height The new height of the screen
 	 */
+
 	public void resize(int width, int height)
 	{
 		//Change the width and height of the camera
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
+
 
 		//Call the methods specific to the state of the game that will update their values
 		if(stateManager.getCurrentState().getID() == State.StateID.GAME)

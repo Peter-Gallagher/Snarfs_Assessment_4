@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.septagon.entites.Tile;
 import com.septagon.states.*;
+import sun.net.ftp.FtpDirEntry;
 
 
 /**
@@ -17,7 +18,11 @@ Class used to handle all inputs from the user
 
 public class InputManager implements InputProcessor
 {
+
+    //TODO WHY?
     Vector3 tp = new Vector3();
+
+
     private boolean dragging;
     private OrthographicCamera camera;
     private StateManager stateManager;
@@ -30,6 +35,7 @@ public class InputManager implements InputProcessor
     private float xCoord;
     private float yCoord;
 
+    //TODO create a gameInfo class to pass these on refrence when needed
     public InputManager(OrthographicCamera camera, StateManager stateManager, BitmapFont font, SpriteBatch batch)
     {
         this.camera = camera;
@@ -38,6 +44,8 @@ public class InputManager implements InputProcessor
         this.batch = batch;
     }
 
+
+    //TODO WHAT!
     /**
      * Usused method that is required since we are implementing InputProcessor
      */
@@ -54,6 +62,7 @@ public class InputManager implements InputProcessor
      */
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         //checks if the game is in the main game state
+        //TODO Redundant Fetches, MEMORY
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             //Cast the currentState to a gameState so that gameState specific methods can be used
@@ -118,6 +127,7 @@ public class InputManager implements InputProcessor
      */
     @Override public boolean touchDragged (int screenX, int screenY, int pointer)
     {
+        //TODO Redundant Fetches, MEMORY
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             //Convert currentState to gameState so that gameState specific methods can be used
@@ -151,7 +161,7 @@ public class InputManager implements InputProcessor
      * @param screenY The y position of the input
      * @param button The mouse button that performed the input
      */
-    @Override public boolean touchUp (int screenX, int screenY, int pointer, int button) {
+     @Override public boolean touchUp (int screenX, int screenY, int pointer, int button) {
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             if (button != Input.Buttons.LEFT || pointer > 0) return false;
@@ -160,6 +170,8 @@ public class InputManager implements InputProcessor
         }
         return true;
     }
+
+
 
     /**
      * Method calls when the user presses a key on the keyboard
@@ -173,6 +185,7 @@ public class InputManager implements InputProcessor
             MenuState currentState = (MenuState) stateManager.getCurrentState();
 
             //If up or down pressed, move the menuPosition accordingly
+            //TODO convert if to case statement
             if(keycode == Input.Keys.DOWN)
             {
                 currentState.setMenuPosition(currentState.getMenuPosition() + 1);
