@@ -7,7 +7,7 @@ import com.septagon.game.InputManager;
 /**
 Child of State class that will be used to manage the system when the user is playing the minigame
  */
-
+//TODO Empty minigame class, implement a minigame here
 public class MinigameState extends State 
 {
     //Used to keep track of the score in the minigame

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 /*
 Child class of the State class that will manage the system when the user is in the game
  */
-
+//TODO Implement a turn counter here?
 //TODO ABSOLUTELY BUTTFUCK GOD, CLASS. WE ARE GOD NOW
 public class GameState extends State
 {

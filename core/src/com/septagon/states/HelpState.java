@@ -7,7 +7,7 @@ import com.septagon.game.InputManager;
 /**
 Child of the state class that will be used to manage the system when the user is on the help screen
  */
-
+//TODO Empty, useless class
 public class HelpState extends State
 {
     private String helpLabel;

@@ -7,7 +7,7 @@ import com.septagon.game.InputManager;
 /**
 Child class of the State class that will be used to manage the system when the user is on the settings screen
  */
-
+//TODO Empty useless class for a settings menu
 public class SettingsState extends State
 {
     public SettingsState(InputManager inputManager, BitmapFont font, StateManager stateManager)
