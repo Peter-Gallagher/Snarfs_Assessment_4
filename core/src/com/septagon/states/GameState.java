@@ -21,6 +21,7 @@ import java.util.ArrayList;
 Child class of the State class that will manage the system when the user is in the game
  */
 
+//TODO ABSOLUTELY BUTTFUCK GOD, CLASS. WE ARE GOD NOW
 public class GameState extends State
 {
     //TODO: why public?
@@ -115,8 +116,10 @@ public class GameState extends State
     /***
      * Sets up all objects in our game and gets the game ready to be played
      */
+    //TODO Break up and put into respective classes
     public void initialise()
     {
+        //TODO initialise extra fire engines and fortresses HERE!
         //Initialises all engines, fortress and stations in the game
         engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 4, 6, 100, 4, 01);
         engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 02);
