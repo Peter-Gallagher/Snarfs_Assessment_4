@@ -37,6 +37,7 @@ public class Engine extends Vehicle
      */
     public void ifInRangeFill(Station station){
         System.out.println("Checking if should fill");
+        //TODO refactor, make this readable
         if(this.col <= station.getCol() + station.getWidth()/Tile.TILE_SIZE && this.col > station.getCol() && this.row >= station.getRow()-5 && this.row <= station.getRow()-1){
             System.out.println("filling");
             this.volume = this.maxVolume;
@@ -47,6 +48,7 @@ public class Engine extends Vehicle
     /**
      * Calls to update the required variables when the engine fires at a fortress
      */
+    //TODO clamp to zero
     public void fire(){
         this.volume -= this.damage;
     }
@@ -59,6 +61,7 @@ public class Engine extends Vehicle
      * @return returns true if there is any overlap, false otherwise
      */
     public Boolean checkForOverlap(Entity fireEngine){
+        //TODO remove excessive object calls
         for(int i=0; i<2; i++){
             for(int j=2; j<4; j++){
                 if (rangeCorners.get(i) >= fireEngine.getCol() && rangeCorners.get(i) < fireEngine.getCol() + (fireEngine.getWidth()/Tile.TILE_SIZE)

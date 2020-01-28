@@ -87,6 +87,7 @@ public abstract class Attacker extends Entity
     }
 
     //Setters
+    //TODO refactor with max()
     public void takeDamage(int damage) {
         if(this.health - damage > 0){
             this.health -= damage;
