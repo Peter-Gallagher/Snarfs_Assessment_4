@@ -22,6 +22,7 @@ Child class of the State class that will manage the system when the user is in t
  */
 //TODO Implement a turn counter here?
 //TODO ABSOLUTELY BUTTFUCK GOD, CLASS. WE ARE GOD NOW
+
 public class GameState extends State
 {
     //TODO: why public?
