@@ -37,8 +37,10 @@ public class Engine extends Vehicle
      */
     public void ifInRangeFill(Station station){
         System.out.println("Checking if should fill");
-        //TODO refactor, make this readable
-        if(this.col <= station.getCol() + station.getWidth()/Tile.TILE_SIZE && this.col > station.getCol() && this.row >= station.getRow()-5 && this.row <= station.getRow()-1){
+        int xRange =station.getCol() + station.getWidth()/Tile.TILE_SIZE;
+        int stationRow = station.getRow();
+
+        if(this.col <= xRange && this.col > station.getCol() && this.row >= stationRow-5 && this.row <= stationRow-1){
             System.out.println("filling");
             this.volume = this.maxVolume;
             this.health = this.maxHealth;
@@ -48,9 +50,8 @@ public class Engine extends Vehicle
     /**
      * Calls to update the required variables when the engine fires at a fortress
      */
-    //TODO clamp to zero
     public void fire(){
-        this.volume -= this.damage;
+        this.volume = Math.max(this.volume - this.damage, 0) ;
     }
 
 
@@ -61,11 +62,16 @@ public class Engine extends Vehicle
      * @return returns true if there is any overlap, false otherwise
      */
     public Boolean checkForOverlap(Entity fireEngine){
-        //TODO remove excessive object calls
+        int fireEngineCol = fireEngine.getCol();
+        int fireEngineRow = fireEngine.getRow();
+        int widthOverTileSize = fireEngine.getWidth()/Tile.TILE_SIZE;
+        int heightOverTileSize = fireEngine.getWidth()/Tile.TILE_SIZE;
+
+
         for(int i=0; i<2; i++){
             for(int j=2; j<4; j++){
-                if (rangeCorners.get(i) >= fireEngine.getCol() && rangeCorners.get(i) < fireEngine.getCol() + (fireEngine.getWidth()/Tile.TILE_SIZE)
-                        && rangeCorners.get(j) >= fireEngine.getRow() && rangeCorners.get(j) < fireEngine.getRow() + (fireEngine.getHeight()/Tile.TILE_SIZE)){
+                if (rangeCorners.get(i) >= fireEngineCol && rangeCorners.get(i) < fireEngineCol + widthOverTileSize
+                        && rangeCorners.get(j) >= fireEngineRow && rangeCorners.get(j) < fireEngineRow + heightOverTileSize){
                     return true;
                 }
             }
