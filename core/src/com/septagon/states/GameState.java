@@ -475,6 +475,10 @@ public class GameState extends State
 
     //public void setShouldCreateBullets(boolean shouldCreateBullets) { this.shouldCreateBullets = shouldCreateBullets; }
 
-    public int getMapWidth() { return gameMap.getMapWidth(); }
-    public int getMapHeight() { return gameMap.getMapHeight(); }
+    public int getMapWidth() {
+        return gameMap.getMapWidth();
+    }
+    public int getMapHeight() {
+        return gameMap.getMapHeight();
+    }
 }

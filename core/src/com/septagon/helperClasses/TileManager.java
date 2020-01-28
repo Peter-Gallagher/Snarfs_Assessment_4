@@ -5,6 +5,8 @@ import com.septagon.entites.Tile;
 import com.septagon.entites.TiledGameMap;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Used to handle all of the tile interaction methods and methods for updating values of tiles
@@ -14,10 +16,14 @@ public class TileManager {
 
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
+    private int[][] adjacencyList;
+
+
 
     public TileManager(ArrayList<Engine> engines, ArrayList<Tile> tiles){
         this.engines = engines;
         this.tiles = tiles;
+        adjacencyList = new int[tiles.size()][4];
     }
 
     /***
@@ -92,6 +98,9 @@ public class TileManager {
             }
         }
 
+
+        //TODO: superfluous if statement
+
         //Loops through all tiles to work out if they are water tiles, and if so makes them occupied
         for (Tile tile : tiles)
         {
@@ -145,97 +154,126 @@ public class TileManager {
     /***
      * Get the movable tiles for all the engines based on their positions
      */
-    //TODO
-    // this is the shitty movement
 
-
-    public void setMovableTiles(Engine currentEngine){
+    public void setMovableTiles(Engine currentEngine) {
         //Reset all moveable tiles from previous turn
         resetMovableTiles();
+        createAdjacencyList(50,50);
+        Tile accessTile;
+        int startTileIndex = currentEngine.getCol() + (currentEngine.getRow() * 50);
 
-        //Gets all the moveable tiles in the up direction
-        for(int i = 1; i <= currentEngine.getSpeed(); i++){
-            Tile nextTile = this.getTileAtLocation(currentEngine.getCol(), currentEngine.getRow() + i);
-            if(nextTile != null) {
-                if (!nextTile.isOccupied()) {
-                    nextTile.setMovable(true);
-                } else break;
-            }else break;
+        for (Integer index: BFS(adjacencyList, startTileIndex, currentEngine.getSpeed())) {
+            accessTile = this.getTileAtLocation(index % 50, index / 50);
+            accessTile.setMovable(true);
         }
+    }
 
-        //Gets all the moveable tiles in the down direction
-        for(int i = 1; i <= currentEngine.getSpeed(); i++){
-            Tile nextTile = this.getTileAtLocation(currentEngine.getCol(), currentEngine.getRow() - i);
-            if(nextTile != null) {
-                if (!nextTile.isOccupied()) {
-                    nextTile.setMovable(true);
-                } else break;
-            }else break;
-        }
+    //TODO: should be called on startup and then updated when fire engines move
+    public void createAdjacencyList(int maxWidth, int maxHeight){
 
-        //Gets all the moveable tiles in the left direction
-        for(int i = 1; i <= currentEngine.getSpeed(); i++){
-            Tile nextTile = this.getTileAtLocation(currentEngine.getCol() - i, currentEngine.getRow());
-            if(nextTile != null) {
-                if (!nextTile.isOccupied()) {
-                    nextTile.setMovable(true);
-                } else break;
-            }else break;
-        }
+        Tile checkTile;
 
-        //Gets all the moveable tiles in the right direction
-        for(int i = 1; i <= currentEngine.getSpeed(); i++){
-            Tile nextTile = this.getTileAtLocation(currentEngine.getCol() + i, currentEngine.getRow());
-            if(nextTile != null) {
-                if (!nextTile.isOccupied()) {
-                    nextTile.setMovable(true);
-                } else break;
-            }else break;
-        }
+        for (int width = 0; width <= maxWidth; width++) {
+            for (int height = 0; height <= maxHeight; height++) {
 
-        //Get the diagonal moveable tiles
-        int loopCounter = 1;
-        while(loopCounter <= currentEngine.getSpeed() - 1)
-        {
-            for (int i = 1; i <= currentEngine.getSpeed() - loopCounter; i++)
-            {
-                Tile nextTile = this.getTileAtLocation(currentEngine.getCol() - i, currentEngine.getRow() - loopCounter);
-                if (nextTile != null)
-                {
-                    if (!nextTile.isOccupied())
-                    {
-                        nextTile.setMovable(true);
+                checkTile = this.getTileAtLocation(width, height);
+                int tileIndex = width + (maxWidth * height);
+
+                if (checkTile != null){
+                    if(checkTileAdjacent(checkTile,-1,0)){
+                        adjacencyList[tileIndex][0] = 1;
                     }
-                }
-
-                nextTile = this.getTileAtLocation(currentEngine.getCol() + i, currentEngine.getRow() - loopCounter);
-                if (nextTile != null)
-                {
-                    if (!nextTile.isOccupied())
-                    {
-                        nextTile.setMovable(true);
+                    if(checkTileAdjacent(checkTile,1,0)){
+                        adjacencyList[tileIndex][1] = 1;
                     }
-                }
-
-                nextTile = this.getTileAtLocation(currentEngine.getCol() - i, currentEngine.getRow() + loopCounter);
-                if (nextTile != null)
-                {
-                    if (!nextTile.isOccupied())
-                    {
-                        nextTile.setMovable(true);
+                    if(checkTileAdjacent(checkTile,0,-1)){
+                        adjacencyList[tileIndex][2] = 1;
                     }
-                }
-
-                nextTile = this.getTileAtLocation(currentEngine.getCol() + i, currentEngine.getRow() + loopCounter);
-                if (nextTile != null)
-                {
-                    if (!nextTile.isOccupied())
-                    {
-                        nextTile.setMovable(true);
+                    if(checkTileAdjacent(checkTile,0,1)){
+                        adjacencyList[tileIndex][3] = 1;
                     }
                 }
             }
-            loopCounter++;
+        }
+
+    }
+
+    public ArrayList<Integer> BFS(int[][] tileAdjacencyList,int startTileIndex,int maxDepth) {
+
+        int numNodes = tileAdjacencyList.length;
+        int depth = 0;
+        int newIndex;
+        Integer qVal;
+
+        ArrayList<Integer> visitedTilesIndex = new ArrayList<Integer>();
+        boolean[] visited = new boolean[numNodes];
+        Queue<Integer> queue = new LinkedList<>();
+
+        queue.add(startTileIndex);
+        queue.add(null);
+
+        while (queue.isEmpty() == false) {
+
+            qVal = queue.poll();
+
+            if (qVal == null){
+                depth++;
+                queue.offer(null);
+                qVal = queue.poll();
+                if(depth > maxDepth){
+                    break;
+                }
+            }
+
+            int currentTileIndex = qVal;
+
+            if (currentTileIndex < 0 || currentTileIndex >= numNodes || visited[currentTileIndex])
+                continue;
+
+            visited[currentTileIndex] = true;
+
+            //TODO: can probably be done better
+            for (int i = 0; i < 4; i++) {
+                if (tileAdjacencyList[currentTileIndex][i] == 1) {
+                    newIndex = getNewIndex(currentTileIndex, i);
+                    if (!visited[newIndex]) {
+                        queue.offer(newIndex);
+                        visitedTilesIndex.add(newIndex);
+                    }
+                }
+            }
+        }
+
+        return visitedTilesIndex;
+    }
+
+    private int getNewIndex(int currentIndex, int i){
+        switch(i){
+            case 0:
+                return currentIndex - 1;
+            case 1:
+                return currentIndex + 1;
+            case 2:
+                return currentIndex - 50;
+            case 3:
+                return currentIndex + 50;
+            default:
+                return 0;
         }
     }
+
+
+    private boolean checkTileAdjacent(Tile centreTile, int xOffset, int yOffset){
+        int centreX = centreTile.getCol();
+        int centreY = centreTile.getRow();
+
+        Tile checkTile = this.getTileAtLocation(centreX + xOffset,centreY + yOffset);
+
+        if (checkTile != null){
+            return !checkTile.isOccupied();
+        }
+
+        return false;
+    }
+
 }
