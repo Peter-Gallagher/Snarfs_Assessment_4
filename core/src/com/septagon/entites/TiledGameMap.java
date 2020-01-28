@@ -45,6 +45,7 @@ public class TiledGameMap
 	 * @return Returns true if the tile is a water tile, false if not
 	 */
 	public boolean checkIfWaterTile(int col, int row){
+		//TODO remove unecessary object calls and make more readable
 		//Gets the cell (format used by Tiled) at the current location
 		Cell cell = ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(col, row);
 
@@ -72,6 +73,7 @@ public class TiledGameMap
 	public Tile getTileByCoordinate(int layer, int col, int row)
 	{
 		//Gets the cell (format used by Tiled) at the current location
+		//TODO is there a more readable way of doing this?
 		Cell cell = ((TiledMapTileLayer)tiledMap.getLayers().get(layer)).getCell(col, row);
 
 		//null checks to check both the cell and the tile actually exit

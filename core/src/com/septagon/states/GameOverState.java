@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.septagon.game.InputManager;
+import com.sun.tools.javac.comp.Todo;
 
 import java.awt.*;
 
@@ -80,6 +81,7 @@ public class GameOverState extends State
         setupRectangles();
     }
 
+    //Todo Smelly code, empty method
     //Unused method that is needed since we are a child class of State
     public void update()
     {
@@ -98,6 +100,7 @@ public class GameOverState extends State
 
         font.setColor(Color.WHITE);
 
+        //TODO redundant win message
         if(didWin){
             gameOverLabel.setText(font, "Congrats, you win!");
             extraInfoLabel.setText(font, "You destroyed all the ET Fortresses and saved York!");
@@ -128,6 +131,7 @@ public class GameOverState extends State
      * @param currentLabel The layout being used to render the text
      * @param text The actual string containing the text to be renderer
      */
+    //TODO redundant? unclear on purpose of method
     private void setTextColour(int currentPosition, GlyphLayout currentLabel, String text){
         //If the menu should be on the current text, draw it blue if not white
         if(currentPosition == this.position){
@@ -157,7 +161,7 @@ public class GameOverState extends State
     }
 
     /**
-     * Called when mouse inout happens and checks if the user has pressed either yes or no buttons
+     * Called when mouse input happens and checks if the user has pressed either yes or no buttons
      * @param x The x position of the input
      * @param y The y position of the input
      */

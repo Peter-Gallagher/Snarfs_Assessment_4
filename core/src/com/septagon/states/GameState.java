@@ -341,7 +341,7 @@ public class GameState extends State
     public void render(SpriteBatch batch)
     {
         //Clear the background to red - the colour does not reall matter
-        Gdx.gl.glClearColor(0, 1, 0, 1);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Render the map and all objects for our game

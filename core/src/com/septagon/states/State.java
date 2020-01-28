@@ -26,6 +26,7 @@ public abstract class State
         this.stateManager = stateManager;
     }
 
+    //TODO Some meth-heads unnecessary in this class;
     //Abstract methods that are used to handle all actions within a state
     public abstract void initialise();
     public abstract void update();

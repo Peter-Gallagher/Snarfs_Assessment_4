@@ -45,6 +45,7 @@ public class Fortress extends Attacker
      */
     public void DamageEngineIfInRange(Engine fireEngine) {
         System.out.println("Checking if should damage engine");
+        //TODO make this more readable
         if (fireEngine.getCol() >= this.rangeCorners.get(0) && fireEngine.getCol() < this.rangeCorners.get(1) && fireEngine.getRow() >= this.rangeCorners.get(2) && fireEngine.getRow() < this.rangeCorners.get(3)){
             fireEngine.takeDamage(this.damage);
             GameState.bullets.add(new Bullet(this.x + 150, this.y + 50, fireEngine.getX() + 20, fireEngine.getY() + 10, false));
@@ -63,6 +64,7 @@ public class Fortress extends Attacker
         //If the fortress is pressed, show its boundary image
         if(selected && !dead)
         {
+            //TODO: improve readibility
             batch.draw(AssetManager.getFortressBoundaryImage(), (col - this.getRange()) * Tile.TILE_SIZE, (row - this.getRange()) * Tile.TILE_SIZE,
                     (((int)width / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE, (((int)height / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE);
         }else if(dead){
