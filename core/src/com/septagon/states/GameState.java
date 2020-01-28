@@ -23,6 +23,8 @@ Child class of the State class that will manage the system when the user is in t
 
 public class GameState extends State
 {
+    //TODO: why public?
+
     // we will use 32px/unit in world
     public final static float SCALE = 32f;
     public final static float INV_SCALE = 1.f/SCALE;
@@ -74,6 +76,7 @@ public class GameState extends State
     private UIManager uiManager;
 
     //Creates an array of bullets
+    //TODO: not public static
     public static ArrayList<Bullet> bullets;
     //private boolean shouldCreateBullets = false;
 
@@ -199,6 +202,7 @@ public class GameState extends State
      */
     public void update()
     {
+        //TODO: refactor bullet removal
         this.paused = uiManager.isPaused();
         //Update the bullets
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
@@ -248,6 +252,7 @@ public class GameState extends State
         currentCameraX = camera.position.x;
         currentCameraY = camera.position.y;
 
+        //TODO: refactor this
         //Checks if the player has destroyed all the fortresses
         boolean hasWon = true;
         for (Fortress f : fortresses)
@@ -286,9 +291,9 @@ public class GameState extends State
                 }
                 attackerManager.snapToAttacker(engines.get(0), gameMap, camera);
                 tileManager.resetMovableTiles();
-                for(Engine e: engines){
-                    e.setMoved(false);
-                    e.ifInRangeFill(fireStation);
+                for(Engine fireEngine: engines){
+                    fireEngine.setMoved(false);
+                    fireEngine.ifInRangeFill(fireStation);
                 }
                 playerTurn = true;
                 return;
@@ -297,9 +302,9 @@ public class GameState extends State
             Fortress nextFortress = fortresses.get(currentFortressIndex);
 
             //Work out if there is an engine near to the current fortress so we can display the fortress
-            for(Engine e: engines){
-                int xPosition = e.getX() + (e.getWidth() / 2) - (Gdx.graphics.getWidth() / 2);
-                int yPosition = e.getY() + (e.getHeight() / 2) - (Gdx.graphics.getHeight() / 2);
+            for(Engine fireEngine: engines){
+                int xPosition = fireEngine.getX() + (fireEngine.getWidth() / 2) - (Gdx.graphics.getWidth() / 2);
+                int yPosition = fireEngine.getY() + (fireEngine.getHeight() / 2) - (Gdx.graphics.getHeight() / 2);
                 if(nextFortress.getX() >= xPosition && nextFortress.getX() <= xPosition + Gdx.graphics.getWidth() &&
                         nextFortress.getY() >= yPosition && nextFortress.getY() <= yPosition + Gdx.graphics.getHeight()){
                     shouldShowFortress = true;
@@ -325,8 +330,9 @@ public class GameState extends State
         //If we are already displaying a fortress, keep displaying until the timer has reached its limit
         else
         {
+
             counter++;
-            if(counter >= 180){
+            if(counter >= 0){
                 hasChangedFortress = false;
                 currentFortressIndex++;
                 counter = 0;
