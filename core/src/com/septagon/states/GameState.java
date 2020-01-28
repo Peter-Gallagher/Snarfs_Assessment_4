@@ -218,6 +218,7 @@ public class GameState extends State
         }
         bullets.removeAll(bulletToRemove);
 
+        //TODO Modify counter to only happen during shooting
         //If we are in the process of waiting to change turn, just wait until the timer says we swap turns
         if(changingTurn){
             changeTurnCounter++;
@@ -279,6 +280,7 @@ public class GameState extends State
     /**
      * Method that handles all the updating that should happen on an enemies turn
      */
+    //TODO refactor into smaller methods
     private void enemyTurnUpdate(){
         boolean shouldShowFortress = false;
 
@@ -349,7 +351,7 @@ public class GameState extends State
      */
     public void render(SpriteBatch batch)
     {
-        //Clear the background to red - the colour does not reall matter
+        //Clear the background to red - the colour does not really matter
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -376,6 +378,7 @@ public class GameState extends State
         uiManager.render();
     }
 
+    //TODO WHAT A STINKY UNUSED METHOD
     //Unused method that is required since this is a child of State
     public void dispose(){
 
@@ -384,6 +387,7 @@ public class GameState extends State
     /***
      * Method that handles map resizing when the window size is changed
      */
+    //TODO Broken method, completely redo
     public void hasResized()
     {
         //Checks that the change in screen size has not caused the camera to show features off the map
@@ -406,6 +410,7 @@ public class GameState extends State
 
     //Getters and setters
 
+    //TODO Implement time passed properly
     public int getTimePassed()
     {
         return timePassed;
