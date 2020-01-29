@@ -122,7 +122,7 @@ public class TileManager {
         }
     }
 
-    
+
     public void setEngineTilesOccupied(){
         //Set the tiles that currently have an engine on to be occupied
         for (Engine fireEngige : engines)

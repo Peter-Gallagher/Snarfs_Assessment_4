@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /*
 Child class of the State class that will manage the system when the user is in the game
  */
-//TODO Implement a turn counter here?
+
 //TODO ABSOLUTELY BUTTFUCK GOD, CLASS. WE ARE GOD NOW
 
 public class GameState extends State
@@ -51,19 +51,9 @@ public class GameState extends State
 
     //Loads textures and creates objects for the engines
     private ArrayList<Engine> engines;
-    private Engine engine1;
-    private Engine engine2;
-    private Engine engine3;
-    private Engine engine4;
 
     //Loads textures and creates objects for the fortresses
     private ArrayList<Fortress> fortresses;
-    private Fortress fortressFire;
-    private Fortress fortressStation;
-    private Fortress fortressMinister;
-    private Fortress newFortress1;
-    private Fortress newFortress2;
-    private Fortress newFortress3;
 
     //Loads textures and creates an object for the fire station
     private Station fireStation;
@@ -122,8 +112,6 @@ public class GameState extends State
      */
     public void initialise()
     {
-        //TODO initialise extra fire engines and fortresses HERE!
-
         //TODO fireEngines need unique stats and textures
         initializeFireEngines();
         //Initialises all engines, fortress and stations in the game
@@ -146,17 +134,16 @@ public class GameState extends State
         //Initialises the statusBarRenderer object
         statusBarGenerator = new StatusBarGenerator(engines, fortresses);
 
-
         //Initialise the AttackerManager
         attackerManager = new AttackerManager(engines, tiles, fortresses, this);
     }
 
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 4, 6, 100, 4, 01);
-        engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 02);
-        engine3 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 03);
-        engine4 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 04);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 4, 20, 100, 4, 01);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 02);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(47);
@@ -183,12 +170,12 @@ public class GameState extends State
 
     private void initializeFortresses(){
         //creates all fortress objects
-        fortressFire = new Fortress(4, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 3);
-        fortressMinister = new Fortress(11, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 3);
-        fortressStation = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
-        newFortress1 = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
-        newFortress2 = new Fortress(38, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
-        newFortress3 = new Fortress(20, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
+        Fortress fortressFire = new Fortress(4, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
+        Fortress fortressMinister = new Fortress(11, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
+        Fortress fortressStation = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress1 = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress2 = new Fortress(38, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress3 = new Fortress(20, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
@@ -322,9 +309,9 @@ public class GameState extends State
         //TODO: refactor this
         //Checks if the player has destroyed all the fortresses
         boolean hasWon = true;
-        for (Fortress f : fortresses)
+        for (Fortress fortress : fortresses)
         {
-            if (f.getHealth() > 0) hasWon = false;
+            if (fortress.getHealth() > 0) hasWon = false;
         }
         if (hasWon)
         {
@@ -332,8 +319,7 @@ public class GameState extends State
         }
 
         //Checks if all the players fire engines have been destroyed
-        boolean hasLost = true;
-        hasLost = attackerManager.checkIfAllEnginesDead();
+        boolean hasLost = attackerManager.checkIfAllEnginesDead();
         if (hasLost)
         {
             stateManager.changeState(new GameOverState(inputManager, font, stateManager, false));
@@ -351,43 +337,35 @@ public class GameState extends State
         if(!hasChangedFortress){
             //If all fortresses have been displayed, go back to the player turn
             if(currentFortressIndex >= fortresses.size()){
-                currentFortressIndex = 0;
-                //If the fortresses have destroyed all engines, finish the game
-                if(attackerManager.checkIfAllEnginesDead()){
-                    stateManager.changeState(new GameOverState(inputManager, font, stateManager, false));
-                    return;
-                }
-                attackerManager.snapToAttacker(engines.get(0), gameMap, camera);
-                tileManager.resetMovableTiles();
-                for(Engine fireEngine: engines){
-                    fireEngine.setMoved(false);
-                    fireEngine.ifInRangeFill(fireStation);
-                }
-                playerTurn = true;
+                postAlienTurn();
                 return;
             }
             //Get the current fortress that should be displayed
-            Fortress nextFortress = fortresses.get(currentFortressIndex);
+            Fortress currentFortress = fortresses.get(currentFortressIndex);
 
+            //TODO: figure out what the fuck this for loop is and then delete it
             //Work out if there is an engine near to the current fortress so we can display the fortress
             for(Engine fireEngine: engines){
                 int xPosition = fireEngine.getX() + (fireEngine.getWidth() / 2) - (Gdx.graphics.getWidth() / 2);
                 int yPosition = fireEngine.getY() + (fireEngine.getHeight() / 2) - (Gdx.graphics.getHeight() / 2);
-                if(nextFortress.getX() >= xPosition && nextFortress.getX() <= xPosition + Gdx.graphics.getWidth() &&
-                        nextFortress.getY() >= yPosition && nextFortress.getY() <= yPosition + Gdx.graphics.getHeight()){
+                if(currentFortress.getX() >= xPosition && currentFortress.getX() <= xPosition + Gdx.graphics.getWidth() &&
+                        currentFortress.getY() >= yPosition && currentFortress.getY() <= yPosition + Gdx.graphics.getHeight()){
                     shouldShowFortress = true;
                 }
-                else if(nextFortress.getX() + nextFortress.getWidth() >= xPosition && nextFortress.getX() +
-                        nextFortress.getWidth() <= xPosition + Gdx.graphics.getWidth() && nextFortress.getY() +
-                        nextFortress.getHeight() >= yPosition && nextFortress.getY() <= yPosition + Gdx.graphics.getHeight()){
+                else if(currentFortress.getX() + currentFortress.getWidth() >= xPosition && currentFortress.getX() +
+                        currentFortress.getWidth() <= xPosition + Gdx.graphics.getWidth() && currentFortress.getY() +
+                        currentFortress.getHeight() >= yPosition && currentFortress.getY() <= yPosition + Gdx.graphics.getHeight()){
                     shouldShowFortress = true;
                 }
             }
+
+
+
             //If there is an engine near the fortress, show it and perform the fortresses attack
             if(shouldShowFortress)
             {
-                attackerManager.snapToAttacker(nextFortress, gameMap, camera);
-                attackerManager.BattleTurn(nextFortress);
+                attackerManager.snapToAttacker(currentFortress, gameMap, camera);
+                attackerManager.BattleTurn(currentFortress);
             }
             else{
                 currentFortressIndex++;
@@ -407,6 +385,30 @@ public class GameState extends State
             }
         }
     }
+
+
+    private void postAlienTurn(){
+        currentFortressIndex = 0;
+        timePassed++;
+
+        //If the fortresses have destroyed all engines, finish the game
+        if(attackerManager.checkIfAllEnginesDead()){
+            stateManager.changeState(new GameOverState(inputManager, font, stateManager, false));
+            return;
+        }
+
+        attackerManager.snapToAttacker(engines.get(0), gameMap, camera);
+        tileManager.resetMovableTiles();
+
+        for(Engine fireEngine: engines){
+            fireEngine.setMoved(false);
+            fireEngine.ifInRangeFill(fireStation);
+        }
+        playerTurn = true;
+    }
+
+
+
 
     /***
      * Method that will render everything in the game each frame
@@ -473,7 +475,6 @@ public class GameState extends State
 
     //Getters and setters
 
-    //TODO Implement time passed properly
     public int getTimePassed()
     {
         return timePassed;
