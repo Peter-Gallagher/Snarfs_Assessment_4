@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
 import com.septagon.game.InputManager;
@@ -25,11 +24,10 @@ Child class of the State class that will manage the system when the user is in t
 
 public class GameState extends State
 {
-    //TODO: why public?
 
-    // we will use 32px/unit in world
-    public final static float SCALE = 32f;
-    public final static float INV_SCALE = 1.f/SCALE;
+    //TODO: these shouldn't be hard coded
+    // find where window size is stored and call from there
+
     // this is our "target" resolution, note that the window can be any size, it is not bound to this one
     public final static float VP_WIDTH = 640;
     public final static float VP_HEIGHT = 480;
@@ -55,12 +53,17 @@ public class GameState extends State
     private ArrayList<Engine> engines;
     private Engine engine1;
     private Engine engine2;
+    private Engine engine3;
+    private Engine engine4;
 
     //Loads textures and creates objects for the fortresses
     private ArrayList<Fortress> fortresses;
     private Fortress fortressFire;
     private Fortress fortressStation;
     private Fortress fortressMinister;
+    private Fortress newFortress1;
+    private Fortress newFortress2;
+    private Fortress newFortress3;
 
     //Loads textures and creates an object for the fire station
     private Station fireStation;
@@ -117,68 +120,121 @@ public class GameState extends State
     /***
      * Sets up all objects in our game and gets the game ready to be played
      */
-    //TODO Break up and put into respective classes
     public void initialise()
     {
         //TODO initialise extra fire engines and fortresses HERE!
+
+        //TODO fireEngines need unique stats and textures
+        initializeFireEngines();
         //Initialises all engines, fortress and stations in the game
+
+        //TODO fortresses need unique stats and textures
+        initializeFortresses();
+
+        fireStation = new Station(42, 6, 256, 128, AssetManager.getFireStationTexture());
+
+        font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
+
+        initializeEntityManager();
+
+        initializeUIManager();
+
+        initializeGameMap();
+
+        initializeCamera();
+
+        //Initialises the statusBarRenderer object
+        statusBarGenerator = new StatusBarGenerator(engines, fortresses);
+
+
+        //Initialise the AttackerManager
+        attackerManager = new AttackerManager(engines, tiles, fortresses, this);
+    }
+
+    private void initializeFireEngines(){
+        //create all Fire Engine objects
         engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 4, 6, 100, 4, 01);
         engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 02);
+        engine3 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 03);
+        engine4 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 8, 100, 4, 04);
+
+        //Sets the engines positions so that they start from the fireStation
+        engine1.setCol(47);
+        engine1.setRow(5);
+
+        engine2.setCol(45);
+        engine2.setRow(4);
+
+        engine3.setCol(42);
+        engine3.setRow(5);
+
+        engine4.setCol(43);
+        engine4.setRow(4);
+
+        //Adds all the engines to the ArrayList of engines
+        engines = new ArrayList<Engine>();
+        engines.add(engine1);
+        engines.add(engine2);
+        engines.add(engine3);
+        engines.add(engine4);
+
+    }
+
+
+    private void initializeFortresses(){
+        //creates all fortress objects
         fortressFire = new Fortress(4, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 3);
         fortressMinister = new Fortress(11, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 3);
         fortressStation = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
-        fireStation = new Station(42, 6, 256, 128, AssetManager.getFireStationTexture());
+        newFortress1 = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
+        newFortress2 = new Fortress(38, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
+        newFortress3 = new Fortress(20, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 3);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
         fortresses.add(fortressFire);
         fortresses.add(fortressMinister);
         fortresses.add(fortressStation);
+        fortresses.add(newFortress1);
+        fortresses.add(newFortress2);
+        fortresses.add(newFortress3);
+    }
 
-        //Sets the engines positions so that they start from the fireStation
-        engine1.setCol(fireStation.getCol() + 5);
-        engine1.setRow(fireStation.getRow() - 1);
-        engine2.setCol(fireStation.getCol() + 3);
-        engine2.setRow(fireStation.getRow() - 1);
 
-        //Adds all the engines to the ArrayList of engines
-        engines = new ArrayList<Engine>();
-        engines.add(engine1);
-        engines.add(engine2);
-
-        font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
-
+    private void initializeEntityManager(){
         //Adds all the entities to the entity manager so all their updating and rendering can be handled
         entityManager = new EntityManager();
         entityManager.addEntity(fireStation);
-        for(Fortress f: fortresses)
+        for(Fortress fortress: fortresses)
         {
-            entityManager.addEntity(f);
+            entityManager.addEntity(fortress);
         }
-        for(Engine e: engines)
+        for(Engine engine: engines)
         {
-            entityManager.addEntity(e);
+            entityManager.addEntity(engine);
         }
 
+        entityManager.initialise();
+    }
+
+
+    private void initializeCamera(){
         // Intialises the game viewport and spritebatch
         viewport = new ExtendViewport(VP_WIDTH, VP_HEIGHT, camera);
         objectBatch = new SpriteBatch();
         objectBatch.setProjectionMatrix(camera.combined);
 
-        //Creates instance of uiManager which will be used to render and manage all UI elements
-        uiManager = new UIManager(this, font);
-
-        //Creates the gameMap instance that will be used to load the map from the tmx file
-        gameMap = new TiledGameMap();
-
-        //Intialises all entities and all ui elements
-        entityManager.initialise();
-        uiManager.initialise();
-
         //Sets up the camera parameters and moves it to its inital position
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.x = gameMap.getMapWidth() * Tile.TILE_SIZE - Gdx.graphics.getWidth() / 2;
         camera.update();
+    }
+
+
+    private void initializeGameMap(){
+
+        //Creates the gameMap instance that will be used to load the map from the tmx file
+        gameMap = new TiledGameMap();
 
         //Create objects referring to all tiles in game
         for(int row = 0; row < gameMap.getMapHeight(); row++)
@@ -190,16 +246,20 @@ public class GameState extends State
             }
         }
 
-        //Initialises the statusBarRenderer object
-        statusBarGenerator = new StatusBarGenerator(engines, fortresses);
-
         //Sets up all the occupied tiles on the map so they cannot be moved to
         tileManager = new TileManager(engines, tiles);
         tileManager.setOccupiedTiles(gameMap);
-
-        //Initialise the AttackerManager
-        attackerManager = new AttackerManager(engines, tiles, fortresses, this);
     }
+
+
+    private void initializeUIManager(){
+        //Creates instance of uiManager which will be used to render and manage all UI elements
+        uiManager = new UIManager(this, font);
+
+        //Intialises all entities and all ui elements
+        uiManager.initialise();
+    }
+
 
     /***
      * Update method that is called every frame and will update and move all objects if required
