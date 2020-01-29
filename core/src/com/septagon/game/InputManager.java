@@ -185,53 +185,65 @@ public class InputManager implements InputProcessor
             MenuState currentState = (MenuState) stateManager.getCurrentState();
 
             //If up or down pressed, move the menuPosition accordingly
-            //TODO convert if to case statement
-            if(keycode == Input.Keys.DOWN)
-            {
-                currentState.setMenuPosition(currentState.getMenuPosition() + 1);
-            }else if(keycode == Input.Keys.UP)
-            {
-                currentState.setMenuPosition(currentState.getMenuPosition() - 1);
+            switch(keycode){
+                case Input.Keys.DOWN:
+                    currentState.setMenuPosition(currentState.getMenuPosition() + 1);
+
+                case Input.Keys.UP:
+                    currentState.setMenuPosition(currentState.getMenuPosition() - 1);
+
+                //If enter pressed, perform action depending on the position of the menu
+                case Input.Keys.ENTER:
+
+                    switch(currentState.getMenuPosition())
+                    {
+                        case 0:
+                            stateManager.changeState(new GameState(this, font, stateManager, camera));
+                            break;
+                        case 1:
+                            Gdx.app.exit();
+                            break;
+                        default:
+                            System.err.println("Something went wrong with the menu system");
+                            break;
+                    }
+
+                default:
+                    break;
             }
-            //If enter pressed, perform action depending on the position of the menu
-            else if(keycode == Input.Keys.ENTER)
-            {
-                switch(currentState.getMenuPosition())
-                {
-                    case 0:
-                        stateManager.changeState(new GameState(this, font, stateManager, camera));
-                        break;
-                    case 1:
-                        Gdx.app.exit();
-                        break;
-                    default:
-                        System.err.println("Something went wrong with the menu system");
-                        break;
-                }
-            }
+
+
         }else if(stateManager.getCurrentState().getID() == State.StateID.GAME){
             //Cast currentState to a gameState so gameState specific methods can be used
             GameState currentState = (GameState) stateManager.getCurrentState();
+            int currentPausePosition = currentState.getUiManager().getPausePosition();
 
             //If user presses escape, flip whether the game is paused or not
             if(keycode == Input.Keys.ESCAPE){
                 currentState.setPaused(!currentState.isPaused());
             }
-            if(currentState.isPaused()){
-                //If up or down pressed, move pause position accordingly
-                if(keycode == Input.Keys.DOWN && currentState.getUiManager().getPausePosition() == 1){
-                    currentState.getUiManager().setPausePosition(2);
-                }else if(keycode == Input.Keys.UP && currentState.getUiManager().getPausePosition() == 2){
-                    currentState.getUiManager().setPausePosition(1);
-                }
 
-                //If enter pressed, perform action depending on where in the pause menu the user is
-                if(keycode == Input.Keys.ENTER){
-                    if(currentState.getUiManager().getPausePosition() == 1){
-                        currentState.setPaused(false);
-                    }else{
-                        stateManager.changeState(new MenuState(this, font, stateManager, camera));
-                    }
+            if(currentState.isPaused()){
+
+                switch (keycode){
+                    //If up or down pressed, move pause position accordingly
+                    case Input.Keys.DOWN:
+                        if(currentPausePosition == 1){
+                            currentState.getUiManager().setPausePosition(2);
+                        }
+                    case Input.Keys.UP:
+                        if(currentPausePosition == 2){
+                            currentState.getUiManager().setPausePosition(1);
+                        }
+                    //If enter pressed, perform action depending on where in the pause menu the user is
+                    case Input.Keys.ENTER:
+                        if(currentPausePosition == 1){
+                            currentState.setPaused(false);
+                        }else{
+                            stateManager.changeState(new MenuState(this, font, stateManager, camera));
+                        }
+                    default:
+                        break;
                 }
             }
         }

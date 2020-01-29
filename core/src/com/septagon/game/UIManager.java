@@ -67,8 +67,6 @@ public class UIManager
     }
 
 
-
-    //TODO separate into function
     /***
      * Sets up all the variables
      */
@@ -79,6 +77,19 @@ public class UIManager
         uiBatch = new SpriteBatch();
 
         //Generate font from font file and create all the varients of it
+        generateFont();
+
+        //Set up all the text objects
+        setUpStatsText();
+
+        //Sets up text for the pause menu text
+        setUpPauseText();
+
+        //Sets up positions for all text on the screen
+        setupPositions();
+    }
+
+    private void generateFont(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 16;
@@ -92,8 +103,10 @@ public class UIManager
         playerTurnText = new GlyphLayout(font, "Your Turn");
         font.setColor(Color.RED);
         enemyTurnText = new GlyphLayout(font, "Enemy Turn");
+    }
 
-        //Set up all the text objects
+
+    private void setUpStatsText(){
         showEngineStatsText = new GlyphLayout(smallFont, "Show Stats");
         maxVolumeText = new GlyphLayout(smallFont, "Max Volume: 0");
         healthText = new GlyphLayout(smallFont, "Health: 0");
@@ -101,19 +114,18 @@ public class UIManager
         rangeText = new GlyphLayout(smallFont, "Range: 0");
         speedText = new GlyphLayout(smallFont, "Speed: 0");
         minimiseSymbol = new GlyphLayout(smallFont, "-");
+    }
 
-        //Sets up text for the pause menu text
+
+    private void setUpPauseText(){
         font.setColor(Color.RED);
         pauseText = new GlyphLayout(font, "Paused");
         font.setColor(Color.WHITE);
         resumeText = new GlyphLayout(font, "Resume");
         exitText = new GlyphLayout(font, "Exit");
-
-        //Sets up positions for all text on the screen
-        setupPositions();
     }
 
-    //TODO separate into function
+
     /***
      * Render method that draws all objects to the screen
      */
@@ -126,67 +138,11 @@ public class UIManager
         //If not paused, render all UI elements
         if(!paused)
         {
-            engineStatsRenderer.begin(ShapeRenderer.ShapeType.Filled);
             //Draws either the button to open the stats menu or the stats menu itself
-            if (currentEngine != null && !displayingStats)
-            {
-                engineStatsRenderer.setColor(Color.GRAY);
-                engineStatsRenderer.rect(showRectX, showRectY, showRectWidth, showRectHeight);
-            } else if (currentEngine != null && displayingStats)
-            {
-                engineStatsRenderer.setColor(Color.GRAY);
-                engineStatsRenderer.rect(statsRectX, statsRectY, statsRectWidth, statsRectHeight);
-            }
-            engineStatsRenderer.end();
-
-            //Draws the outline for the button/menu
-            engineStatsRenderer.begin(ShapeRenderer.ShapeType.Line);
-            if (currentEngine != null && !displayingStats)
-            {
-                engineStatsRenderer.setColor(Color.BLACK);
-                engineStatsRenderer.rect(showRectX, showRectY, showRectWidth, showRectHeight);
-            } else if (currentEngine != null && displayingStats)
-            {
-                engineStatsRenderer.setColor(Color.BLACK);
-                engineStatsRenderer.rect(statsRectX, statsRectY, statsRectWidth, statsRectHeight);
-                engineStatsRenderer.rect(minimiseX, minimiseY, minimiseWidth, minimiseHeight);
-            }
-            engineStatsRenderer.end();
-            uiBatch.end();
+            renderEngineStats();
 
             //Draws all the text to the screen in its correct place
-            uiBatch.begin();
-            engineStatsRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            //Draws the text that tells the player who's turn it is
-            if (gameState.isPlayerTurn())
-            {
-                font.draw(uiBatch, playerTurnText, playerTurnX, playerTurnY);
-            } else
-            {
-                font.draw(uiBatch, enemyTurnText, enemyTurnX, enemyTurnY);
-            }
-
-            //If stats are not showing, just display button text
-            if (currentEngine != null && !displayingStats)
-            {
-                smallFont.setColor(Color.WHITE);
-                smallFont.draw(uiBatch, showEngineStatsText, showRectX + 5, showRectY + 20);
-            }
-            //If stats are showing, draw all the text relating to them
-            else if (currentEngine != null && displayingStats)
-            {
-                smallFont.setColor(Color.WHITE);
-                uiBatch.draw(currentEngine.getTexture(), statsRectX + 50, statsRectY + statsRectHeight - 70);
-                smallFont.draw(uiBatch, maxVolumeText, statsRectX + 10, statsRectY + statsRectHeight - 90);
-                smallFont.draw(uiBatch, healthText, statsRectX + 10, statsRectY + statsRectHeight - 120);
-                smallFont.draw(uiBatch, damageText, statsRectX + 10, statsRectY + statsRectHeight - 150);
-                smallFont.draw(uiBatch, rangeText, statsRectX + 10, statsRectY + statsRectHeight - 180);
-                smallFont.draw(uiBatch, speedText, statsRectX + 10, statsRectY + statsRectHeight - 210);
-                smallFont.draw(uiBatch, minimiseSymbol, minimiseX + 7, minimiseY + 15);
-            }
-
-            engineStatsRenderer.end();
+            drawText();
         }
         //If the game is paused, draw the pause menu
         else{
@@ -197,6 +153,77 @@ public class UIManager
         }
         uiBatch.end();
     }
+
+
+    private void renderEngineStats(){
+
+        engineStatsRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        //Draws either the button to open the stats menu or the stats menu itself
+        if (currentEngine != null && !displayingStats)
+        {
+            engineStatsRenderer.setColor(Color.GRAY);
+            engineStatsRenderer.rect(showRectX, showRectY, showRectWidth, showRectHeight);
+        } else if (currentEngine != null && displayingStats)
+        {
+            engineStatsRenderer.setColor(Color.GRAY);
+            engineStatsRenderer.rect(statsRectX, statsRectY, statsRectWidth, statsRectHeight);
+        }
+        engineStatsRenderer.end();
+
+        //Draws the outline for the button/menu
+        engineStatsRenderer.begin(ShapeRenderer.ShapeType.Line);
+        if (currentEngine != null && !displayingStats)
+        {
+            engineStatsRenderer.setColor(Color.BLACK);
+            engineStatsRenderer.rect(showRectX, showRectY, showRectWidth, showRectHeight);
+        } else if (currentEngine != null && displayingStats)
+        {
+            engineStatsRenderer.setColor(Color.BLACK);
+            engineStatsRenderer.rect(statsRectX, statsRectY, statsRectWidth, statsRectHeight);
+            engineStatsRenderer.rect(minimiseX, minimiseY, minimiseWidth, minimiseHeight);
+        }
+        engineStatsRenderer.end();
+        uiBatch.end();
+
+    }
+
+
+    private void drawText(){
+        //Draws all the text to the screen in its correct place
+        uiBatch.begin();
+        engineStatsRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        //Draws the text that tells the player who's turn it is
+        if (gameState.isPlayerTurn())
+        {
+            font.draw(uiBatch, playerTurnText, playerTurnX, playerTurnY);
+        } else
+        {
+            font.draw(uiBatch, enemyTurnText, enemyTurnX, enemyTurnY);
+        }
+
+        //If stats are not showing, just display button text
+        if (currentEngine != null && !displayingStats)
+        {
+            smallFont.setColor(Color.WHITE);
+            smallFont.draw(uiBatch, showEngineStatsText, showRectX + 5, showRectY + 20);
+        }
+        //If stats are showing, draw all the text relating to them
+        else if (currentEngine != null && displayingStats)
+        {
+            smallFont.setColor(Color.WHITE);
+            uiBatch.draw(currentEngine.getTexture(), statsRectX + 50, statsRectY + statsRectHeight - 70);
+            smallFont.draw(uiBatch, maxVolumeText, statsRectX + 10, statsRectY + statsRectHeight - 90);
+            smallFont.draw(uiBatch, healthText, statsRectX + 10, statsRectY + statsRectHeight - 120);
+            smallFont.draw(uiBatch, damageText, statsRectX + 10, statsRectY + statsRectHeight - 150);
+            smallFont.draw(uiBatch, rangeText, statsRectX + 10, statsRectY + statsRectHeight - 180);
+            smallFont.draw(uiBatch, speedText, statsRectX + 10, statsRectY + statsRectHeight - 210);
+            smallFont.draw(uiBatch, minimiseSymbol, minimiseX + 7, minimiseY + 15);
+        }
+
+        engineStatsRenderer.end();
+    }
+
 
     /***
      * Method that is run for each string in the pause menu to set up its colour and position
