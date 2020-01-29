@@ -249,6 +249,8 @@ public class GameState extends State
         //Sets up all the occupied tiles on the map so they cannot be moved to
         tileManager = new TileManager(engines, tiles);
         tileManager.setOccupiedTiles(gameMap);
+
+        tileManager.createAdjacencyList(gameMap.getMapWidth(), gameMap.getMapHeight());
     }
 
 

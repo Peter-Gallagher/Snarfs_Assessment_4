@@ -52,4 +52,8 @@ public class Tile extends Entity
     //Getters
     public boolean isMovable() { return movable; }
     public boolean isOccupied() { return occupied; }
+    public int getIndex(){
+        return col + (row * 50);
+    }
+
 }

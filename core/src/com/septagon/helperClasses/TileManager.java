@@ -41,18 +41,7 @@ public class TileManager {
      */
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
-        //Set the tiles that currently have an engine on to be occupied
-        for (Engine fireEngige : engines)
-        {
-            for (Tile tile : tiles)
-            {
-                if (tile.getCol() == fireEngige.getCol() && tile.getRow() == fireEngige.getRow())
-                {
-                    tile.setOccupied(true);
-                    break;
-                }
-            }
-        }
+        setEngineTilesOccupied();
 
         //Set the all the tiles within the fire station fortress bounds as occupied
         for (int x = 4; x < 12; x++)
@@ -99,8 +88,6 @@ public class TileManager {
         }
 
 
-        //TODO: superfluous if statement
-
         //Loops through all tiles to work out if they are water tiles, and if so makes them occupied
         for (Tile tile : tiles)
         {
@@ -135,6 +122,38 @@ public class TileManager {
         }
     }
 
+    
+    public void setEngineTilesOccupied(){
+        //Set the tiles that currently have an engine on to be occupied
+        for (Engine fireEngige : engines)
+        {
+            int engineRow = fireEngige.getRow();
+            int engineCol = fireEngige.getCol();
+            Integer tileIndex = null;
+
+            for (Tile tile : tiles)
+            {
+                if (tile.getCol() == engineCol && tile.getRow() == engineRow)
+                {
+                    tile.setOccupied(true);
+                    tileIndex = tile.getIndex();
+                    updateTileInAdjacencyMatrix(tileIndex, 0);
+
+                    break;
+                }
+            }
+        }
+    }
+
+
+    public void updateTileInAdjacencyMatrix(int tileIndex, int access){
+        adjacencyList[tileIndex - 1][1] = access;
+        adjacencyList[tileIndex + 1][0] = access;
+        adjacencyList[tileIndex - 50][3] = access;
+        adjacencyList[tileIndex + 50][2] = access;
+    }
+
+
     /***
      * Method to get the tile at a row and column
      * @param col The column of the tile you want to get
@@ -143,12 +162,14 @@ public class TileManager {
      */
     public Tile getTileAtLocation(int col, int row)
     {
-        for(Tile tile: tiles)
-        {
-            if(tile.getCol() == col && tile.getRow() == row)
-                return tile;
+        int tileIndex = col + (row * 50);
+
+        if (tileIndex >= 0 && tileIndex < 2500){
+            Tile tile = tiles.get(tileIndex);
+            return  tile;
+        }else{
+            return null;
         }
-        return null;
     }
 
     /***
@@ -158,8 +179,9 @@ public class TileManager {
     public void setMovableTiles(Engine currentEngine) {
         //Reset all moveable tiles from previous turn
         resetMovableTiles();
-        createAdjacencyList(50,50);
+        setEngineTilesOccupied();
         Tile accessTile;
+
         int startTileIndex = currentEngine.getCol() + (currentEngine.getRow() * 50);
 
         for (Integer index: BFS(adjacencyList, startTileIndex, currentEngine.getSpeed())) {
