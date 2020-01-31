@@ -31,7 +31,7 @@ public class Game extends ApplicationAdapter
 	@Override
 	/**
 	 * Method that is automatically called when an instance of the Game class is created
-	 * Will initalise all variables in the game and set up the inital state
+	 * Will initialize all variables in the game and set up the initial state
 	 */
 	public void create ()
 	{
@@ -43,14 +43,7 @@ public class Game extends ApplicationAdapter
 		camera.position.set(0, 0, 0);
 		camera.update();
 
-		//TODO encapsulate in own function
-		//Load the font into the game loaded from our custom font file
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
-		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 32;
-		parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:-";
-		font = generator.generateFont(parameter);
-		generator.dispose();
+		loadFont();
 
 		//Intialise all variables with default values
 		stateManager = new StateManager();
@@ -64,6 +57,19 @@ public class Game extends ApplicationAdapter
 		//TODO add an initialise state function for a given state, pass the state as parameter
 		stateManager.changeState(startState);
 		stateManager.initialise();
+	}
+
+	/**
+	 * Method that is called exclusively by create
+	 * Will load the font into the game loaded from our custom font files
+	 */
+	public void loadFont(){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 32;
+		parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:-";
+		font = generator.generateFont(parameter);
+		generator.dispose();
 	}
 
 	/**
