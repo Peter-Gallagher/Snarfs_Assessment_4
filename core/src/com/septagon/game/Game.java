@@ -53,9 +53,16 @@ public class Game extends ApplicationAdapter
 
 		//Set the current state of the game to be the GameState and 
 		//initialise this state
-
-		//TODO add an initialise state function for a given state, pass the state as parameter
 		stateManager.changeState(startState);
+		stateManager.initialise();
+	}
+
+	/**
+	 * Method that is used to enter new states
+	 * Enter the desired state as a parameter and the state will be initialized
+	 */
+	public void initializeState(State newState){
+		stateManager.changeState(newState);
 		stateManager.initialise();
 	}
 
