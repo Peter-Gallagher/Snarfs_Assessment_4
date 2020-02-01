@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class Vehicle extends Attacker
 {
     protected int speed;
+
+    //TODO direction is never used
     protected char direction;
 
     public Vehicle (int col, int row, Texture texture, int health, int damage, int range, int speed)

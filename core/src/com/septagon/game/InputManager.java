@@ -18,11 +18,6 @@ Class used to handle all inputs from the user
 
 public class InputManager implements InputProcessor
 {
-
-    //TODO WHY?
-    Vector3 tp = new Vector3();
-
-
     private boolean dragging;
     private OrthographicCamera camera;
     private StateManager stateManager;
@@ -63,6 +58,7 @@ public class InputManager implements InputProcessor
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         //checks if the game is in the main game state
         //TODO Redundant Fetches, MEMORY
+
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             //Cast the currentState to a gameState so that gameState specific methods can be used
@@ -149,7 +145,7 @@ public class InputManager implements InputProcessor
 
                 //Refresh the camera
                 camera.update();
-                camera.unproject(tp.set(screenX, screenY, 0));
+                camera.unproject(new Vector3(screenX, screenY, 0));
             }
         }
         return true;
@@ -165,7 +161,7 @@ public class InputManager implements InputProcessor
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             if (button != Input.Buttons.LEFT || pointer > 0) return false;
-            camera.unproject(tp.set(screenX, screenY, 0));
+            camera.unproject(new Vector3(screenX, screenY, 0));
             dragging = false;
         }
         return true;

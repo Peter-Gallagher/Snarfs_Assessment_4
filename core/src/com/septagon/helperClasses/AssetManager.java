@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class AssetManager {
     //TODO add extra fire engine textures
-    private static final Texture engineTexture1 = new Texture(Gdx.files.internal("images/engine1.png"));
-    private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engine2.png"));
+    private static final Texture engineTexture1 = new Texture(Gdx.files.internal("images/engineSF.png"));
+    private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engineRS.png"));
+    private static final Texture engineTexture3 = new Texture(Gdx.files.internal("images/engineMCL.png"));
+    private static final Texture engineTexture4 = new Texture(Gdx.files.internal("images/engineRP.png"));
     private static final Texture moveSpaceTexture = new Texture(Gdx.files.internal("move_square.png"));
 
     //TODO add extra fortress textures
@@ -34,6 +36,14 @@ public class AssetManager {
 
     public static Texture getEngineTexture2() {
         return engineTexture2;
+    }
+
+    public static Texture getEngineTexture3() {
+        return engineTexture3;
+    }
+
+    public static Texture getEngineTexture4() {
+        return engineTexture4;
     }
 
     public static Texture getMoveSpaceTexture() {

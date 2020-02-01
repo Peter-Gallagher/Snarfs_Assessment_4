@@ -142,8 +142,8 @@ public class GameState extends State
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 4, 20, 100, 4, 01);
         Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 4, 20, 100, 4, 04);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 4, 20, 100, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 4, 20, 100, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(47);
