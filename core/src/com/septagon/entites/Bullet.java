@@ -41,8 +41,8 @@ public class Bullet {
      * Move bullets in required directions
      */
     public void update (float deltaTime) {
-        y += this.ySPEED * deltaTime * 25000;
-        x += this.xSPEED * deltaTime * 25000;
+        y += this.ySPEED * deltaTime * 50000;
+        x += this.xSPEED * deltaTime * 50000;
         if ((deltaX* (targetX - x) < 0)&&(deltaY* (targetY - y) < 0))
             remove = true;
     }

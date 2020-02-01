@@ -46,14 +46,27 @@ public class Fortress extends Attacker
     public void DamageEngineIfInRange(Engine fireEngine) {
         System.out.println("Checking if should damage engine");
 
-        int xDisplacement = this.getCol() - fireEngine.getCol();
-        int yDisplacement = this.getRow() - fireEngine.getRow();
+        int engineCol = fireEngine.getCol();
+        int engineRow = fireEngine.getRow();
+
+        int xDisplacement = Math.min(Math.abs(this.getCol() - engineCol), Math.abs((this.getCol() + (this.width / 32)) - engineCol));
+        int yDisplacement = Math.min(Math.abs(this.getRow() - engineRow), Math.abs((this.getRow() + (this.height / 32)) - engineRow));
+
+        //define the number of projectiles are drawn when an entity is shot
+        int numBullets = 25;
 
         if(Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range){
             fireEngine.takeDamage(this.damage);
-            GameState.bullets.add(new Bullet(this.x + 150, this.y + 50, fireEngine.getX() + 20, fireEngine.getY() + 10, false));
-            GameState.bullets.add(new Bullet(this.x + 100, this.y + 25, fireEngine.getX() + 20, fireEngine.getY() + 10, false));
-            GameState.bullets.add(new Bullet(this.x + 200, this.y + 75, fireEngine.getX() + 20, fireEngine.getY() + 10, false));
+
+            int engineX = fireEngine.getX();
+            int engineY = fireEngine.getY();
+
+            int centreX = this.x + (this.width/2);
+            int centreY = this.y + (this.height/2);;
+
+            for (int i = 0; i< numBullets; i++){
+                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  engineX + 10, engineY, false));
+            }
         }
     }
 

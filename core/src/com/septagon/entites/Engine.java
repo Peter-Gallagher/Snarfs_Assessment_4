@@ -8,6 +8,8 @@ package com.septagon.entites;
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
 
+import java.util.Arrays;
+
 public class Engine extends Vehicle
 {
     //Member variables that will be unique stats of each engine
@@ -58,25 +60,19 @@ public class Engine extends Vehicle
 
     /***
      * Checks if any of the corners of the engines range are in the body of the fortress or station
-     * @param fireEngine Entity that is being checked
+     * @param fortress Entity that is being checked
      * @return returns true if there is any overlap, false otherwise
      */
-    public Boolean checkForOverlap(Entity fireEngine){
-        int fireEngineCol = fireEngine.getCol();
-        int fireEngineRow = fireEngine.getRow();
-        int widthOverTileSize = fireEngine.getWidth()/Tile.TILE_SIZE;
-        int heightOverTileSize = fireEngine.getWidth()/Tile.TILE_SIZE;
+    public Boolean checkForOverlap(Fortress fortress){
+        int fortX = fortress.getCol();
+        int fortWidth = fortress.getWidth() / 32;
+        int fortY = fortress.getRow();
+        int fortHeight = fortress.getHeight() / 32;
 
+        int xDisplacement = Math.min(Math.abs(this.getCol() - (fortX + fortWidth)), Math.abs(this.getCol() - fortX));
+        int yDisplacement = Math.min(Math.abs(this.getRow() - (fortY + fortHeight)), Math.abs(this.getRow() - fortY));
 
-        for(int i=0; i<2; i++){
-            for(int j=2; j<4; j++){
-                if (rangeCorners.get(i) >= fireEngineCol && rangeCorners.get(i) < fireEngineCol + widthOverTileSize
-                        && rangeCorners.get(j) >= fireEngineRow && rangeCorners.get(j) < fireEngineRow + heightOverTileSize){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range);
     }
 
     /***
@@ -84,14 +80,21 @@ public class Engine extends Vehicle
      * @param fortress The fortress we are currently checking the bounds/range of
      */
     public void DamageFortressIfInRange(Fortress fortress){
-        this.setRangeCorners();
+        //this.setRangeCorners();
+
         if(checkForOverlap(fortress)){
             if (this.volume >= this.damage){
                 this.fire();
                 fortress.takeDamage(this.damage);
-                GameState.bullets.add(new Bullet(this.x + 20, this.y + 10, fortress.x + 150, fortress.y + 50, true));
-                GameState.bullets.add(new Bullet(this.x, this.y, fortress.x + 150, fortress.y + 50, true));
-                GameState.bullets.add(new Bullet(this.x + 40, this.y + 20, fortress.x + 150, fortress.y + 50, true));
+
+                int fortX = fortress.getX();
+                int fortY = fortress.getY();
+                int numBullets = 20;
+
+                for (int i = 0; i< numBullets; i++){
+                    GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i*3),  fortX + 100, fortY + 70, true));
+                }
+
             }
         }
 

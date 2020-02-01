@@ -41,7 +41,7 @@ public abstract class Attacker extends Entity
     @Override
     public void initialise() {
         super.initialise();
-        setRangeCorners();
+        //setRangeCorners();
     }
 
     /***
