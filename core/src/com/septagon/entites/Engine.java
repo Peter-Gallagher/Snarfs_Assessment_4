@@ -8,8 +8,6 @@ package com.septagon.entites;
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
 
-import java.util.Arrays;
-
 public class Engine extends Vehicle
 {
     //Member variables that will be unique stats of each engine
@@ -38,6 +36,8 @@ public class Engine extends Vehicle
      * @param station The Fire Station
      */
     public void ifInRangeFill(Station station){
+        //TODO: make a circle
+
         System.out.println("Checking if should fill");
         int xRange =station.getCol() + station.getWidth()/Tile.TILE_SIZE;
         int stationRow = station.getRow();
@@ -63,7 +63,7 @@ public class Engine extends Vehicle
      * @param fortress Entity that is being checked
      * @return returns true if there is any overlap, false otherwise
      */
-    public Boolean checkForOverlap(Fortress fortress){
+    public Boolean checkInRange(Fortress fortress){
         int fortX = fortress.getCol();
         int fortWidth = fortress.getWidth() / 32;
         int fortY = fortress.getRow();
@@ -82,7 +82,7 @@ public class Engine extends Vehicle
     public void DamageFortressIfInRange(Fortress fortress){
         //this.setRangeCorners();
 
-        if(checkForOverlap(fortress)){
+        if(checkInRange(fortress)){
             if (this.volume >= this.damage){
                 this.fire();
                 fortress.takeDamage(this.damage);

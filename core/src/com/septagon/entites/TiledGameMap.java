@@ -45,6 +45,7 @@ public class TiledGameMap
 	 * @return Returns true if the tile is a water tile, false if not
 	 */
 	public boolean checkIfWaterTile(int col, int row){
+		//TODO make dynamic
 		//Gets the cell (format used by Tiled) at the current location
 		Cell cell = ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(col, row);
 		int cellTileID = cell.getTile().getId();

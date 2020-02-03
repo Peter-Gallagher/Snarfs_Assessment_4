@@ -125,10 +125,10 @@ public class TileManager {
 
     public void setEngineTilesOccupied(){
         //Set the tiles that currently have an engine on to be occupied
-        for (Engine fireEngige : engines)
+        for (Engine fireEngine : engines)
         {
-            int engineRow = fireEngige.getRow();
-            int engineCol = fireEngige.getCol();
+            int engineRow = fireEngine.getRow();
+            int engineCol = fireEngine.getCol();
             Integer tileIndex = null;
 
             for (Tile tile : tiles)
@@ -239,6 +239,9 @@ public class TileManager {
             qVal = queue.poll();
 
             if (qVal == null){
+                if (queue.isEmpty()){
+                    break;
+                }
                 depth++;
                 queue.offer(null);
                 qVal = queue.poll();
@@ -286,14 +289,19 @@ public class TileManager {
 
 
     private boolean checkTileAdjacent(Tile centreTile, int xOffset, int yOffset){
-        int centreX = centreTile.getCol();
-        int centreY = centreTile.getRow();
+        int newX = centreTile.getCol() + xOffset;
+        int newY = centreTile.getRow() + yOffset;
 
-        Tile checkTile = this.getTileAtLocation(centreX + xOffset,centreY + yOffset);
+        if (newX == 50 || newX < 0) {
+            return false;
+        }
+
+        Tile checkTile = this.getTileAtLocation(newX, newY);
 
         if (checkTile != null){
             return !checkTile.isOccupied();
         }
+
 
         return false;
     }

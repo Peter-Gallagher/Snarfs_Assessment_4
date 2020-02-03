@@ -45,7 +45,7 @@ public class GameState extends State
     //Contains all the information about our game map
     private TiledGameMap gameMap;
 
-    private int timePassed;
+    private int turnsPassed;
     private boolean paused = false;
     private int minigameScore;
 
@@ -99,7 +99,7 @@ public class GameState extends State
     {
         super(inputManager, font, StateID.GAME, stateManager);
         this.camera = camera;
-        timePassed = 0;
+        turnsPassed = 0;
         minigameScore = 0;
         currentCameraX = 0;
         currentCameraY = 0;
@@ -390,7 +390,13 @@ public class GameState extends State
 
     private void postAlienTurn(){
         currentFortressIndex = 0;
-        timePassed++;
+        turnsPassed++;
+
+        strengthenFortresses();
+
+        if (turnsPassed == 20){
+            destroyStation();
+        }
 
         //If the fortresses have destroyed all engines, finish the game
         if(attackerManager.checkIfAllEnginesDead()){
@@ -409,6 +415,24 @@ public class GameState extends State
     }
 
 
+    public void strengthenFortresses(){
+
+        if (turnsPassed >= 10){
+            for (Fortress fortress : fortresses) {
+            fortress.setHealth(fortress.getHealth() + turnsPassed);
+
+            fortress.setDamage(fortress.getDamage() + (turnsPassed % 5));
+            }
+        }
+
+    }
+
+
+    public void destroyStation(){
+        fireStation.setDead();
+        //TODO: create an asset for destroyed fire station
+        fireStation.setTexture(AssetManager.getFireStationTexture());
+    }
 
 
     /***
@@ -476,9 +500,9 @@ public class GameState extends State
 
     //Getters and setters
 
-    public int getTimePassed()
+    public int getTurnsPassed()
     {
-        return timePassed;
+        return turnsPassed;
     }
 
     public float getCurrentCameraX()
@@ -533,8 +557,8 @@ public class GameState extends State
         uiManager.setPaused(paused);
     }
 
-    public void setTimePassed(int timePassed) {
-        this.timePassed = timePassed;
+    public void setTurnsPassed(int turnsPassed) {
+        this.turnsPassed = turnsPassed;
     }
 
     //public void setShouldCreateBullets(boolean shouldCreateBullets) { this.shouldCreateBullets = shouldCreateBullets; }
