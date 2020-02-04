@@ -55,6 +55,9 @@ public class GameState extends State
     //Loads textures and creates objects for the fortresses
     private ArrayList<Fortress> fortresses;
 
+    //Loads textures and creates objects for the patrols
+    private ArrayList<Patrol> patrols;
+
     //Loads textures and creates an object for the fire station
     private Station fireStation;
 
@@ -118,6 +121,8 @@ public class GameState extends State
 
         //TODO fortresses need unique stats and textures
         initializeFortresses();
+
+        initializePatrols();
 
         fireStation = new Station(42, 6, 256, 128, AssetManager.getFireStationTexture());
 
@@ -188,8 +193,23 @@ public class GameState extends State
         fortresses.add(newFortress3);
     }
 
+    private void initializePatrols() {
+        //create all Patrol objects
+        Patrol patrol1 = new Patrol(20, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u');
+        Patrol patrol2 = new Patrol(4, 1, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r');
+        Patrol patrol3 = new Patrol(4, 2, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd');
+        Patrol patrol4 = new Patrol(4, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l');
 
-    private void initializeEntityManager(){
+        //Adds all the patrols to the ArrayList of patrols
+        patrols = new ArrayList<Patrol>();
+        patrols.add(patrol1);
+        patrols.add(patrol2);
+        patrols.add(patrol3);
+        patrols.add(patrol4);
+    }
+
+
+        private void initializeEntityManager(){
         //Adds all the entities to the entity manager so all their updating and rendering can be handled
         entityManager = new EntityManager();
         entityManager.addEntity(fireStation);
