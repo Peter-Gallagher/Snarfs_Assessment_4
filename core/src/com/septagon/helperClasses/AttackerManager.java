@@ -37,6 +37,7 @@ public class AttackerManager
      */
     public void snapToAttacker(Attacker attacker, TiledGameMap gameMap, OrthographicCamera camera)
     {
+        //TODO make the snapping less spazzy if possible or change it
         //Get the positions of where the camera should move to
         int newCameraX = attacker.getX() + (attacker.getWidth() / 2);
         int newCameraY = attacker.getY() + (attacker.getHeight() / 2);
@@ -62,6 +63,7 @@ public class AttackerManager
      * Checks if all engines have been moved or not so that the game knows when to end the players turn
      * @return boolean of whether all the engines have been moved or not
      */
+    //TODO why is this here? move to Fire Engine
     public boolean allEnginesMoved(){
         for(Engine fireEngine : engines){
 
@@ -99,6 +101,7 @@ public class AttackerManager
      * Method that works out is all the engines have been destroyed by the fortresses
      * @return Returns true if all engines are destroyed, false otherwise
      */
+    //TODO do this for loop inside BattleTurn()
     public boolean checkIfAllEnginesDead(){
         for(Engine fireEngine: engines){
             //again?
