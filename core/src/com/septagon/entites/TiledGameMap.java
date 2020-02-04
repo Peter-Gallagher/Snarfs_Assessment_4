@@ -24,7 +24,7 @@ public class TiledGameMap
 	 */
 	public TiledGameMap()
 	{
-		tiledMap = new TmxMapLoader().load("FinalMap.tmx");
+		tiledMap = new TmxMapLoader().load("extendedMap.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 	}
 
@@ -103,4 +103,19 @@ public class TiledGameMap
 	{
 		return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getHeight();
 	}
+
+	public boolean[][] getPassable(){
+		boolean passableTiles[][] = new boolean[this.getMapHeight()][this.getMapWidth()];
+
+		for (int i = 0; i < this.getMapWidth(); i++){
+			for(int j = 0; j < this.getMapHeight(); j++){
+				TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
+				passableTiles[j][i] = (passableLayer.getCell(i,j) != null);
+			}
+		}
+
+		return passableTiles;
+	}
+
 }
+

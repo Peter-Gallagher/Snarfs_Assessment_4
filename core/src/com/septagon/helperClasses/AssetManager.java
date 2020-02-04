@@ -20,6 +20,7 @@ public class AssetManager {
     private static final Texture fortressFireTexture = new Texture(Gdx.files.internal("images/FortressFire.png"));
     private static final Texture fortressMinisterTexture = new Texture(Gdx.files.internal("images/FortressMinister.png"));
     private static final Texture fortressStationTexture = new Texture(Gdx.files.internal("images/FortressStation.png"));
+    private static final Texture fortressPlaceHolderTexture = new Texture(Gdx.files.internal("images/FortressPlaceHolder.png"));
 
     private static final Texture defeatedFireTexture = new Texture(Gdx.files.internal("images/DefeatedOldStation.png"));
     private static final Texture defeatedMinsterTexture = new Texture(Gdx.files.internal("images/DefeatedMinster.png"));
@@ -78,4 +79,7 @@ public class AssetManager {
 
     public static  Texture getDefeatedStationTexture() { return defeatedStationTexture; }
 
+    public static Texture getfortressPlaceHolderTexture() {
+        return fortressPlaceHolderTexture;
+    }
 }

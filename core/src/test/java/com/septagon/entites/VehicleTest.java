@@ -40,10 +40,6 @@ class VehicleTest {
         assertEquals(testV.getSpeed(), 2);
     }
 
-    @Test //A test for the Vehicle class' getDirection method
-    public void testGetDirection() throws Exception {
-        testV.direction = 'U';
-        assertEquals(testV.getDirection(), 'U');
-    }
+
 
 }

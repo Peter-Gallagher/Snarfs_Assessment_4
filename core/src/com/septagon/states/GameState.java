@@ -124,7 +124,7 @@ public class GameState extends State
 
         initializePatrols();
 
-        fireStation = new Station(42, 6, 256, 128, AssetManager.getFireStationTexture());
+        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture());
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
@@ -152,16 +152,16 @@ public class GameState extends State
         Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 8, 20, 100, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
-        engine1.setCol(47);
+        engine1.setCol(77);
         engine1.setRow(5);
 
-        engine2.setCol(45);
+        engine2.setCol(75);
         engine2.setRow(4);
 
-        engine3.setCol(42);
+        engine3.setCol(72);
         engine3.setRow(5);
 
-        engine4.setCol(43);
+        engine4.setCol(73);
         engine4.setRow(4);
 
         //Adds all the engines to the ArrayList of engines
@@ -176,12 +176,12 @@ public class GameState extends State
 
     private void initializeFortresses(){
         //creates all fortress objects
-        Fortress fortressFire = new Fortress(4, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
-        Fortress fortressMinister = new Fortress(11, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
-        Fortress fortressStation = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress1 = new Fortress(31, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress2 = new Fortress(38, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress3 = new Fortress(20, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
+        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
+        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress1 = new Fortress(9, 42, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress2 = new Fortress(1, 4, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress3 = new Fortress(9, 21, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
@@ -366,6 +366,8 @@ public class GameState extends State
 
             //TODO: figure out what the fuck this for loop is and then delete it
             //Work out if there is an engine near to the current fortress so we can display the fortress
+
+
             for(Engine fireEngine: engines){
                 int xPosition = fireEngine.getX() + (fireEngine.getWidth() / 2) - (Gdx.graphics.getWidth() / 2);
                 int yPosition = fireEngine.getY() + (fireEngine.getHeight() / 2) - (Gdx.graphics.getHeight() / 2);
@@ -380,11 +382,10 @@ public class GameState extends State
                 }
             }
 
-
-
             //If there is an engine near the fortress, show it and perform the fortresses attack
             if(shouldShowFortress)
             {
+                //TODO conditional delay to occur only when shooting can be added here
                 attackerManager.snapToAttacker(currentFortress, gameMap, camera);
                 attackerManager.BattleTurn(currentFortress);
             }
