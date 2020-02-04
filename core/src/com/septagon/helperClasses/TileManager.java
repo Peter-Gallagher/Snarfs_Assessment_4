@@ -39,6 +39,7 @@ public class TileManager {
     /***
      * Sets up the tiles which contain an engine, fortress or the station to be occupied
      */
+    //TODO there must be a better way to initialise the Fortresses than hard coding each
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
         setEngineTilesOccupied();
@@ -96,7 +97,7 @@ public class TileManager {
                 tile.setOccupied(true);
             }
         }
-
+        //TODO same with the bridges, hard coding does not look efficient
         //Makes so that the bridge tiles are not occupied
         for (int i = 34; i < 38; i++)
         {

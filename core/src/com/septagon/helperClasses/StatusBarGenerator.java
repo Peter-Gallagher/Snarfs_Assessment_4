@@ -57,7 +57,6 @@ public class StatusBarGenerator
         //Work out whether the current health meter should show in red, yellow or green depending on health value
         int healthBoundary1 = attacker.getMaxHealth() / 2;
         int healthBoundary2 = attacker.getMaxHealth() / 4;
-
         if(attacker.getHealth() >= healthBoundary1){
             barRenderer.setColor(Color.GREEN);
         }else if(attacker.getHealth() >= healthBoundary2){
