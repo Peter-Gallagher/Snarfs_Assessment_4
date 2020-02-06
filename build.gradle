@@ -54,12 +54,16 @@ project(":core") {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        implementation 'org.mockito:mockito-core:3.2.4'
     }
+
+
 
 }
 
