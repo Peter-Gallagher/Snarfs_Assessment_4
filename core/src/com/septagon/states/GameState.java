@@ -195,10 +195,10 @@ public class GameState extends State
 
     private void initializePatrols() {
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(20, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u');
-        Patrol patrol2 = new Patrol(4, 1, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r');
-        Patrol patrol3 = new Patrol(4, 2, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd');
-        Patrol patrol4 = new Patrol(4, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l');
+        Patrol patrol1 = new Patrol(20, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', 1);
+        Patrol patrol2 = new Patrol(4, 1, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', 2);
+        Patrol patrol3 = new Patrol(4, 2, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', 3);
+        Patrol patrol4 = new Patrol(4, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l', 4);
 
         //Adds all the patrols to the ArrayList of patrols
         patrols = new ArrayList<Patrol>();
@@ -206,6 +206,7 @@ public class GameState extends State
         patrols.add(patrol2);
         patrols.add(patrol3);
         patrols.add(patrol4);
+
     }
 
 

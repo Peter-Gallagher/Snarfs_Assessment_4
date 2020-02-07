@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SEPR_ASS_3.iml" filepath="$PROJECT_DIR$/.idea/modules/SEPR_ASS_3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/SEPR_ASS_3.core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.test.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/SEPR_ASS_3.desktop.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/src/test/test.iml" filepath="$PROJECT_DIR$/core/src/test/test.iml" />
+    </modules>
+  </component>
+</project>
