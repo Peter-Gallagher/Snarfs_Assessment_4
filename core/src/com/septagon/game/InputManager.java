@@ -115,6 +115,12 @@ public class InputManager implements InputProcessor
         return true;
     }
 
+
+    public Tile miniGameClickInput(float x, float y){
+        //TODO make this p.s. why is this code so shit
+        return null;
+    }
+
     /**
      * Checks if the user has performed a drag action on the screen
      * @param screenX The x position of where the drag finished
@@ -236,7 +242,7 @@ public class InputManager implements InputProcessor
                         if(currentPausePosition == 1){
                             currentState.setPaused(false);
                         }else{
-                            stateManager.changeState(new MenuState(this, font, stateManager, camera));
+                            stateManager.changeState(new MinigameState(this, font, stateManager));
                         }
                     default:
                         break;

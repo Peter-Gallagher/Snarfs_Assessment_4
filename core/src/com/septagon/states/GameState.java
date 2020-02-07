@@ -29,8 +29,8 @@ public class GameState extends State
     // find where window size is stored and call from there
 
     // this is our "target" resolution, note that the window can be any size, it is not bound to this one
-    public final static float VP_WIDTH = 640;
-    public final static float VP_HEIGHT = 480;
+    public final static float VP_WIDTH = 1280;
+    public final static float VP_HEIGHT = 720;
 
     //Variable to keep track of whether it is the player or enemies turn
     private boolean playerTurn = true;
@@ -242,7 +242,7 @@ public class GameState extends State
     private void initializeGameMap(){
 
         //Creates the gameMap instance that will be used to load the map from the tmx file
-        gameMap = new TiledGameMap();
+        gameMap = new TiledGameMap("extendedMap.tmx");
 
         //Create objects referring to all tiles in game
         for(int row = 0; row < gameMap.getMapHeight(); row++)

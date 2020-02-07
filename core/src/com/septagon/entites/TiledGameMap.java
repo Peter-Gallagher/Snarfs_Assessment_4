@@ -22,9 +22,9 @@ public class TiledGameMap
 	/***
 	 * Constructor that initialises variables and uses libGDX to load the map of the game
 	 */
-	public TiledGameMap()
+	public TiledGameMap(String mapName)
 	{
-		tiledMap = new TmxMapLoader().load("extendedMap.tmx");
+		tiledMap = new TmxMapLoader().load(mapName);
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 	}
 

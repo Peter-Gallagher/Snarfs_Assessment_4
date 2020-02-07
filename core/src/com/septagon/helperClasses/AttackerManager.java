@@ -119,41 +119,54 @@ public class AttackerManager
     public Boolean touchedTile(float x, float y)
     {
         //Loops through all tiles to see if it has been pressed
+
+        currentlyTouchedTile = getTileClicked(x,y);
+
+        if (currentlyTouchedTile != null){
+            //updated the pointers to the current and previous tiles
+            previouslyTouchedTile = currentlyTouchedTile;
+            //if an engine has been previously pressed on, check on if a valid move has been pressed
+            //and if so perform that move
+            if (currentEngine != null) {
+                if (currentlyTouchedTile.isMovable() && !currentEngine.isMoved() && !currentEngine.isDead()) {
+                    currentlyTouchedTile.setOccupied(true);
+                    previouslyTouchedTile.setOccupied(false);
+                    gameState.getTileManager().updateTileInAdjacencyMatrix(previouslyTouchedTile.getIndex(), 1);
+                    currentEngine.setX(currentlyTouchedTile.getX());
+                    currentEngine.setY(currentlyTouchedTile.getY());
+                    currentEngine.setMoved(true);
+                }
+            }
+
+            //If not a moveable tile pressed, check if a fortress tile has been pressed
+            checkIfTouchingFortress(x, y);
+            for (Engine fireEngine: engines){
+                if (currentlyTouchedTile.getCol() == fireEngine.getCol() && currentlyTouchedTile.getRow() == fireEngine.getRow()) {
+                    currentEngine = fireEngine;
+                    gameState.getUiManager().setCurrentEngine(fireEngine);
+                    gameState.getTileManager().setMovableTiles(currentEngine);
+                    return true;
+                }
+        }
         for(Tile tile: tiles) {
             //When we have found the tile that has been pressed, perform neccessary processing
             if(tile.checkIfClickedInside(x, y)) {
-                //updated the pointers to the current and previous tiles
-                previouslyTouchedTile = currentlyTouchedTile;
-                currentlyTouchedTile = tile;
-                //if an engine has been previously pressed on, check on if a valid move has been pressed
-                //and if so perform that move
-                if (currentEngine != null) {
-                    if (currentlyTouchedTile.isMovable() && !currentEngine.isMoved() && !currentEngine.isDead()) {
-                        currentlyTouchedTile.setOccupied(true);
-                        previouslyTouchedTile.setOccupied(false);
-                        gameState.getTileManager().updateTileInAdjacencyMatrix(previouslyTouchedTile.getIndex(), 1);
-                        currentEngine.setX(currentlyTouchedTile.getX());
-                        currentEngine.setY(currentlyTouchedTile.getY());
-                        currentEngine.setMoved(true);
-                        break;
-                    }
-                }
 
-                //If not a moveable tile pressed, check if a fortress tile has been pressed
-                checkIfTouchingFortress(x, y);
-                for (Engine fireEngine: engines){
-                    if (tile.getCol() == fireEngine.getCol() && tile.getRow() == fireEngine.getRow()) {
-                        currentEngine = fireEngine;
-                        gameState.getUiManager().setCurrentEngine(fireEngine);
-                        gameState.getTileManager().setMovableTiles(currentEngine);
-                        return true;
-                    }
                 }
             }
         }
         return false;
     }
 
+
+    public Tile getTileClicked(float x, float y){
+        for(Tile tile: tiles) {
+            if(tile.checkIfClickedInside(x, y)){
+                return tile;
+            }
+        }
+        return null;
+    }
     /***
      * Method that is run for the phase of the game where damage events occur (damage, filling etc) turn
      */

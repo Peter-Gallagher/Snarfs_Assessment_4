@@ -43,7 +43,7 @@ public class TileManager {
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
         setEngineTilesOccupied();
-        
+
         boolean[][]  passableTiles = gameMap.getPassable();
 
         for (int i = 0; i < passableTiles.length - 1; i++){
