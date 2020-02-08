@@ -112,6 +112,24 @@ public class InputManager implements InputProcessor
             //Call gameOverState method that processes a mouse press
             currentState.checkIfButtonPressed(screenX, Gdx.graphics.getHeight() - screenY);
         }
+        else if(stateManager.getCurrentState().getID() == State.StateID.MINIGAME){
+            MinigameState currentState = (MinigameState) stateManager.getCurrentState();
+
+            //Get the positions of the input in terms of screen coords
+            xCoord = Gdx.input.getX();
+            yCoord = Gdx.input.getY();
+
+            //Convert input coords to screen coords
+            //xCoord = (xCoord * 0.3f) + (80)  - (Gdx.graphics.getWidth() / 2) * 0.3f;
+
+            xCoord = (xCoord - (Gdx.graphics.getWidth() / 2)) * 0.3f + 80;
+
+            //yCoord = (Gdx.graphics.getHeight() * 0.3f - yCoord * 0.3f) + (70) - (Gdx.graphics.getHeight() / 2) * 0.3f;
+
+            yCoord = (Gdx.graphics.getHeight() - yCoord - (Gdx.graphics.getHeight() / 2)) * 0.3f + 70;
+
+            currentState.handleInputForMinigame(xCoord,yCoord);
+        }
         return true;
     }
 

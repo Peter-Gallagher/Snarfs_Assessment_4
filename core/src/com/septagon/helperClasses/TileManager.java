@@ -20,6 +20,7 @@ public class TileManager {
 
 
 
+
     public TileManager(ArrayList<Engine> engines, ArrayList<Tile> tiles){
         this.engines = engines;
         this.tiles = tiles;
@@ -56,13 +57,15 @@ public class TileManager {
     //TODO there must be a better way to initialise the Fortresses than hard coding each
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
+        int width = gameMap.getMapWidth();
+        int height = gameMap.getMapHeight();
         setEngineTilesOccupied();
 
         boolean[][]  passableTiles = gameMap.getPassable();
 
         for (int i = 0; i < passableTiles.length - 1; i++){
             for (int j = 0; j < passableTiles[0].length - 1; j++){
-                Tile tile = getTileAtLocation(j, i);
+                Tile tile = getTileAtLocation(j, i, width, height);
                 tile.setOccupied(passableTiles[i][j]);
             }
         }
@@ -73,7 +76,7 @@ public class TileManager {
         {
             for (int y = 10; y < 15; y++)
             {
-                Tile t = getTileAtLocation(x, y);
+                Tile t = getTileAtLocation(x, y, width, height);
                 if (t != null)
                     t.setOccupied(true);
             }
@@ -84,7 +87,7 @@ public class TileManager {
         {
             for (int y = 41; y < 48; y++)
             {
-                Tile t = getTileAtLocation(x, y);
+                Tile t = getTileAtLocation(x, y, width, height);
                 if (t != null)
                     t.setOccupied(true);
             }
@@ -95,7 +98,7 @@ public class TileManager {
         {
             for (int y = 30; y < 34; y++)
             {
-                Tile t = getTileAtLocation(x, y);
+                Tile t = getTileAtLocation(x, y, width, height);
                 if (t != null)
                     t.setOccupied(true);
             }
@@ -106,7 +109,7 @@ public class TileManager {
         {
             for (int y = 6; y < 10; y++)
             {
-                Tile t = getTileAtLocation(x, y);
+                Tile t = getTileAtLocation(x, y, width, height);
                 if (t != null)
                     t.setOccupied(true);
             }
@@ -151,11 +154,11 @@ public class TileManager {
      * @param row The row of the tile you want to get
      * @return The tile at the location asked for
      */
-    public Tile getTileAtLocation(int col, int row)
+    public Tile getTileAtLocation(int col, int row, int width, int height)
     {
-        int tileIndex = col + (row * 80);
+        int tileIndex = col + (row * width);
 
-        if (tileIndex >= 0 && tileIndex < 4000){
+        if (tileIndex >= 0 && tileIndex < (width * height)){
             Tile tile = tiles.get(tileIndex);
             return  tile;
         }else{
@@ -176,7 +179,7 @@ public class TileManager {
         int startTileIndex = currentEngine.getCol() + (currentEngine.getRow() * 80);
 
         for (Integer index: BFS(adjacencyList, startTileIndex, currentEngine.getSpeed())) {
-            accessTile = this.getTileAtLocation(index % 80, index / 80);
+            accessTile = this.getTileAtLocation(index % 80, index / 80, 80, 50);
             accessTile.setMovable(true);
         }
     }
@@ -189,20 +192,20 @@ public class TileManager {
         for (int width = 0; width <= maxWidth; width++) {
             for (int height = 0; height <= maxHeight; height++) {
 
-                checkTile = this.getTileAtLocation(width, height);
+                checkTile = this.getTileAtLocation(width, height,maxWidth, maxHeight);
                 int tileIndex = width + (maxWidth * height);
 
                 if (checkTile != null){
-                    if(checkTileAdjacent(checkTile,-1,0)){
+                    if(checkTileAdjacent(checkTile,-1,0, maxWidth, maxHeight)){
                         adjacencyList[tileIndex][0] = 1;
                     }
-                    if(checkTileAdjacent(checkTile,1,0)){
+                    if(checkTileAdjacent(checkTile,1,0, maxWidth, maxHeight)){
                         adjacencyList[tileIndex][1] = 1;
                     }
-                    if(checkTileAdjacent(checkTile,0,-1)){
+                    if(checkTileAdjacent(checkTile,0,-1, maxWidth, maxHeight)){
                         adjacencyList[tileIndex][2] = 1;
                     }
-                    if(checkTileAdjacent(checkTile,0,1)){
+                    if(checkTileAdjacent(checkTile,0,1, maxWidth, maxHeight)){
                         adjacencyList[tileIndex][3] = 1;
                     }
                 }
@@ -279,15 +282,15 @@ public class TileManager {
     }
 
 
-    private boolean checkTileAdjacent(Tile centreTile, int xOffset, int yOffset){
+    private boolean checkTileAdjacent(Tile centreTile, int xOffset, int yOffset, int width, int height){
         int newX = centreTile.getCol() + xOffset;
         int newY = centreTile.getRow() + yOffset;
 
-        if (newX == 80 || newX < 0) {
+        if (newX == width || newX < 0 || newY == height || newY < 0) {
             return false;
         }
 
-        Tile checkTile = this.getTileAtLocation(newX, newY);
+        Tile checkTile = this.getTileAtLocation(newX, newY, width, height);
 
         if (checkTile != null){
             return !checkTile.isOccupied();

@@ -53,21 +53,27 @@ public class MinigameState extends State
         }
 
         tileManager = new TileManager(tiles);
+        createPipeAdjacencyList(pipeMap.getMapWidth(),pipeMap.getMapHeight());
 
-        tileManager.createAdjacencyList(pipeMap.getMapWidth(),pipeMap.getMapHeight());
-
-        //initializeCamera();
+        initializeCamera();
     }
 
     private void initializeCamera(){
         // Intialises the game viewport and spritebatch
-        viewport = new ExtendViewport(1280, 720, camera);
-        objectBatch = new SpriteBatch();
+        //viewport = new ExtendViewport(1280, 720, camera);
+        //objectBatch = new SpriteBatch();
         //objectBatch.setProjectionMatrix(camera.combined);
 
         //Sets up the camera parameters and moves it to its inital position
-        //camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.x = pipeMap.getMapWidth() * Tile.TILE_SIZE - Gdx.graphics.getWidth() / 2;
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+
+        camera = new OrthographicCamera(width, height);
+        camera.zoom = 0.3f;
+
+        //camera.setToOrtho(false, width, height);
+        camera.position.x = 80;
+        camera.position.y = 70;
         camera.update();
     }
 
@@ -81,7 +87,7 @@ public class MinigameState extends State
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //pipeMap.render(camera);
+        pipeMap.render(camera);
     }
 
     public void dispose(){
@@ -90,15 +96,70 @@ public class MinigameState extends State
 
     public void rotateTile(Tile tileToRotate){
 
-        pipeMap.getTileByCoordinate(0, tileToRotate.getCol(),tileToRotate.getRow());
+        //pipeMap.getTileByCoordinate(0, tileToRotate.getCol(),tileToRotate.getRow());
 
         TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
 
-        TiledMapTileLayer.Cell cell = pipeLayer.getCell(tileToRotate.getCol(),tileToRotate.getCol());
-        cell.setRotation(cell.getRotation() + 1);
+        TiledMapTileLayer.Cell cell = pipeLayer.getCell(tileToRotate.getCol(),tileToRotate.getRow());
+        int newRotation = (cell.getRotation() + 1) % 4;
+        cell.setRotation(newRotation);
+
+        String[] adjDir = ((String) cell.getTile().getProperties().get("AdjacentDirections")).split(",");
+        int[] adjacencyDirections = new int[adjDir.length];
+        for (int i = 0; i < adjDir.length; i++){
+            adjacencyDirections[i] = Integer.parseInt(adjDir[i]);
+        }
+
+        int tileIndex = tileToRotate.getCol() + (pipeLayer.getWidth() * tileToRotate.getRow());
+        updateAdjacencyMatrix(tileIndex, adjacencyDirections);
 
     }
 
+
+    public void createPipeAdjacencyList(int maxWidth, int maxHeight){
+
+        Tile checkTile;
+        TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
+        adjacencyList = new int[maxWidth * maxHeight][4];
+
+        for (int width = 0; width < maxWidth; width++) {
+            for (int height = 0; height < maxHeight; height++) {
+                TiledMapTileLayer.Cell cell = pipeLayer.getCell(width, height);
+                String[] adjDir = ((String) cell.getTile().getProperties().get("AdjacentDirections")).split(",");
+
+                int[] adjacencyDirections = new int[adjDir.length];
+                for (int i = 0; i < adjDir.length; i++){
+                    adjacencyDirections[i] = Integer.parseInt(adjDir[i]);
+                }
+
+                int sourceIndex = width + (maxWidth * height);
+                for (int adjacencyDirection : adjacencyDirections) {
+                    int targetIndex = sourceIndex + getOffset(adjacencyDirection);
+                    if (targetIndex > 0 && targetIndex < (maxWidth * maxHeight)){
+                        adjacencyList[sourceIndex][getRelativePosition(sourceIndex,targetIndex)] = 1;
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    private int getRelativePosition(int sourceIndex, int targetIndex){
+        int indexDifference = sourceIndex - targetIndex;
+        switch (indexDifference){
+            case 1:
+                return 0;
+            case - 1:
+                return 1;
+            case 5:
+                return 2;
+            case - 5:
+                return 3;
+            default:
+                return 0;
+        }
+    }
 
     public void updateAdjacencyMatrix(int sourceIndex, int[] pipeEndPositions){
         int oppositePipePosition;
@@ -110,13 +171,13 @@ public class MinigameState extends State
         targetIndex = sourceIndex + getOffset(pipeEndPositions[i]);
         oppositePipePosition = (pipeEndPositions[i] + 2) % 4;
         adjacencyList[sourceIndex][pipeEndPositions[i]] = 0;
-        adjacencyList[targetIndex][oppositePipePosition] = 0;
+        //adjacencyList[targetIndex][oppositePipePosition] = 0;
 
         newPipeEndPosition = (pipeEndPositions[i]+ 1) % 4;
         newTargetIndex = sourceIndex + getOffset(newPipeEndPosition);
         oppositePipePosition = (newPipeEndPosition + 2) % 4;
         adjacencyList[sourceIndex][pipeEndPositions[i]] = 1;
-        adjacencyList[newTargetIndex][oppositePipePosition] = 1;
+        //adjacencyList[newTargetIndex][oppositePipePosition] = 1;
         }
 
     }
@@ -129,9 +190,9 @@ public class MinigameState extends State
             case 1:
                 return 1;
             case 2:
-                return - 6;
+                return - 5;
             case 3:
-                return 6;
+                return 5;
             case 4:
                 return -1;
             default:
@@ -140,18 +201,28 @@ public class MinigameState extends State
     }
 
 
-    public void handleInputForMinigame() {
-        float xCoord = Gdx.input.getX();
-        float yCoord = Gdx.input.getY();
+    public void handleInputForMinigame(float xCoord, float yCoord) {
+        Tile tileClicked = getTileClicked(xCoord,yCoord);
+        System.out.println(xCoord);
+        System.out.println(yCoord);
 
-        //Convert input coords to screen coords
-        xCoord = xCoord + camera.position.x - (Gdx.graphics.getWidth() / 2);
-        yCoord = (Gdx.graphics.getHeight() - yCoord) + camera.position.y - (Gdx.graphics.getHeight() / 2);
-
+        if (tileClicked != null){
+            System.out.println("IT WORKED");
+            rotateTile(tileClicked);
+        }
 
         GameState state = (GameState)stateManager.getState(StateID.GAME);
         Tile tile = state.getAttackerManager().getTileClicked(xCoord, yCoord);
     }
 
     private void returnToMainGame() {}
+
+    public Tile getTileClicked(float x, float y){
+        for(Tile tile: tiles) {
+            if(tile.checkIfClickedInside(x, y)){
+                return tile;
+            }
+        }
+        return null;
+    }
 }
