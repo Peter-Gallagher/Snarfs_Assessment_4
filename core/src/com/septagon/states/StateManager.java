@@ -70,4 +70,13 @@ public class StateManager
     public int getCurrentIndex() { return currentIndex; }
     public State getCurrentState() { return states.get(currentIndex); }
     public ArrayList<State> getStates() { return states; }
+
+    public State getState(State.StateID stateType) {
+        for (State state: states) {
+            if (state.getID() == stateType){
+                return state;
+            }
+        }
+        return null;
+    }
 }

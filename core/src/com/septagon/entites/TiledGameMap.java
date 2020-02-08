@@ -106,15 +106,19 @@ public class TiledGameMap
 
 	public boolean[][] getPassable(){
 		boolean passableTiles[][] = new boolean[this.getMapHeight()][this.getMapWidth()];
+		TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
 
 		for (int i = 0; i < this.getMapWidth(); i++){
 			for(int j = 0; j < this.getMapHeight(); j++){
-				TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
 				passableTiles[j][i] = (passableLayer.getCell(i,j) != null);
 			}
 		}
 
 		return passableTiles;
+	}
+
+	public TiledMapTileLayer getTileLayer(int layerIndex){
+		return  (TiledMapTileLayer) tiledMap.getLayers().get(layerIndex);
 	}
 
 }

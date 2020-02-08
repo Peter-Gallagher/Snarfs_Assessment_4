@@ -121,6 +121,8 @@ public class InputManager implements InputProcessor
         return null;
     }
 
+
+
     /**
      * Checks if the user has performed a drag action on the screen
      * @param screenX The x position of where the drag finished

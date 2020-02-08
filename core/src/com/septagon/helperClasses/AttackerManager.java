@@ -131,7 +131,7 @@ public class AttackerManager
                 if (currentlyTouchedTile.isMovable() && !currentEngine.isMoved() && !currentEngine.isDead()) {
                     currentlyTouchedTile.setOccupied(true);
                     previouslyTouchedTile.setOccupied(false);
-                    gameState.getTileManager().updateTileInAdjacencyMatrix(previouslyTouchedTile.getIndex(), 1);
+                    gameState.getTileManager().updateTileInAdjacencyList(previouslyTouchedTile.getIndex(), 1);
                     currentEngine.setX(currentlyTouchedTile.getX());
                     currentEngine.setY(currentlyTouchedTile.getY());
                     currentEngine.setMoved(true);

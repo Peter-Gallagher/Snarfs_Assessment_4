@@ -26,6 +26,20 @@ public class TileManager {
         adjacencyList = new int[tiles.size()][4];
     }
 
+    public TileManager(ArrayList<Tile> tiles){
+        this.tiles = tiles;
+        adjacencyList = new int[tiles.size()][4];
+    }
+
+    public Tile getTileClicked(float x, float y){
+        for(Tile tile: tiles) {
+            if(tile.checkIfClickedInside(x, y)){
+                return tile;
+            }
+        }
+        return null;
+    }
+
     /***
      * Clear all the current moveable tiles
      */
@@ -114,7 +128,7 @@ public class TileManager {
                 {
                     tile.setOccupied(true);
                     tileIndex = tile.getIndex();
-                    updateTileInAdjacencyMatrix(tileIndex, 0);
+                    updateTileInAdjacencyList(tileIndex, 0);
 
                     break;
                 }
@@ -123,7 +137,7 @@ public class TileManager {
     }
 
 
-    public void updateTileInAdjacencyMatrix(int tileIndex, int access){
+    public void updateTileInAdjacencyList(int tileIndex, int access){
         adjacencyList[tileIndex - 1][1] = access;
         adjacencyList[tileIndex + 1][0] = access;
         adjacencyList[tileIndex - 80][3] = access;
