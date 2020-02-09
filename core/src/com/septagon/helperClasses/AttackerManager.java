@@ -184,7 +184,7 @@ public class AttackerManager
             if (fortress.isDead()){
                 fortresses.remove(fortress);
             }
-            engines.get(i).ifInRangeFill(gameState.getStation());
+            //engines.get(i).ifInRangeFill(gameState.getStation());
         }
     }
 

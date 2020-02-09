@@ -262,7 +262,7 @@ public class InputManager implements InputProcessor
                         if(currentPausePosition == 1){
                             currentState.setPaused(false);
                         }else{
-                            stateManager.changeState(new MinigameState(this, font, stateManager));
+                            stateManager.changeState(new MenuState(this, font, stateManager, camera));
                         }
                     default:
                         break;

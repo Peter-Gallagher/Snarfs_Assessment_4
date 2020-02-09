@@ -35,7 +35,7 @@ public class Engine extends Vehicle
      * Checks if the engine is in range to fill and calls the fill method if it is
      * @param station The Fire Station
      */
-    public void ifInRangeFill(Station station){
+    public boolean ifInRangeFill(Station station){
         //TODO: make a circle
 
         System.out.println("Checking if should fill");
@@ -43,10 +43,15 @@ public class Engine extends Vehicle
         int stationRow = station.getRow();
 
         if(this.col <= xRange && this.col > station.getCol() && this.row >= stationRow-5 && this.row <= stationRow-1){
-            System.out.println("filling");
-            this.volume = this.maxVolume;
-            this.health = this.maxHealth;
+            if(this.volume < this.maxVolume || this.health < this.maxHealth){
+                System.out.println("filling");
+                this.volume = this.maxVolume;
+                this.health = this.maxHealth;
+                return true;
+            }
         }
+
+        return false;
     }
 
     /**
