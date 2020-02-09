@@ -58,6 +58,12 @@ public class GameState extends State
     //Loads textures and creates objects for the patrols
     private ArrayList<Patrol> patrols;
 
+    //preset paths for the patrols
+    //TODO create preset paths
+    private ArrayList<Tile> path1 = new ArrayList<>();
+    private ArrayList<Tile> path2 = new ArrayList<>();
+    private ArrayList<Tile> path3 = new ArrayList<>();
+
     //Loads textures and creates an object for the fire station
     private Station fireStation;
 
@@ -195,10 +201,9 @@ public class GameState extends State
 
     private void initializePatrols() {
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', 1);
-        Patrol patrol2 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', 2);
-        Patrol patrol3 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', 3);
-        Patrol patrol4 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l', 4);
+        Patrol patrol1 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', path1);
+        Patrol patrol2 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', path2);
+        Patrol patrol3 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', path3);
 
         //initialize patrols along preset paths
         //TODO initialize with paths when implemented
@@ -211,16 +216,11 @@ public class GameState extends State
         patrol1.setCol(3);
         patrol1.setRow(3);
 
-        patrol1.setCol(4);
-        patrol1.setRow(4);
-
-
         //Adds all the patrols to the ArrayList of patrols
         patrols = new ArrayList<Patrol>();
         patrols.add(patrol1);
         patrols.add(patrol2);
         patrols.add(patrol3);
-        patrols.add(patrol4);
 
     }
 

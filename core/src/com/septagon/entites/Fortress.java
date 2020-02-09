@@ -52,17 +52,17 @@ public class Fortress extends Attacker
         int xDisplacement = Math.min(Math.abs(this.getCol() - engineCol), Math.abs((this.getCol() + (this.width / 32)) - engineCol));
         int yDisplacement = Math.min(Math.abs(this.getRow() - engineRow), Math.abs((this.getRow() + (this.height / 32)) - engineRow));
 
+        int engineX = fireEngine.getX();
+        int engineY = fireEngine.getY();
+
+        int centreX = this.x + (this.width/2);
+        int centreY = this.y + (this.height/2);;
+
         //define the number of projectiles are drawn when an entity is shot
         int numBullets = 25;
 
         if(Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range){
             fireEngine.takeDamage(this.damage);
-
-            int engineX = fireEngine.getX();
-            int engineY = fireEngine.getY();
-
-            int centreX = this.x + (this.width/2);
-            int centreY = this.y + (this.height/2);;
 
             for (int i = 0; i< numBullets; i++){
                 GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  engineX + 10, engineY, false));
