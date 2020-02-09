@@ -11,10 +11,10 @@ import com.septagon.states.GameState;
 public class Engine extends Vehicle
 {
     //Member variables that will be unique stats of each engine
-    private int volume;
-    private int maxVolume;
-    private int fillSpeed;
-    private Integer id;
+    protected int volume;
+    protected int maxVolume;
+    protected int fillSpeed;
+    protected Integer id;
 
     //Keeps track of whether the engine has moved on the current player turn
     private boolean moved = false;
@@ -75,6 +75,8 @@ public class Engine extends Vehicle
         return (Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range);
     }
 
+
+    //TODO num bullets want to be a local?
     /***
      * Method that will check if the Attacker is in range of the fortress and if so will damage it
      * @param fortress The fortress we are currently checking the bounds/range of

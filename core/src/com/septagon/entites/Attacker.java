@@ -17,6 +17,8 @@ public abstract class Attacker extends Entity
     protected int maxHealth;
     protected int damage;
     protected int range;
+    protected ArrayList<Integer> rangeCorners;
+
 
     /***
      * Constructor that sets up values based on inputs (also refers to Entity constructor)
@@ -34,9 +36,10 @@ public abstract class Attacker extends Entity
         this.maxHealth = health;
         this.damage = damage;
         this.range = range;
+        this.rangeCorners = new ArrayList<Integer>();
     }
 
-    protected ArrayList<Integer> rangeCorners = new ArrayList<Integer>();
+
 
     @Override
     public void initialise() {

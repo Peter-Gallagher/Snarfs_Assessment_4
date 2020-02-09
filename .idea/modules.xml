@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SEPR_ASS_3.iml" filepath="$PROJECT_DIR$/.idea/modules/SEPR_ASS_3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/src/test/test.iml" filepath="$PROJECT_DIR$/core/src/test/test.iml" />
     </modules>
   </component>

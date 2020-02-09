@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 
+import java.util.ArrayList;
+
 import  static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -24,8 +26,8 @@ class AttackerTest {
 
     @BeforeEach //A set up function for the tests`
     public void beforeMethod() {
-        //mockedAttacker = new ConcreteAttacker(1, 1, 32, 32, null, 10, 2, 4);
-        mockedAttacker = mock(Attacker.class);
+        mockedAttacker = new ConcreteAttacker(1, 1, 32, 32, null, 10, 2, 4);
+        //mockedAttacker = mock(Attacker.class);
     }
 
     @Test //A test for the Attacker class initialisation
@@ -99,6 +101,20 @@ class AttackerTest {
     @Test //A test for the Attacker class' getMaxHealth method
     public void testGetMaxHealth() throws Exception {
         assertEquals(mockedAttacker.getMaxHealth(), 10);
+    }
+
+    @Test //A test for the setRangeCorners method
+    public void testSetRangeCorners() throws Exception {
+        mockedAttacker.setRangeCorners();
+        ArrayList<Integer> testCorners = mockedAttacker.getRangeCorners();
+        assertEquals(testCorners.get(0), -3);
+        assertEquals(testCorners.get(1), 6);
+        assertEquals(testCorners.get(2), -3);
+        assertEquals(testCorners.get(3), 6);
+
+
+
+
     }
 
 }
