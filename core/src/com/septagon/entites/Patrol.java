@@ -3,11 +3,19 @@ package com.septagon.entites;
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
 
+import java.util.ArrayList;
+
 //TODO Add patrol, extend from vehicle?
 public class Patrol extends Vehicle  {
 
     //Variable to keep track of the patrol's route
     private char direction;
+
+    //preset paths for the patrols
+    private ArrayList<Tile> path1;
+    private ArrayList<Tile> path2;
+    private ArrayList<Tile> path3;
+
 
     //Variable to help keep track of each patrol
     private Integer id;

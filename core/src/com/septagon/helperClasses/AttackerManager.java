@@ -17,15 +17,17 @@ public class AttackerManager
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private ArrayList<Fortress> fortresses;
+    private ArrayList<Patrol> patrols;
     private GameState gameState;
 
     private Tile currentlyTouchedTile = null;
     private Tile previouslyTouchedTile = null;
     private Engine currentEngine = null;
 
-    public AttackerManager(ArrayList<Engine> engines, ArrayList<Tile> tiles, ArrayList<Fortress> fortresses, GameState gameState){
+    public AttackerManager(ArrayList<Engine> engines, ArrayList<Tile> tiles, ArrayList<Patrol> patrols, ArrayList<Fortress> fortresses, GameState gameState){
         this.engines = engines;
         this.tiles = tiles;
+        this.patrols = patrols;
         this.fortresses = fortresses;
         this.gameState = gameState;
     }
@@ -170,6 +172,7 @@ public class AttackerManager
     /***
      * Method that is run for the phase of the game where damage events occur (damage, filling etc) turn
      */
+    //TODO include patrols in battleturn
     public void BattleTurn(Fortress fortress){
         //Set the moved variable to false for each engine and then check if damages can occur
         gameState.getTileManager().resetMovableTiles();
