@@ -78,7 +78,7 @@ public class MinigameState extends State
 
     public void render(SpriteBatch batch)
     {
-
+        //TODO: add image background
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
