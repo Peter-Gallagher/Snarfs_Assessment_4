@@ -178,7 +178,7 @@ public class TileManager {
 
         int startTileIndex = currentEngine.getCol() + (currentEngine.getRow() * 80);
 
-        for (Integer index: BFS(adjacencyList, startTileIndex, currentEngine.getSpeed())) {
+        for (Integer index: BFS(adjacencyList, startTileIndex, 80, currentEngine.getSpeed())) {
             accessTile = this.getTileAtLocation(index % 80, index / 80, 80, 50);
             accessTile.setMovable(true);
         }
@@ -214,7 +214,7 @@ public class TileManager {
 
     }
 
-    public ArrayList<Integer> BFS(int[][] tileAdjacencyList,int startTileIndex,int maxDepth) {
+    public ArrayList<Integer> BFS(int[][] tileAdjacencyList, int startTileIndex, int width, int maxDepth) {
 
         int numNodes = tileAdjacencyList.length;
         int depth = 0;
@@ -239,7 +239,7 @@ public class TileManager {
                 depth++;
                 queue.offer(null);
                 qVal = queue.poll();
-                if(depth > maxDepth){
+                if(depth > maxDepth || qVal == null){
                     break;
                 }
             }
@@ -254,10 +254,12 @@ public class TileManager {
             //TODO: can probably be done better
             for (int i = 0; i < 4; i++) {
                 if (tileAdjacencyList[currentTileIndex][i] == 1) {
-                    newIndex = getNewIndex(currentTileIndex, i);
-                    if (!visited[newIndex]) {
-                        queue.offer(newIndex);
-                        visitedTilesIndex.add(newIndex);
+                    newIndex = getNewIndex(currentTileIndex, i, width);
+                    if (newIndex < visited.length && newIndex > 0){
+                        if (!visited[newIndex]) {
+                            queue.offer(newIndex);
+                            visitedTilesIndex.add(newIndex);
+                        }
                     }
                 }
             }
@@ -266,16 +268,16 @@ public class TileManager {
         return visitedTilesIndex;
     }
 
-    private int getNewIndex(int currentIndex, int i){
+    private int getNewIndex(int currentIndex, int i, int width){
         switch(i){
             case 0:
                 return currentIndex - 1;
             case 1:
                 return currentIndex + 1;
             case 2:
-                return currentIndex - 80;
+                return currentIndex - width;
             case 3:
-                return currentIndex + 80;
+                return currentIndex + width;
             default:
                 return 0;
         }

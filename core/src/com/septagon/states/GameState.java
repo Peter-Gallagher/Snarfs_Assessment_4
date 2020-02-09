@@ -146,7 +146,7 @@ public class GameState extends State
 
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 20, 100, 4, 01);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 50, 100, 4, 01);
         Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 8, 20, 100, 4, 02);
         Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 8, 20, 100, 4, 03);
         Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 8, 20, 100, 4, 04);
@@ -411,6 +411,7 @@ public class GameState extends State
 
 
     private void postAlienTurn(){
+        boolean playMiniGame = false;
         currentFortressIndex = 0;
         turnsPassed++;
 
@@ -431,7 +432,13 @@ public class GameState extends State
 
         for(Engine fireEngine: engines){
             fireEngine.setMoved(false);
-            fireEngine.ifInRangeFill(fireStation);
+            if (fireEngine.ifInRangeFill(fireStation)){
+                playMiniGame = true;
+            }
+        }
+
+        if (playMiniGame){
+            stateManager.changeState(new MinigameState(inputManager, font, stateManager));
         }
         playerTurn = true;
     }

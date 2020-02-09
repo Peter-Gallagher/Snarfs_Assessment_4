@@ -66,17 +66,21 @@ public class StateManager
     	currentIndex = states.indexOf(newState);
     }
 
+    public void changeToGameState(){
+        currentIndex = getState(State.StateID.GAME);
+    }
+
     //Getters
     public int getCurrentIndex() { return currentIndex; }
     public State getCurrentState() { return states.get(currentIndex); }
     public ArrayList<State> getStates() { return states; }
 
-    public State getState(State.StateID stateType) {
-        for (State state: states) {
-            if (state.getID() == stateType){
-                return state;
+    public int getState(State.StateID stateType) {
+        for (int i = 0; i < states.size(); i++){
+            if (states.get(i).getID() == stateType){
+                return i;
             }
         }
-        return null;
+        return 0;
     }
 }
