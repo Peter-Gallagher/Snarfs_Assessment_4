@@ -141,7 +141,7 @@ public class GameState extends State
         statusBarGenerator = new StatusBarGenerator(engines, fortresses);
 
         //Initialise the AttackerManager
-        attackerManager = new AttackerManager(engines, tiles, fortresses, this);
+        attackerManager = new AttackerManager(engines, tiles, patrols, fortresses, this);
     }
 
     private void initializeFireEngines(){
@@ -195,10 +195,25 @@ public class GameState extends State
 
     private void initializePatrols() {
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(20, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', 1);
-        Patrol patrol2 = new Patrol(4, 1, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', 2);
-        Patrol patrol3 = new Patrol(4, 2, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', 3);
-        Patrol patrol4 = new Patrol(4, 3, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l', 4);
+        Patrol patrol1 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', 1);
+        Patrol patrol2 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', 2);
+        Patrol patrol3 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', 3);
+        Patrol patrol4 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'l', 4);
+
+        //initialize patrols along preset paths
+        //TODO initialize with paths when implemented
+        patrol1.setCol(1);
+        patrol1.setRow(1);
+
+        patrol1.setCol(2);
+        patrol1.setRow(2);
+
+        patrol1.setCol(3);
+        patrol1.setRow(3);
+
+        patrol1.setCol(4);
+        patrol1.setRow(4);
+
 
         //Adds all the patrols to the ArrayList of patrols
         patrols = new ArrayList<Patrol>();
