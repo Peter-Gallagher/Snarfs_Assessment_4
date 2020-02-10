@@ -126,7 +126,6 @@ public class AttackerManager
 
         if (currentlyTouchedTile != null){
             //updated the pointers to the current and previous tiles
-            previouslyTouchedTile = currentlyTouchedTile;
             //if an engine has been previously pressed on, check on if a valid move has been pressed
             //and if so perform that move
             if (currentEngine != null) {
@@ -139,6 +138,7 @@ public class AttackerManager
                     currentEngine.setMoved(true);
                 }
             }
+            previouslyTouchedTile = currentlyTouchedTile;
 
             //If not a moveable tile pressed, check if a fortress tile has been pressed
             checkIfTouchingFortress(x, y);
