@@ -237,6 +237,10 @@ public class GameState extends State
         {
             entityManager.addEntity(engine);
         }
+        for(Patrol patrol: patrols)
+        {
+            entityManager.addEntity(patrol);
+        }
 
         entityManager.initialise();
     }
