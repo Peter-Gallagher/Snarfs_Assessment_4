@@ -13,6 +13,9 @@ public class Patrol extends Vehicle  {
     //path owned by any one patrol
     private ArrayList<Tile> path;
 
+    //keep track of where we are on the patrol
+    private Tile currentTile;
+
     public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, char direction, ArrayList<Tile> path){
         super(col, row, texture, health, damage, range, speed);
         this.path = path;
@@ -40,7 +43,7 @@ public class Patrol extends Vehicle  {
         int centreY = this.y + (this.height/2);
 
         //Actual functionality
-        if(inRange(Engine fireEngine)){
+        if(inRange(fireEngine)){
             fireEngine.takeDamage(this.damage);
 
             for (int i = 0; i< numBullets; i++){
@@ -51,6 +54,11 @@ public class Patrol extends Vehicle  {
 
     //TODO implement movement mechanism
     private void move(){
+        //Gives the tile the patrol is currently at
+        int progress = this.path.indexOf(currentTile);
+        //Moves the patrol unit speed amount of tiles along its preset patrol path
+        this.x = this.path.get(progress + speed).getX();
+        this.y = this.path.get(progress + speed).getY();
         }
     }
 
