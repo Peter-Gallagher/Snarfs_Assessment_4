@@ -3,6 +3,7 @@ package com.septagon.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -25,8 +26,10 @@ public class MinigameState extends State
     private int[][] adjacencyList;
     int[] terminalTileIndex = new int[2];
     private TiledGameMap pipeMap;
+    private TiledGameMap backGround;
     private ArrayList<Tile> tiles = new ArrayList<Tile>();
     private OrthographicCamera camera;
+    private OrthographicCamera cameraBackground;
     private Integer[][] pipeAdjacencyDirections;
     private TileManager tileManager;
 
@@ -38,7 +41,8 @@ public class MinigameState extends State
 
     public void initialise()
     {
-        pipeMap = new TiledGameMap("pipeShite.tmx");
+        pipeMap = new TiledGameMap("MiniGame2.tmx");
+        backGround = new TiledGameMap("MinigameBackground.tmx");
 
         for(int row = 0; row < pipeMap.getMapHeight(); row++)
         {
@@ -69,6 +73,13 @@ public class MinigameState extends State
         camera.position.x = 80;
         camera.position.y = 70;
         camera.update();
+
+        cameraBackground = new OrthographicCamera(width, height);
+        cameraBackground.zoom = 0.29f;
+
+        cameraBackground.position.x = 192;
+        cameraBackground.position.y = 115;
+        cameraBackground.update();
     }
 
 
@@ -78,16 +89,20 @@ public class MinigameState extends State
 
     public void render(SpriteBatch batch)
     {
-        //TODO: add image background
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //final Texture tex = new Texture(Gdx.files.internal("images/fuck.png"));
+        //batch.draw(tex, -0, -0, 0, 0, 1280, 720);
+
+        backGround.render(cameraBackground);
         pipeMap.render(camera);
     }
 
     public void dispose(){
 
     }
+
 
     public void rotateTile(Tile tileToRotate){
         TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
@@ -339,9 +354,11 @@ public class MinigameState extends State
         return connectionExists;
     }
 
+
     private void returnToMainGame() {
         stateManager.changeToGameState();
     }
+
 
     public Tile getTileClicked(float x, float y){
         for(Tile tile: tiles) {
