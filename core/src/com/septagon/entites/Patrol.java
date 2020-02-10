@@ -54,9 +54,10 @@ public class Patrol extends Vehicle  {
 
     //TODO implement movement mechanism
     private void move(){
-        //Gives the tile the patrol is currently at
+        //Gives the index of the tile the patrol is currently at
         int progress = this.path.indexOf(currentTile);
         //Moves the patrol unit speed amount of tiles along its preset patrol path
+        //TODO change so it loops around rather than just go over bounds
         this.x = this.path.get(progress + speed).getX();
         this.y = this.path.get(progress + speed).getY();
         }
