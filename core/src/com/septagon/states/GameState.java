@@ -326,6 +326,7 @@ public class GameState extends State
         }else if(!paused)
         {
             enemyTurnUpdate();
+            patrolTurnUpdate();
         }
     }
 
@@ -426,6 +427,10 @@ public class GameState extends State
                 counter = 0;
             }
         }
+    }
+
+    //TODO create turn update loop for patrol. i.e. if a fireEngine is in range shoot it, else move.
+    public void patrolTurnUpdate(){
     }
 
 
