@@ -449,15 +449,18 @@ public class GameState extends State
         attackerManager.snapToAttacker(engines.get(0), gameMap, camera);
         tileManager.resetMovableTiles();
 
-        for(Engine fireEngine: engines){
-            fireEngine.setMoved(false);
-            if (fireEngine.ifInRangeFill(fireStation)){
-                playMiniGame = true;
+        if (!fireStation.isDead()){
+            for(Engine fireEngine: engines){
+                fireEngine.setMoved(false);
+                if (fireEngine.ifInRangeFill(fireStation)){
+                    playMiniGame = true;
+                }
             }
-        }
 
-        if (playMiniGame){
-            stateManager.changeState(new MinigameState(inputManager, font, stateManager));
+            if (playMiniGame){
+                stateManager.changeState(new MinigameState(inputManager, font, stateManager));
+            }
+
         }
         playerTurn = true;
     }
