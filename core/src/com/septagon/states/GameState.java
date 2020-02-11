@@ -58,11 +58,6 @@ public class GameState extends State
     //Loads textures and creates objects for the patrols
     private ArrayList<Patrol> patrols;
 
-    //preset paths for the patrols
-    //TODO create preset paths
-    private ArrayList<Tile> path1 = new ArrayList<>();
-    private ArrayList<Tile> path2 = new ArrayList<>();
-    private ArrayList<Tile> path3 = new ArrayList<>();
 
     //Loads textures and creates an object for the fire station
     private Station fireStation;
@@ -128,18 +123,20 @@ public class GameState extends State
         //TODO fortresses need unique stats and textures
         initializeFortresses();
 
-        initializePatrols();
 
         fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture());
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
 
-        initializeEntityManager();
 
         initializeUIManager();
 
         initializeGameMap();
+
+        initializePatrols();
+
+        initializeEntityManager();
 
         initializeCamera();
 
@@ -202,10 +199,32 @@ public class GameState extends State
     }
 
     private void initializePatrols() {
+        //preset paths for the patrols
+        //TODO create preset paths
+        Tile tile1 = new Tile(8,40, null, false);
+        Tile tile2 = new Tile(72,14, null, false);
+        Tile tile3 = new Tile(53,18, null, false);
+        Tile tile4 = new Tile(19,33, null, false);
+        Tile tile5 = new Tile(22,20, null, false);
+        Tile tile6 = new Tile(35,10, null, false);
+
+        ArrayList<Tile> path1 = new ArrayList<>();
+        ArrayList<Tile> path2 = new ArrayList<>();
+        ArrayList<Tile> path3 = new ArrayList<>();
+
+        path1.add(tile1);
+        path1.add(tile2);
+
+        path2.add(tile3);
+        path2.add(tile4);
+
+        path3.add(tile5);
+        path3.add(tile6);
+
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'u', path1);
-        Patrol patrol2 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'r', path2);
-        Patrol patrol3 = new Patrol(0, 0, AssetManager.getEngineTexture1(), 100, 50, 10, 5, 'd', path3);
+        Patrol patrol1 = new Patrol(20, 20, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path1, tileManager);
+        Patrol patrol2 = new Patrol(21, 21, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path2, tileManager);
+        Patrol patrol3 = new Patrol(22, 22, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path3, tileManager);
 
         //initialize patrols along preset paths
         //TODO initialize with paths when implemented
@@ -470,6 +489,10 @@ public class GameState extends State
             }
 
         playerTurn = true;
+
+        for (Patrol patrol : patrols) {
+            patrol.move();
+        }
     }
 
 

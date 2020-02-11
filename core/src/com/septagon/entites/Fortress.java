@@ -80,10 +80,14 @@ public class Fortress extends Attacker
         //If the fortress is pressed, show its boundary image
         if(selected && !dead)
         {
-            int imgX = (col - this.getRange()) * Tile.TILE_SIZE;
-            int imgY = (row - this.getRange()) * Tile.TILE_SIZE;
-            int imgWidth = ( ((int)width / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
-            int imgHeight = ( ((int)height / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
+            //int imgX = (col - this.getRange()) * Tile.TILE_SIZE;
+            //int imgY = (row - this.getRange()) * Tile.TILE_SIZE;
+            //int imgWidth = ( ((int)width / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
+            //int imgHeight = ( ((int)height / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
+            int imgX = (col ) * Tile.TILE_SIZE;
+            int imgY = (row ) * Tile.TILE_SIZE;
+            int imgWidth = ( ((int)width / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
+            int imgHeight = ( ((int)height / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
 
             batch.draw(AssetManager.getFortressBoundaryImage(), imgX, imgY, imgWidth, imgHeight);
         }else if(dead){

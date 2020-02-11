@@ -9,17 +9,16 @@ import java.util.ArrayList;
 public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol
-    private Tile currentTile;
-    private int tileIndex;
-    private int[][] adjacencyList;
+    private int pathIndex;
+    private ArrayList<Tile> path;
 
     private TileManager tileManager;
 
-    ArrayList<Integer> moves = new ArrayList<Integer>();
-
-    public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, char direction, ArrayList<Tile> path,TileManager tileManager){
+    public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);
         this.tileManager = tileManager;
+        this.path = path;
+        pathIndex = 0;
     }
 
 
@@ -69,26 +68,67 @@ public class Patrol extends Vehicle  {
     }
 
     //Function that returns a list of distances of possible moves from the target node
-    private ArrayList<Integer> distanceToTarget(Patrol patrol, Tile targetNode) {
-        ArrayList<Integer> listOfDistances = new ArrayList<Integer>();
+    private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
+        ArrayList<Float> listOfDistances = new ArrayList<Float>();
 
-        for (int i = 0; i <= moves.size(); i++) {
+        int targetX = targetNode.getCol();
+        int targetY = targetNode.getRow();
 
-            int targetCol = tileManager.getTileFromIndex(moves.get(i)).getCol();
-            int targetRow = tileManager.getTileFromIndex(moves.get(i)).getRow();
 
-            int xDistance = Math.abs(targetCol - targetNode.getCol());
-            int yDistance = Math.abs(targetRow - targetNode.getRow());
-            int absDistance = (int) Math.round(Math.sqrt((xDistance * xDistance) + (yDistance * yDistance)));
+        for (Integer move : moves) {
+            int consideredX = tileManager.getTileFromIndex(move).getCol();
+            int consideredY = tileManager.getTileFromIndex(move).getRow();
+
+            int xDistance = Math.abs(consideredX - targetX);
+            int yDistance = Math.abs(consideredY - targetY);
+            float absDistance = (float) (Math.sqrt((xDistance * xDistance) + (yDistance * yDistance)));
 
             listOfDistances.add(absDistance);
         }
+
         return listOfDistances;
     }
 
+    private int getTileClosestToGoal(ArrayList<Integer> moves){
+        ArrayList<Float> distances = getDistanceToTarget(path.get(pathIndex), moves);
+        int shortestDistanceIndex = 0;
+
+        for (int i = 0; i < distances.size(); i++){
+            if (distances.get(i) < distances.get(shortestDistanceIndex)){
+                shortestDistanceIndex = i;
+            }
+        }
+
+        return shortestDistanceIndex;
+    }
+
     //TODO implement movement mechanism
-    private void move(Patrol patrol){
-        moves = tileManager.BFS(adjacencyList, tileIndex, 5, 20);
+    public void move(){
+        ArrayList<Integer> moves = new ArrayList<Integer>();
+        int currentTileIndex = this.col + (this.row * 80);
+        int tileMoveToIndex;
+        Tile tileToMoveTo;
+
+        moves = functionForLucas();
+        tileMoveToIndex = getTileClosestToGoal(moves);
+        tileToMoveTo = tileManager.getTileFromIndex(tileMoveToIndex);
+
+        tileManager.getTileAtLocation(this.col, this.row,80,50).setOccupied(false);
+        tileManager.updateTileInAdjacencyList(currentTileIndex,1);
+        this.col = tileToMoveTo.getCol();
+        this.row = tileToMoveTo.getRow();
+        tileToMoveTo.setOccupied(true);
+        tileManager.updateTileInAdjacencyList(tileMoveToIndex,0);
+
+        System.out.println("Moving to X:" + col + " Y:" + row);
+
+        updatePathIndex(path.get(pathIndex));
+        }
+
+        private void updatePathIndex(Tile currentGoal){
+            if (this.col == currentGoal.getCol() && this.row == currentGoal.getRow()){
+                pathIndex = (pathIndex + 1) % path.size();
+            }
         }
     }
 
