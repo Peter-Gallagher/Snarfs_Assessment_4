@@ -70,7 +70,6 @@ public class Patrol extends Vehicle  {
     //Function that returns a list of distances of possible moves from the target node
     private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
         ArrayList<Float> listOfDistances = new ArrayList<Float>();
-
         int targetX = targetNode.getCol();
         int targetY = targetNode.getRow();
 
@@ -106,19 +105,19 @@ public class Patrol extends Vehicle  {
     public void move(){
         ArrayList<Integer> moves = new ArrayList<Integer>();
         int currentTileIndex = this.col + (this.row * 80);
-        int tileMoveToIndex;
+        int moveIndex;
         Tile tileToMoveTo;
 
         moves = functionForLucas();
-        tileMoveToIndex = getTileClosestToGoal(moves);
-        tileToMoveTo = tileManager.getTileFromIndex(tileMoveToIndex);
+        moveIndex = getTileClosestToGoal(moves);
+        tileToMoveTo = tileManager.getTileFromIndex(moves.get(moveIndex));
 
         tileManager.getTileAtLocation(this.col, this.row,80,50).setOccupied(false);
         tileManager.updateTileInAdjacencyList(currentTileIndex,1);
         this.col = tileToMoveTo.getCol();
         this.row = tileToMoveTo.getRow();
         tileToMoveTo.setOccupied(true);
-        tileManager.updateTileInAdjacencyList(tileMoveToIndex,0);
+        tileManager.updateTileInAdjacencyList(moves.get(moveIndex),0);
 
         System.out.println("Moving to X:" + col + " Y:" + row);
 
