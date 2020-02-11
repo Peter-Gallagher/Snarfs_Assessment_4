@@ -312,5 +312,6 @@ public class TileManager {
         if (tileIndex >= 0 && tileIndex < tiles.size()){
             return tiles.get(tileIndex);
         }
+        return null;
     }
 }
