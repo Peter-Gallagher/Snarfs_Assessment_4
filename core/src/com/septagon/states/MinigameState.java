@@ -302,10 +302,14 @@ public class MinigameState extends State
 
     public void handleInputForMinigame(float xCoord, float yCoord) {
         Tile tileClicked = getTileClicked(xCoord,yCoord);
-
+        boolean isNonTerminal = false;
         TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
-        TiledMapTileLayer.Cell cell = pipeLayer.getCell(tileClicked.getCol(), tileClicked.getRow());
-        boolean isNonTerminal = !(boolean) cell.getTile().getProperties().get("Terminal");
+        try{
+            TiledMapTileLayer.Cell cell = pipeLayer.getCell(tileClicked.getCol(), tileClicked.getRow());
+            isNonTerminal = !(boolean) cell.getTile().getProperties().get("Terminal");
+        }catch(Exception e){
+
+        }
 
         if (tileClicked != null && isNonTerminal){
             rotateTile(tileClicked);
