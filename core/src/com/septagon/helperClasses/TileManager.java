@@ -314,4 +314,8 @@ public class TileManager {
         }
         return null;
     }
+
+    public int[][] getAdjacencyList(){
+        return adjacencyList;
+    }
 }

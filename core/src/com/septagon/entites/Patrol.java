@@ -22,6 +22,21 @@ public class Patrol extends Vehicle  {
         this.tileManager = tileManager;
     }
 
+
+
+    //this will return the index of all tiles within range that the patrol can move to.
+    public ArrayList<Integer> functionForLucas(){
+        int startIndex = this.col + (this.row * 80);
+        ArrayList<Integer> BFSReturnedValues;
+        BFSReturnedValues = tileManager.BFS(tileManager.getAdjacencyList(), startIndex,80, this.speed);
+        return  BFSReturnedValues;
+    }
+
+
+
+
+
+
     //Checks whether a fireEngine is within its range. Return true if it is, return false if it isnt
     private boolean inRange(Engine fireEngine) {
         int engineCol = fireEngine.getCol();
