@@ -1,6 +1,7 @@
 package com.septagon.helperClasses;
 
 import com.septagon.entites.Engine;
+import com.septagon.entites.Patrol;
 import com.septagon.entites.Tile;
 import com.septagon.entites.TiledGameMap;
 
@@ -302,4 +303,9 @@ public class TileManager {
         return false;
     }
 
+    public Tile getTileFromIndex(int tileIndex){
+        if (tileIndex >= 0 && tileIndex < tiles.size()){
+            return tiles.get(tileIndex);
+        }
+    }
 }

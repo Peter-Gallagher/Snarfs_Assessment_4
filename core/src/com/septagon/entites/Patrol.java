@@ -1,24 +1,25 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
 
 import java.util.ArrayList;
 
 public class Patrol extends Vehicle  {
 
-    //Variable to keep track of the patrol's route
-    private char direction;
-
-    //path owned by any one patrol
-    private ArrayList<Tile> path;
-
     //keep track of where we are on the patrol
     private Tile currentTile;
+    private int tileIndex;
+    private int[][] adjacencyList;
 
-    public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, char direction, ArrayList<Tile> path){
+    private TileManager tileManager;
+
+    ArrayList<Integer> moves = new ArrayList<Integer>();
+
+    public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, char direction, ArrayList<Tile> path,TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);
-        this.path = path;
+        this.tileManager = tileManager;
     }
 
     //Checks whether a fireEngine is within its range. Return true if it is, return false if it isnt
@@ -52,14 +53,27 @@ public class Patrol extends Vehicle  {
         }
     }
 
+    //Function that returns a list of distances of possible moves from the target node
+    private ArrayList<Integer> distanceToTarget(Patrol patrol, Tile targetNode) {
+        ArrayList<Integer> listOfDistances = new ArrayList<Integer>();
+
+        for (int i = 0; i <= moves.size(); i++) {
+
+            int targetCol = tileManager.getTileFromIndex(moves.get(i)).getCol();
+            int targetRow = tileManager.getTileFromIndex(moves.get(i)).getRow();
+
+            int xDistance = Math.abs(targetCol - targetNode.getCol());
+            int yDistance = Math.abs(targetRow - targetNode.getRow());
+            int absDistance = (int) Math.round(Math.sqrt((xDistance * xDistance) + (yDistance * yDistance)));
+
+            listOfDistances.add(absDistance);
+        }
+        return listOfDistances;
+    }
+
     //TODO implement movement mechanism
-    private void move(){
-        //Gives the index of the tile the patrol is currently at
-        int progress = this.path.indexOf(currentTile);
-        //Moves the patrol unit speed amount of tiles along its preset patrol path
-        //TODO change so it loops around rather than just go over bounds
-        this.x = this.path.get(progress + speed).getX();
-        this.y = this.path.get(progress + speed).getY();
+    private void move(Patrol patrol){
+        moves = tileManager.BFS(adjacencyList, tileIndex, 5, 20);
         }
     }
 
