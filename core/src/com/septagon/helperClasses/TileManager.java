@@ -142,11 +142,16 @@ public class TileManager {
 
 
     public void updateTileInAdjacencyList(int tileIndex, int access){
-        adjacencyList[tileIndex - 1][1] = access;
-        adjacencyList[tileIndex + 1][0] = access;
-        adjacencyList[tileIndex - 80][3] = access;
-        adjacencyList[tileIndex + 80][2] = access;
-    }
+            try {
+            adjacencyList[tileIndex - 1][1] = access;
+            adjacencyList[tileIndex + 1][0] = access;
+            adjacencyList[tileIndex + 80][2] = access;
+            adjacencyList[tileIndex - 80][3] = access;
+        } catch (Exception e){
+            System.out.println("asdasdasdasd");
+        }
+
+        }
 
 
     /***

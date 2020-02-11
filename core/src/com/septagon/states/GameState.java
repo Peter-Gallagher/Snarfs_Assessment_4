@@ -161,6 +161,7 @@ public class GameState extends State
         engine1.setCol(77);
         engine1.setRow(5);
 
+
         engine2.setCol(75);
         engine2.setRow(4);
 
@@ -176,6 +177,7 @@ public class GameState extends State
         engines.add(engine2);
         engines.add(engine3);
         engines.add(engine4);
+
 
     }
 
@@ -454,11 +456,12 @@ public class GameState extends State
         attackerManager.snapToAttacker(engines.get(0), gameMap, camera);
         tileManager.resetMovableTiles();
 
-        if (!fireStation.isDead()){
             for(Engine fireEngine: engines){
                 fireEngine.setMoved(false);
-                if (fireEngine.ifInRangeFill(fireStation)){
-                    playMiniGame = true;
+                if (!fireStation.isDead()){
+                    if (fireEngine.ifInRangeFill(fireStation)){
+                        playMiniGame = true;
+                    }
                 }
             }
 
@@ -466,7 +469,6 @@ public class GameState extends State
                 stateManager.changeState(new MinigameState(inputManager, font, stateManager));
             }
 
-        }
         playerTurn = true;
     }
 
