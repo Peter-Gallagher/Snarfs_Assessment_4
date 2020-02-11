@@ -14,6 +14,38 @@ import java.util.ArrayList;
 
 public class AttackerManager
 {
+    public ArrayList<Engine> getEngines() {
+        return engines;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public ArrayList<Fortress> getFortresses() {
+        return fortresses;
+    }
+
+    public ArrayList<Patrol> getPatrols() {
+        return patrols;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public Tile getCurrentlyTouchedTile() {
+        return currentlyTouchedTile;
+    }
+
+    public Tile getPreviouslyTouchedTile() {
+        return previouslyTouchedTile;
+    }
+
+    public Engine getCurrentEngine() {
+        return currentEngine;
+    }
+
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private ArrayList<Fortress> fortresses;
@@ -103,7 +135,6 @@ public class AttackerManager
      * Method that works out is all the engines have been destroyed by the fortresses
      * @return Returns true if all engines are destroyed, false otherwise
      */
-    //TODO do this for loop inside BattleTurn()
     public boolean checkIfAllEnginesDead(){
         for(Engine fireEngine: engines){
             //again?

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Fortress extends Attacker
 {
     //Stores if an engine is currently active/pressed on
-    private boolean selected = false;
+    protected boolean selected = false;
     private Texture defeatedTexture;
 
     /***
