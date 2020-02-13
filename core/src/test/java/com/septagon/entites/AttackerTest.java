@@ -1,7 +1,5 @@
 package com.septagon.entites;
 
-import com.badlogic.gdx.graphics.Texture;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -55,9 +53,34 @@ class AttackerTest {
         assertEquals(mockedAttacker.height, 32);
         assertNull(mockedAttacker.texture);
         assertEquals(mockedAttacker.health, 10);
+        assertEquals(mockedAttacker.health, 10);
         assertEquals(mockedAttacker.damage, 2);
         assertEquals(mockedAttacker.range, 4);
     }
+
+    @Test //test for update
+    public void testUpdate(){
+        Mockito.doCallRealMethod().when(mockedAttacker).update();
+
+        mockedAttacker.health = -1;
+        mockedAttacker.update();
+        assertEquals(0, mockedAttacker.health);
+
+        mockedAttacker.health = 5;
+        mockedAttacker.update();
+        assertEquals(5, mockedAttacker.health);
+
+
+    }
+
+    @Test //test for initialise
+    public void testInitialise(){
+        Mockito.doCallRealMethod().when(mockedAttacker).initialise();
+        mockedAttacker.initialise();
+
+    }
+
+
 
     @Test //A test for the Attacker class' damageFortressIfInRange method
     public void testCheckForOverlap() throws Exception {
@@ -84,8 +107,15 @@ class AttackerTest {
     @Test //A test for the Attacker class' takeDamage method
     public void testTakeDamage() throws Exception {
         Mockito.doCallRealMethod().when(mockedAttacker).takeDamage(6);
+        Mockito.doCallRealMethod().when(mockedAttacker).takeDamage(4);
+        Mockito.doCallRealMethod().when(mockedAttacker).setDead();
         mockedAttacker.takeDamage(6);
         assertEquals(mockedAttacker.health, 4);
+
+        mockedAttacker.takeDamage(4);
+        assertEquals( 0 , mockedAttacker.health);
+
+
     }
 
     @Test //A test for the Attacker class' getDamage method
@@ -127,6 +157,14 @@ class AttackerTest {
         Mockito.doCallRealMethod().when(mockedAttacker).setMaxHealth(15);
         mockedAttacker.setMaxHealth(15);
         assertEquals(mockedAttacker.maxHealth, 15);
+    }
+
+    @Test //A test for the Attacker class' setHealth method
+    public void testSetHealth() throws Exception {
+
+        Mockito.doCallRealMethod().when(mockedAttacker).setHealth(20);
+        mockedAttacker.setHealth(20);
+        assertEquals(mockedAttacker.health, 20);
     }
 
     @Test //A test for the Attacker class' getMaxHealth method

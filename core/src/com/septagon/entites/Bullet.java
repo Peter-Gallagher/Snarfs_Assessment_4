@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Bullet {
 
-    private double ySPEED = 500, xSPEED = 500;
+    protected double ySPEED = 500, xSPEED = 500;
     public Texture texture;
-    private double deltaY, deltaX;
+    protected double deltaY, deltaX;
     float x, y, targetX, targetY;
     public boolean remove = false;
 

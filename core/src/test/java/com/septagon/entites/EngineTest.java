@@ -2,6 +2,7 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
+import jdk.internal.vm.compiler.collections.EconomicMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -71,7 +72,7 @@ class EngineTest {
     @Test //A test for the Engine class' ifInRangeFill method
     public void testIfInRangeFill() throws Exception {
 
-        Station testS = new Station(2, 2, 256, 128, null);
+        Station testS = new Station(0, 2, 256, 128, null);
 
 
         Mockito.doCallRealMethod().when(testE).setVolume(10);
@@ -80,10 +81,13 @@ class EngineTest {
         Mockito.doCallRealMethod().when(testE).ifInRangeFill(testS);
 
 
+
+
+
         testE.setVolume(10);
         testE.setRangeCorners();
-        testE.ifInRangeFill(testS);
-        assertEquals(testE.getVolume(), 10);
+        assertTrue(testE.ifInRangeFill(testS));
+        assertEquals(testE.getVolume(), 20);
     }
 
     @Test //A test for the Engine class' getMaxVolume method
@@ -177,12 +181,19 @@ class EngineTest {
         Mockito.doCallRealMethod().when(testE).checkInRange(fortress);
 
         try {
+            testE.DamageFortressIfInRange(null);
+        } catch (Exception e) {
+
+
+        }
+
+        try {
             testE.DamageFortressIfInRange(fortress);
         } catch (NullPointerException e) {
             System.out.println(e);
         }
 
-        assertEquals(80, fortress.health);
+        assertEquals(98, fortress.health);
 
 
     }

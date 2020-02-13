@@ -87,6 +87,19 @@ class EntityTest {
         assertEquals(testEN.getHeight(), 64);
     }
 
+    @Test //A test for the Entity class' isDead method
+    public void testIsDead() throws Exception {
+        Mockito.doCallRealMethod().when(testEN).isDead();
+        assertFalse(testEN.isDead());
+    }
+
+    @Test //A test for the Entity class' setDead method
+    public void testSetDead() throws Exception {
+        Mockito.doCallRealMethod().when(testEN).setDead();
+        testEN.setDead();
+        assertTrue(testEN.dead);
+    }
+
     @Test //A test for the Entity class' getTexture method
     public void testGetTexture() throws Exception {
         Mockito.doCallRealMethod().when(testEN).getTexture();
@@ -137,4 +150,17 @@ class EntityTest {
         testEN.setTexture(null);
         assertEquals(testEN.texture, null);
     }
+
+    @Test //test for render if applicable
+    public void testRender() {
+        Mockito.doNothing().when(testEN).render(null);
+        Mockito.doNothing().when(testEN).initialise();
+        Mockito.doNothing().when(testEN).update();
+        testEN.initialise();
+        testEN.update();
+        testEN.render(null);
+
+
+    }
+
 }
