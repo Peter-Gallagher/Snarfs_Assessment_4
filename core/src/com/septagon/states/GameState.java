@@ -457,8 +457,6 @@ public class GameState extends State
             for (Engine engine : engines) {
                 if (patrol.inRange(engine)) {
                     engine.takeDamage(patrol.getDamage());
-                    if (engine.isDead()){
-                        attackerManager.engines.remove(engine);
                 } else {
                     patrol.move();
                 }
