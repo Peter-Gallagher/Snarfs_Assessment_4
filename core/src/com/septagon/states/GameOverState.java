@@ -70,13 +70,13 @@ public class GameOverState extends State
         gameOverX = (int)((Gdx.graphics.getWidth() / 2) - gameOverLabel.width / 2);
         gameOverY = (int)((Gdx.graphics.getHeight() / 2) + gameOverLabel.height + 100);
         extraInfoX = (int)((Gdx.graphics.getWidth() / 2) - extraInfoLabel.width / 2);
-        extraInfoY = (int)((Gdx.graphics.getHeight() / 2) + 70);
+        extraInfoY = (Gdx.graphics.getHeight() / 2) + 70;
         playAgainX = (int)((Gdx.graphics.getWidth() / 2) - playAgainLabel.width / 2);
-        playAgainY = (int)((Gdx.graphics.getHeight() / 2) + 20);
+        playAgainY = (Gdx.graphics.getHeight() / 2) + 20;
         yesX = (int)((Gdx.graphics.getWidth() / 2) - yesLabel.width / 2);
-        yesY = (int)((Gdx.graphics.getHeight() / 2) - 60);
+        yesY = (Gdx.graphics.getHeight() / 2) - 60;
         noX = (int)((Gdx.graphics.getWidth() / 2) - noLabel.width / 2);
-        noY = (int)((Gdx.graphics.getHeight() / 2) - 110);
+        noY = (Gdx.graphics.getHeight() / 2) - 110;
 
         setupRectangles();
     }
@@ -149,9 +149,9 @@ public class GameOverState extends State
      */
     private void setupRectangles(){
         yesX = (int)((Gdx.graphics.getWidth() / 2) - yesLabel.width / 2);
-        yesY = (int)((Gdx.graphics.getHeight() / 2) - 60);
+        yesY = (Gdx.graphics.getHeight() / 2) - 60;
         noX = (int)((Gdx.graphics.getWidth() / 2) - noLabel.width / 2);
-        noY = (int)((Gdx.graphics.getHeight() / 2) - 110);
+        noY = (Gdx.graphics.getHeight() / 2) - 110;
 
         yesBox = new Rectangle();
         noBox = new Rectangle();

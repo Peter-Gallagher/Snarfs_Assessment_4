@@ -326,11 +326,7 @@ public class MinigameState extends State
         ArrayList<Integer> arr;
         arr = tileManager.BFS(adjacencyList, terminalTileIndex[0],5, 50);
 
-        if (arr.contains(terminalTileIndex[1])){
-            return true;
-        }
-
-        return false;
+        return arr.contains(terminalTileIndex[1]);
     }
 
 

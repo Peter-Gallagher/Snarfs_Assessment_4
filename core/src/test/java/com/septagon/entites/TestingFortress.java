@@ -57,7 +57,7 @@ public class TestingFortress extends Attacker
         if(selected)
         {
             batch.draw(boundaryImage, (col - this.getRange()) * Tile.TILE_SIZE, (row - this.getRange()) * Tile.TILE_SIZE,
-                    (((int)width / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE, (((int)height / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE);
+                    ((width / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE, ((height / Tile.TILE_SIZE) + range * 2) * Tile.TILE_SIZE);
         }
         super.render(batch);
     }

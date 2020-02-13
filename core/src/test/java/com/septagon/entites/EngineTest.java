@@ -170,7 +170,7 @@ class EngineTest {
 
 
         GameState gs = mock(GameState.class);
-        gs.bullets = new ArrayList<Bullet>();
+        GameState.bullets = new ArrayList<Bullet>();
 
         Fortress fortress = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
         Mockito.doCallRealMethod().when(testE).DamageFortressIfInRange(fortress);

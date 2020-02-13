@@ -9,8 +9,7 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -101,22 +100,26 @@ public class TileManagerTest {
     @Test //test for getTileAtLocation
     public void testGetTileAtLocation() {
 
+
+
         Tile testTile1 = mock(Tile.class);
+        for(int i=0 ; i<10; i++) {
+            testTM.getTiles().add(testTile1);
+        }
 
-        //tile params
-        testTile1.col = 1;
-        testTile1.row = 1;
-        testTile1.width = 32;
-        testTile1.height = 32;
+        assertEquals(testTile1, testTM.getTileAtLocation(1,1,5,2));
+        assertEquals(testTile1, testTM.getTileAtLocation(4,1,5,2));
+        assertEquals(null, testTM.getTileAtLocation(20,20,1,1));
 
-        testTM.getTiles().add(testTile1);
+    }
 
 
+    @Test //test for bfs
+    public void testBFS() {
 
 
 
     }
-
 
 
 

@@ -36,12 +36,7 @@ public class Tile extends Entity
      */
     public boolean checkIfClickedInside(float x, float y)
     {
-        if(x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height)
-        {
-            return true;
-        }
-
-        return false;
+        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
 
     }
 

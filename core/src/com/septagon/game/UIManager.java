@@ -282,13 +282,13 @@ public class UIManager
         pauseRectY = Gdx.graphics.getHeight() / 2 - pauseRectHeight / 2;
 
         pauseTextX = (int)(Gdx.graphics.getWidth() / 2 - pauseText.width / 2);
-        pauseTextY = (int)(pauseRectY + pauseRectHeight - 25);
+        pauseTextY = pauseRectY + pauseRectHeight - 25;
 
         resumeTextX = (int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2);
-        resumeTextY = (int)(pauseRectY + pauseRectHeight - 75);
+        resumeTextY = pauseRectY + pauseRectHeight - 75;
 
         exitTextX = (int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2);
-        exitTextY = (int)(pauseRectY + pauseRectHeight - 125);
+        exitTextY = pauseRectY + pauseRectHeight - 125;
     }
 
     //Called by InputManager when the use presses the showStats button
