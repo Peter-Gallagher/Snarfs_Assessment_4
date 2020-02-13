@@ -32,10 +32,6 @@ public class Patrol extends Vehicle  {
     }
 
 
-
-
-
-
     //Checks whether a fireEngine is within its range. Return true if it is, return false if it isnt
     private boolean inRange(Engine fireEngine) {
         int engineCol = fireEngine.getCol();
