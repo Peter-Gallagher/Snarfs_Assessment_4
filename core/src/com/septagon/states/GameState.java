@@ -187,8 +187,8 @@ public class GameState extends State
         Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
         Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
         Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress1 = new Fortress(9, 42, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress2 = new Fortress(1, 4, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress1 = new Fortress(9, 42, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress newFortress2 = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
         Fortress newFortress3 = new Fortress(9, 21, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
 
         //Adds all the fortresses to the ArrayList of fortresses
@@ -225,9 +225,9 @@ public class GameState extends State
         path3.add(tile6);
 
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(20, 20, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path1, tileManager);
-        Patrol patrol2 = new Patrol(21, 21, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path2, tileManager);
-        Patrol patrol3 = new Patrol(22, 22, AssetManager.getEngineTexture1(), 100, 50, 10, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(20, 20, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path1, tileManager);
+        Patrol patrol2 = new Patrol(21, 21, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path2, tileManager);
+        Patrol patrol3 = new Patrol(22, 22, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path3, tileManager);
 
         //initialize patrols along preset paths
         //TODO initialize with paths when implemented
