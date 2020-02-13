@@ -21,7 +21,7 @@ public class Tile extends Entity
     /***
      *Constructor that sets up initial values for all member variables
      */
-    public Tile(int col, int row, Texture texture,  Boolean occupied)
+    public Tile(int col, int row, Texture texture, Boolean occupied)
     {
         super(col,row,Tile.TILE_SIZE,Tile.TILE_SIZE,texture);
         this.occupied = occupied;

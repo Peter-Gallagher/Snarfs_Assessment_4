@@ -87,6 +87,9 @@ public class GameState extends State
     private int counter = 0;
     private boolean hasChangedFortress = false;
 
+    //Keep track of which patrol to move
+    private int currentPatrolIndex = 0;
+
     //Adds a slight delay between switching turns so that it doesn't just happen straight away
     private int changeTurnCounter = 0;
     private boolean changingTurn = false;
@@ -451,7 +454,15 @@ public class GameState extends State
     //TODO create turn update loop for patrol. i.e. if a fireEngine is in range shoot it, else move.
     public void patrolTurnUpdate(){
         for (Patrol patrol : patrols) {
-            patrol.move();
+            for (Engine engine : engines) {
+                if (patrol.inRange(engine)) {
+                    engine.takeDamage(patrol.getDamage());
+                    if (engine.isDead()){
+                        attackerManager.engines.remove(engine);
+                } else {
+                    patrol.move();
+                }
+            }
         }
     }
 
