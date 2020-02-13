@@ -33,7 +33,7 @@ public class Patrol extends Vehicle  {
 
 
     //Checks whether a fireEngine is within its range. Return true if it is, return false if it isnt
-    private boolean inRange(Engine fireEngine) {
+    public boolean inRange(Engine fireEngine) {
         int engineCol = fireEngine.getCol();
         int engineRow = fireEngine.getRow();
 
@@ -112,6 +112,8 @@ public class Patrol extends Vehicle  {
         tileManager.updateTileInAdjacencyList(currentTileIndex,1);
         this.col = tileToMoveTo.getCol();
         this.row = tileToMoveTo.getRow();
+        this.x = tileToMoveTo.getX();
+        this.y = tileToMoveTo.getY();
         tileToMoveTo.setOccupied(true);
         tileManager.updateTileInAdjacencyList(moves.get(moveIndex),0);
 

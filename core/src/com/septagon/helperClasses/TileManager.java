@@ -15,6 +15,10 @@ import java.util.Queue;
 
 public class TileManager {
 
+    public void setAdjacencyList(int[][] adjacencyList) {
+        this.adjacencyList = adjacencyList;
+    }
+
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private int[][] adjacencyList;
@@ -40,6 +44,14 @@ public class TileManager {
             }
         }
         return null;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(ArrayList<Tile> tiles) {
+        this.tiles = tiles;
     }
 
     /***
@@ -148,7 +160,7 @@ public class TileManager {
             adjacencyList[tileIndex + 80][2] = access;
             adjacencyList[tileIndex - 80][3] = access;
         } catch (Exception e){
-            System.out.println("asdasdasdasd");
+
         }
 
         }
@@ -218,6 +230,10 @@ public class TileManager {
             }
         }
 
+    }
+
+    public ArrayList<Engine> getEngines() {
+        return engines;
     }
 
     public ArrayList<Integer> BFS(int[][] tileAdjacencyList, int startTileIndex, int width, int maxDepth) {

@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.septagon.entites.Tile;
 import com.septagon.states.*;
-import sun.net.ftp.FtpDirEntry;
-
 
 /**
 Class used to handle all inputs from the user

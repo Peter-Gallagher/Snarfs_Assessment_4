@@ -21,12 +21,15 @@ public class AssetManager {
     private static final Texture fortressMinisterTexture = new Texture(Gdx.files.internal("images/FortressMinister.png"));
     private static final Texture fortressStationTexture = new Texture(Gdx.files.internal("images/FortressStation.png"));
     private static final Texture fortressPlaceHolderTexture = new Texture(Gdx.files.internal("images/FortressPlaceHolder.png"));
+    private static final Texture fortressSalvoTexture = new Texture(Gdx.files.internal("images/salvo.png"));
+    private static final Texture fortressCliffordsTowerTexture = new Texture(Gdx.files.internal("images/cliffordsTower.png"));
 
     private static final Texture defeatedFireTexture = new Texture(Gdx.files.internal("images/DefeatedOldStation.png"));
     private static final Texture defeatedMinsterTexture = new Texture(Gdx.files.internal("images/DefeatedMinster.png"));
     private static final Texture defeatedStationTexture = new Texture(Gdx.files.internal("images/DefeatedRailStation.png"));
 
     private static final Texture fireStationTexture = new Texture(Gdx.files.internal("images/fireStation.png"));
+    private static final Texture creepyPatrol = new Texture(Gdx.files.internal("images/creepyPatrol.png"));
 
     private static final Texture fortressBoundaryImage = new Texture(Gdx.files.internal("selected fortress.png"));
 
@@ -82,4 +85,10 @@ public class AssetManager {
     public static Texture getfortressPlaceHolderTexture() {
         return fortressPlaceHolderTexture;
     }
+
+    public static Texture getfortressSalvoTexture() { return fortressSalvoTexture; }
+
+    public static Texture getfortressCliffordsTowerTexture() { return fortressCliffordsTowerTexture; }
+
+    public static Texture getCreepyPatrol() { return creepyPatrol; }
 }

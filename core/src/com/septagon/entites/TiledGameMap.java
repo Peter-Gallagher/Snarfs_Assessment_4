@@ -50,11 +50,8 @@ public class TiledGameMap
 		Cell cell = ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(col, row);
 		int cellTileID = cell.getTile().getId();
 
-		if(cellTileID >= 400 && cellTileID <= 550){
-			return true;
-		}
-		return false;
-	}
+        return cellTileID >= 400 && cellTileID <= 550;
+    }
 
 	/***
 	 * Disposes of all objects once the game is finished
@@ -105,7 +102,7 @@ public class TiledGameMap
 	}
 
 	public boolean[][] getPassable(){
-		boolean passableTiles[][] = new boolean[this.getMapHeight()][this.getMapWidth()];
+		boolean[][] passableTiles = new boolean[this.getMapHeight()][this.getMapWidth()];
 		TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
 
 		for (int i = 0; i < this.getMapWidth(); i++){

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Fortress extends Attacker
 {
     //Stores if an engine is currently active/pressed on
-    private boolean selected = false;
+    protected boolean selected = false;
     private Texture defeatedTexture;
 
     /***
@@ -56,7 +56,7 @@ public class Fortress extends Attacker
         int engineY = fireEngine.getY();
 
         int centreX = this.x + (this.width/2);
-        int centreY = this.y + (this.height/2);;
+        int centreY = this.y + (this.height/2);
 
         //define the number of projectiles are drawn when an entity is shot
         int numBullets = 25;
@@ -86,8 +86,8 @@ public class Fortress extends Attacker
             //int imgHeight = ( ((int)height / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
             int imgX = (col ) * Tile.TILE_SIZE;
             int imgY = (row ) * Tile.TILE_SIZE;
-            int imgWidth = ( ((int)width / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
-            int imgHeight = ( ((int)height / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
+            int imgWidth = ( (width / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
+            int imgHeight = ( (height / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;
 
             batch.draw(AssetManager.getFortressBoundaryImage(), imgX, imgY, imgWidth, imgHeight);
         }else if(dead){

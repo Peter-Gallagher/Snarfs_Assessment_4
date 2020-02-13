@@ -37,8 +37,7 @@ public class EntityManager
      */
     public void removeEntity(Entity entityToRemove)
     {
-        if(entities.contains(entityToRemove))
-            entities.remove(entityToRemove);
+        entities.remove(entityToRemove);
     }
 
     /***

@@ -14,14 +14,14 @@ public class Tile extends Entity
     public static final int TILE_SIZE = 32;
 
     //Variable to keep track of if there is currently an object on the tile or not
-    private boolean occupied;
+    protected boolean occupied;
     //Variable to see if the tile can be moved to by one of the engines
-    private boolean movable = false;
+    protected boolean movable = false;
 
     /***
      *Constructor that sets up initial values for all member variables
      */
-    public Tile(int col, int row, Texture texture,  Boolean occupied)
+    public Tile(int col, int row, Texture texture, Boolean occupied)
     {
         super(col,row,Tile.TILE_SIZE,Tile.TILE_SIZE,texture);
         this.occupied = occupied;
@@ -36,12 +36,7 @@ public class Tile extends Entity
      */
     public boolean checkIfClickedInside(float x, float y)
     {
-        if(x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height)
-        {
-            return true;
-        }
-
-        return false;
+        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
 
     }
 
