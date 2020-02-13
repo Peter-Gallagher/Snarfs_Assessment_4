@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 
 import java.util.ArrayList;
@@ -26,8 +27,20 @@ class AttackerTest {
 
     @BeforeEach //A set up function for the tests`
     public void beforeMethod() {
-        mockedAttacker = new ConcreteAttacker(1, 1, 32, 32, null, 10, 2, 4);
-        //mockedAttacker = mock(Attacker.class);
+        //mockedAttacker = new ConcreteAttacker(1, 1, 32, 32, null, 10, 2, 4);
+        mockedAttacker = mock(Attacker.class);
+
+        mockedAttacker.col = 1;
+        mockedAttacker.row = 1;
+        mockedAttacker.x = 32;
+        mockedAttacker.y = 32;
+        mockedAttacker.width = 32;
+        mockedAttacker.height = 32;
+        mockedAttacker.texture = null;
+        mockedAttacker.health = 10;
+        mockedAttacker.damage = 2;
+        mockedAttacker.range = 4;
+
     }
 
     @Test //A test for the Attacker class initialisation
@@ -46,11 +59,18 @@ class AttackerTest {
 
     @Test //A test for the Attacker class' damageFortressIfInRange method
     public void testCheckForOverlap() throws Exception {
+
+        Mockito.doCallRealMethod().when(mockedAttacker).setRangeCorners();
+
+
         //Texture testTexture = new Texture(Gdx.files.internal("images/engine1.png"));
         //Texture testTexture2 = new Texture(Gdx.files.internal("images/FortressMinister.png"));
         Fortress testF1 = new Fortress(2, 2, 256, 256, null, null,100, 20, 3);
         Fortress testF2 = new Fortress(10, 10, 256, 256, null, null, 100, 20, 3);
         mockedAttacker.setRangeCorners();
+
+
+
     }
 
     @Test //A test for the Attacker class' getHealth method

@@ -452,22 +452,23 @@ public class GameState extends State
     }
 
     //TODO create turn update loop for patrol. i.e. if a fireEngine is in range shoot it, else move.
-    public void patrolTurnUpdate(){
+    public void patrolTurnUpdate() {
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
                 if (patrol.inRange(engine)) {
                     engine.takeDamage(patrol.getDamage());
-                    if (engine.isDead()){
-                        attackerManager.engines.remove(engine);
-                } else {
-                    patrol.move();
+                    if (engine.isDead()) {
+                        attackerManager.getEngines().remove(engine);
+                    } else {
+                        patrol.move();
+                    }
                 }
             }
         }
     }
 
 
-    private void postAlienTurn(){
+    private void postAlienTurn() {
         boolean playMiniGame = false;
         currentFortressIndex = 0;
         turnsPassed++;

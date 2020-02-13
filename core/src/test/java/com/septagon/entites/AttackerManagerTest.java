@@ -1,14 +1,8 @@
 package com.septagon.entites;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.septagon.game.InputManager;
 import com.septagon.helperClasses.AttackerManager;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
-import com.septagon.states.StateManager;
-import javafx.scene.Camera;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
