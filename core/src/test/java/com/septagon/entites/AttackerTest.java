@@ -38,8 +38,10 @@ class AttackerTest {
         mockedAttacker.height = 32;
         mockedAttacker.texture = null;
         mockedAttacker.health = 10;
+        mockedAttacker.maxHealth = 10;
         mockedAttacker.damage = 2;
         mockedAttacker.range = 4;
+        mockedAttacker.rangeCorners = new ArrayList<Integer>();
 
     }
 
@@ -75,56 +77,69 @@ class AttackerTest {
 
     @Test //A test for the Attacker class' getHealth method
     public void testGetHealth() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).getHealth();
         assertEquals(mockedAttacker.getHealth(), 10);
     }
 
     @Test //A test for the Attacker class' takeDamage method
     public void testTakeDamage() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).takeDamage(6);
         mockedAttacker.takeDamage(6);
         assertEquals(mockedAttacker.health, 4);
     }
 
     @Test //A test for the Attacker class' getDamage method
     public void testGetDamage() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).getDamage();
         assertEquals(mockedAttacker.getDamage(), 2);
     }
 
     @Test //A test for the Attacker class' setDamage method
     public void testSetDamage() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).setDamage(3);
         mockedAttacker.setDamage(3);
         assertEquals(mockedAttacker.damage, 3);
     }
 
     @Test //A test for the Attacker class' getRange method
     public void testGetRange() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).getRange();
         assertEquals(mockedAttacker.getRange(), 4);
     }
 
     @Test //A test for the Attacker class' setRange method
     public void testSetRange() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).setRange(3);
         mockedAttacker.setRange(3);
         assertEquals(mockedAttacker.range, 3);
     }
 
     @Test //A test for the Attacker class' getRangeCorners method
     public void testGetRangeCorners() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).setRangeCorners();
         mockedAttacker.setRangeCorners();
         assertNotNull(mockedAttacker.getRangeCorners());
     }
 
     @Test //A test for the Attacker class' setMaxHealth method
     public void testSetMaxHealth() throws Exception {
+
+        Mockito.doCallRealMethod().when(mockedAttacker).setMaxHealth(15);
         mockedAttacker.setMaxHealth(15);
         assertEquals(mockedAttacker.maxHealth, 15);
     }
 
     @Test //A test for the Attacker class' getMaxHealth method
     public void testGetMaxHealth() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).getMaxHealth();
         assertEquals(mockedAttacker.getMaxHealth(), 10);
     }
 
     @Test //A test for the setRangeCorners method
     public void testSetRangeCorners() throws Exception {
+        Mockito.doCallRealMethod().when(mockedAttacker).setRangeCorners();
+        Mockito.doCallRealMethod().when(mockedAttacker).getRangeCorners();
+
         mockedAttacker.setRangeCorners();
         ArrayList<Integer> testCorners = mockedAttacker.getRangeCorners();
         assertEquals(testCorners.get(0), -3);
