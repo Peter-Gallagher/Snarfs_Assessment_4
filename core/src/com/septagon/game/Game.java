@@ -122,7 +122,6 @@ public class Game extends ApplicationAdapter
 
 		batch.setProjectionMatrix(camera.combined);
 
-		//TODO Is this fucking up the patrol???
 		//Anything between begin and end is used to render our whole game
 		batch.begin();
 
