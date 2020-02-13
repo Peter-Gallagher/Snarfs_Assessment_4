@@ -14,9 +14,9 @@ public class Tile extends Entity
     public static final int TILE_SIZE = 32;
 
     //Variable to keep track of if there is currently an object on the tile or not
-    private boolean occupied;
+    protected boolean occupied;
     //Variable to see if the tile can be moved to by one of the engines
-    private boolean movable = false;
+    protected boolean movable = false;
 
     /***
      *Constructor that sets up initial values for all member variables
