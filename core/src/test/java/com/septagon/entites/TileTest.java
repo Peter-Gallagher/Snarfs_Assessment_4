@@ -54,4 +54,9 @@ class TileTest {
         assertFalse(testT.isOccupied());
     }
 
+    @Test //A test for the Tile class' getIndex method
+    public void testGetIndex() throws Exception {
+        assertEquals(162, testT.getIndex());
+    }
+
 }
