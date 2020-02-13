@@ -116,6 +116,8 @@ public class Patrol extends Vehicle  {
         tileManager.updateTileInAdjacencyList(currentTileIndex,1);
         this.col = tileToMoveTo.getCol();
         this.row = tileToMoveTo.getRow();
+        this.x = tileToMoveTo.getX();
+        this.y = tileToMoveTo.getY();
         tileToMoveTo.setOccupied(true);
         tileManager.updateTileInAdjacencyList(moves.get(moveIndex),0);
 
