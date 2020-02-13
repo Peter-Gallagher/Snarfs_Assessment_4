@@ -262,7 +262,6 @@ public class GameState extends State
         {
             entityManager.addEntity(patrol);
         }
-
         entityManager.initialise();
     }
 
@@ -347,7 +346,6 @@ public class GameState extends State
         }else if(!paused)
         {
             enemyTurnUpdate();
-            patrolTurnUpdate();
         }
     }
 
@@ -401,6 +399,7 @@ public class GameState extends State
             //If all fortresses have been displayed, go back to the player turn
             if(currentFortressIndex >= fortresses.size()){
                 postAlienTurn();
+                patrolTurnUpdate();
                 return;
             }
             //Get the current fortress that should be displayed
@@ -440,7 +439,6 @@ public class GameState extends State
         //If we are already displaying a fortress, keep displaying until the timer has reached its limit
         else
         {
-
             counter++;
             if(counter >= 0){
                 hasChangedFortress = false;
@@ -452,6 +450,9 @@ public class GameState extends State
 
     //TODO create turn update loop for patrol. i.e. if a fireEngine is in range shoot it, else move.
     public void patrolTurnUpdate(){
+        for (Patrol patrol : patrols) {
+            patrol.move();
+        }
     }
 
 
@@ -490,9 +491,6 @@ public class GameState extends State
 
         playerTurn = true;
 
-        for (Patrol patrol : patrols) {
-            patrol.move();
-        }
     }
 
 
