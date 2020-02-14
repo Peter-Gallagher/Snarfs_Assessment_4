@@ -10,9 +10,9 @@ public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol
     private int pathIndex;
-    private ArrayList<Tile> path;
+    protected ArrayList<Tile> path;
 
-    private TileManager tileManager;
+    protected TileManager tileManager;
 
     public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);

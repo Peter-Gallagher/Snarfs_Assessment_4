@@ -121,12 +121,23 @@ public class PatrolTest {
     @Test //test for getDistanceToTarget
     public void testGetDistanceToTarget() {
         Tile mockedTile = mock(Tile.class);
+        Tile mockedTargetTile = mock(Tile.class);
+
+        int consideredX = tileManager.getTileFromIndex(move).getCol();
+
+
 
         mockedTile.col = 1;
         mockedTile.row = 1;
 
         Mockito.doCallRealMethod().when(mockedTile).getCol();
         Mockito.doCallRealMethod().when(mockedTile).getRow();
+
+        mockedTargetTile.col = 10;
+        mockedTargetTile.row = 10;
+
+        Mockito.doCallRealMethod().when(mockedTargetTile).getCol();
+        Mockito.doCallRealMethod().when(mockedTargetTile).getRow();
 
 
 
