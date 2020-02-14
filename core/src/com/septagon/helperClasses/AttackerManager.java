@@ -219,7 +219,6 @@ public class AttackerManager
                 }
             }
 
-
             if(fortress.damageIfInRange(engines.get(i))){
                 fortress.enemyBullets(engines.get(i), 25);
             }
