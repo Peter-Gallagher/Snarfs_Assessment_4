@@ -32,6 +32,18 @@ public class Patrol extends Vehicle  {
     }
 
 
+
+    public boolean patrolShoot(Engine engine){
+        if(this.inRange(engine)){
+            this.shoot(engine);
+            this.enemyBullets(engine, 25);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     //Function that returns a list of distances of possible moves from the target node
     private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
         ArrayList<Float> listOfDistances = new ArrayList<Float>();

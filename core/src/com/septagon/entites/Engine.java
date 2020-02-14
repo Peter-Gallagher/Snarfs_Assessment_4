@@ -68,7 +68,15 @@ public class Engine extends Vehicle
      * @return returns true if there is any overlap, false otherwise
      */
 
+    public void engineBullets(Attacker attacker) {
+        int attackerX = attacker.getX();
+        int attackerY = attacker.getY();
+        int numBullets = 20;
 
+        for (int i = 0; i < numBullets; i++) {
+            GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i * 3), attackerX + 100, attackerY + 70, true));
+        }
+    }
 
     //TODO num bullets want to be a local?
     /***
@@ -85,18 +93,12 @@ public class Engine extends Vehicle
                 this.shoot(attacker);
                 attackMade = true;
 
-                int attackerX = attacker.getX();
-                int attackerY = attacker.getY();
-                int numBullets = 20;
-
-                for (int i = 0; i< numBullets; i++){
-                    GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i*3),  attackerX + 100, attackerY + 70, true));
-                }
-
+                engineBullets(attacker);
             }
         }
         return attackMade;
     }
+
 
 
 

@@ -220,7 +220,9 @@ public class AttackerManager
             }
 
 
-            fortress.damageIfInRange(engines.get(i));
+            if(fortress.damageIfInRange(engines.get(i))){
+                fortress.enemyBullets(engines.get(i), 25);
+            }
 
             if (engines.get(i).isDead()){
                 engines.remove(engines.get(i));

@@ -80,24 +80,25 @@ public abstract class Attacker extends Entity
         }
     }
 
-    public void shoot(Attacker attacker){
-        int numBullets = 25;
+    public void enemyBullets(Engine engine, int numBullets) {
 
-        int attackerX = attacker.getX();
-        int attackerY = attacker.getY();
+        int engineX = engine.getX();
+        int engineY = engine.getY();
 
-        int centreX = this.x + (this.width/2);
-        int centreY = this.y + (this.height/2);
+        int centreX = this.x + (this.width / 2);
+        int centreY = this.y + (this.height / 2);
 
-        //Actual functionality
-        if(inRange(attacker)){
-            attacker.takeDamage(this.damage);
-
-            for (int i = 0; i< numBullets; i++){
-                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  attackerX + 10, attackerY, false));
-            }
+        for (int i = 0; i < numBullets; i++) {
+            GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i * 3), engineX + 10, engineY, false));
         }
     }
+
+    public void shoot(Attacker attacker){
+        if(inRange(attacker)){
+            attacker.takeDamage(this.damage);
+        }
+    }
+
 
     public boolean inRange(Attacker attacker) {
         int attackerCol = attacker.getCol();

@@ -497,11 +497,11 @@ public class GameState extends State
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
                 if (patrol.inRange(engine)) {
-                    patrol.shoot(engine);
+                    patrol.patrolShoot(engine);
                     //engine.takeDamage(patrol.getDamage());
                 }
                 if (engine.inRange(patrol)){
-                    patrol.takeDamage(engine.getDamage());
+                    engine.damageEnemyIfInRange(patrol);
                 } else {
                     patrol.move();
                 }
