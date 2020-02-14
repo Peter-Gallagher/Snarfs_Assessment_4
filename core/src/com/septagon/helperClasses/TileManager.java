@@ -261,7 +261,7 @@ public class TileManager {
                 depth++;
                 queue.offer(null);
                 qVal = queue.poll();
-                if(depth > maxDepth || qVal == null){
+                if(depth >= maxDepth || qVal == null){
                     break;
                 }
             }
