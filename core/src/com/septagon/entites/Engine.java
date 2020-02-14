@@ -68,13 +68,19 @@ public class Engine extends Vehicle
      * @return returns true if there is any overlap, false otherwise
      */
 
-    public void engineBullets(Attacker attacker) {
+    public void engineBulletsFortress(Attacker attacker) {
         int attackerX = attacker.getX();
         int attackerY = attacker.getY();
         int numBullets = 20;
 
-        for (int i = 0; i < numBullets; i++) {
-            GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i * 3), attackerX + 100, attackerY + 70, true));
+        if(attacker instanceof Fortress){
+            for (int i = 0; i < numBullets; i++) {
+                GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i * 3), attackerX + 100, attackerY + 70, true));
+               }
+        } else {
+            for (int i = 0; i < numBullets; i++) {
+                GameState.bullets.add(new Bullet(this.x + (this.width / 2) + (i * 2), this.y + (this.height / 2), attackerX + 10, attackerY, true));
+            }
         }
     }
 
@@ -93,7 +99,7 @@ public class Engine extends Vehicle
                 this.shoot(attacker);
                 attackMade = true;
 
-                engineBullets(attacker);
+                engineBulletsFortress(attacker);
             }
         }
         return attackMade;
