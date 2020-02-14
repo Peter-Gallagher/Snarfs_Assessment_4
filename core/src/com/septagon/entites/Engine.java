@@ -56,7 +56,7 @@ public class Engine extends Vehicle
     /**
      * Calls to update the required variables when the engine fires at a fortress
      */
-    public void fire(){
+    public void loseWater(){
         this.volume = Math.max(this.volume - this.damage, 0) ;
     }
 
@@ -89,7 +89,7 @@ public class Engine extends Vehicle
 
         if(inRange(attacker)){
             if (this.volume >= this.damage){
-                this.fire();
+                this.loseWater();
                 this.shoot(attacker);
                 attackMade = true;
 

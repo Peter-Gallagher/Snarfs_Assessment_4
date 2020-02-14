@@ -129,9 +129,9 @@ class EngineTest {
     @Test //A test for the Engine class' fire method
     public void testFire() throws Exception {
         when(testE.getVolume()).thenCallRealMethod();
-        Mockito.doCallRealMethod().when(testE).fire();
+        Mockito.doCallRealMethod().when(testE).loseWater();
 
-        testE.fire();
+        testE.loseWater();
         assertEquals(testE.getVolume(), 18);
     }
 

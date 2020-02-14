@@ -496,14 +496,15 @@ public class GameState extends State
     public void patrolTurnUpdate(){
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
+                if(!patrol.isDead()){
                 if (patrol.inRange(engine)) {
                     patrol.patrolShoot(engine);
-                    //engine.takeDamage(patrol.getDamage());
                 }
                 if (engine.inRange(patrol)){
                     engine.damageEnemyIfInRange(patrol);
                 } else {
                     patrol.move();
+                    }
                 }
             }
         }
