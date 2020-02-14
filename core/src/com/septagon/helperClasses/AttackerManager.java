@@ -213,14 +213,14 @@ public class AttackerManager
         for (int i = 0; i < engines.size(); i++){
             engines.get(i).setMoved(false);
 
-            if(engines.get(i).DamageFortressIfInRange(fortress)){
+            if(engines.get(i).damageEnemyIfInRange(fortress)){
                 if (turnOfFirstAttack > 0){
                     turnOfFirstAttack = gameState.getTurnsPassed();
                 }
             }
 
 
-            fortress.DamageEngineIfInRange(engines.get(i));
+            fortress.damageIfInRange(engines.get(i));
 
             if (engines.get(i).isDead()){
                 engines.remove(engines.get(i));

@@ -161,7 +161,6 @@ public class GameState extends State
         engine1.setCol(77);
         engine1.setRow(5);
 
-
         engine2.setCol(75);
         engine2.setRow(4);
 
@@ -203,13 +202,13 @@ public class GameState extends State
 
     private void initializePatrols() {
         //create preset paths for patrols
-        ArrayList<Tile> path1 = initialsePath1();
+        ArrayList<Tile> path1 = initialisePath1();
         ArrayList<Tile> path2 = initialisePath2();
         ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 100, 0, 10, 2, path1, tileManager);
-        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 100, 0, 10, 2, path2, tileManager);
-        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 100, 0, 10, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path1, tileManager);
+        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path2, tileManager);
+        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 5, 0, 10, 5, path3, tileManager);
 
 
         //Adds all the patrols to the ArrayList of patrols
@@ -220,7 +219,7 @@ public class GameState extends State
 
     }
 
-    public ArrayList<Tile> initialsePath1(){
+    public ArrayList<Tile> initialisePath1(){
 
         ArrayList<Tile> path1 = new ArrayList<>();
 
@@ -500,12 +499,16 @@ public class GameState extends State
                 if (patrol.inRange(engine)) {
                     patrol.shoot(engine);
                     //engine.takeDamage(patrol.getDamage());
+                }
+                if (engine.inRange(patrol)){
+                    patrol.takeDamage(engine.getDamage());
                 } else {
                     patrol.move();
                 }
             }
         }
         attackerManager.handleDeadEngines();
+       // attackerManager.handleDeadPatrols();
     }
 
 

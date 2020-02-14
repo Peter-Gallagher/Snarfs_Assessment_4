@@ -64,50 +64,42 @@ public class Engine extends Vehicle
 
     /***
      * Checks if any of the corners of the engines range are in the body of the fortress or station
-     * @param fortress Entity that is being checked
+     * @param  attacker that is being checked
      * @return returns true if there is any overlap, false otherwise
      */
-    public Boolean checkInRange(Fortress fortress){
-        int fortX = fortress.getCol();
-        int fortWidth = fortress.getWidth() / 32;
-        int fortY = fortress.getRow();
-        int fortHeight = fortress.getHeight() / 32;
 
-        int xDisplacement = Math.min(Math.abs(this.getCol() - (fortX + fortWidth)), Math.abs(this.getCol() - fortX));
-        int yDisplacement = Math.min(Math.abs(this.getRow() - (fortY + fortHeight)), Math.abs(this.getRow() - fortY));
-
-        return (Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range);
-    }
 
 
     //TODO num bullets want to be a local?
     /***
      * Method that will check if the Attacker is in range of the fortress and if so will damage it
-     * @param fortress The fortress we are currently checking the bounds/range of
+     * @param attacker The fortress we are currently checking the bounds/range of
      */
-    public boolean DamageFortressIfInRange(Fortress fortress){
+    public boolean damageEnemyIfInRange(Attacker attacker){
         //this.setRangeCorners();
         boolean attackMade = false;
 
-        if(checkInRange(fortress)){
+        if(inRange(attacker)){
             if (this.volume >= this.damage){
                 this.fire();
-                fortress.takeDamage(this.damage);
+                this.shoot(attacker);
                 attackMade = true;
 
-                int fortX = fortress.getX();
-                int fortY = fortress.getY();
+                int attackerX = attacker.getX();
+                int attackerY = attacker.getY();
                 int numBullets = 20;
 
                 for (int i = 0; i< numBullets; i++){
-                    GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i*3),  fortX + 100, fortY + 70, true));
+                    GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i*3),  attackerX + 100, attackerY + 70, true));
                 }
 
             }
         }
         return attackMade;
-
     }
+
+
+
 
     //Getters and Setters
     public int getMaxVolume()

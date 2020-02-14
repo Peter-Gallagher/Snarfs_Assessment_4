@@ -71,6 +71,44 @@ public abstract class Attacker extends Entity
         this.rangeCorners.add(topY);
     }
 
+    public boolean damageIfInRange(Attacker attacker){
+        if(this.inRange(attacker)){
+            shoot(attacker);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void shoot(Attacker attacker){
+        int numBullets = 25;
+
+        int attackerX = attacker.getX();
+        int attackerY = attacker.getY();
+
+        int centreX = this.x + (this.width/2);
+        int centreY = this.y + (this.height/2);
+
+        //Actual functionality
+        if(inRange(attacker)){
+            attacker.takeDamage(this.damage);
+
+            for (int i = 0; i< numBullets; i++){
+                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  attackerX + 10, attackerY, false));
+            }
+        }
+    }
+
+    public boolean inRange(Attacker attacker) {
+        int attackerCol = attacker.getCol();
+        int attackerRow = attacker.getRow();
+
+        int xDisplacement = Math.min(Math.abs(this.getCol() - attackerCol), Math.abs((this.getCol() + (this.width / 32)) - attackerCol));
+        int yDisplacement = Math.min(Math.abs(this.getRow() - attackerRow), Math.abs((this.getRow() + (this.height / 32)) - attackerRow));
+
+        return (Math.sqrt((xDisplacement * xDisplacement) + (yDisplacement * yDisplacement)) <= this.range);
+    }
+
     //Getters
     public int getHealth() {
         return health;
@@ -96,7 +134,6 @@ public abstract class Attacker extends Entity
         if(this.health <= 0){
             this.setDead();
         }
-
     }
     public void setDamage(int damage) {
         this.damage = damage;
