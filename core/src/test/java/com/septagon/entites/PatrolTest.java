@@ -1,6 +1,7 @@
 package com.septagon.entites;
 
 import com.septagon.game.Game;
+import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -123,7 +124,8 @@ public class PatrolTest {
         Tile mockedTile = mock(Tile.class);
         Tile mockedTargetTile = mock(Tile.class);
 
-        int consideredX = tileManager.getTileFromIndex(move).getCol();
+        mockedPatrol.tileManager = new TileManager(new ArrayList<Engine>(), new ArrayList<Tile>());
+
 
 
 
@@ -140,6 +142,7 @@ public class PatrolTest {
         Mockito.doCallRealMethod().when(mockedTargetTile).getRow();
 
 
+        mockedPatrol.tileManager.getTiles().add(mockedTargetTile);
 
 
     }
