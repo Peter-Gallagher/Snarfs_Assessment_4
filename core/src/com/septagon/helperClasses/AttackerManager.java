@@ -156,6 +156,7 @@ public class AttackerManager
         //Loops through all tiles to see if it has been pressed
 
         currentlyTouchedTile = getTileClicked(x,y);
+        System.out.println("Clicked tile Col =" + currentlyTouchedTile.getCol() + " Row = " + currentlyTouchedTile.getRow());
 
         if (currentlyTouchedTile != null){
             //updated the pointers to the current and previous tiles
