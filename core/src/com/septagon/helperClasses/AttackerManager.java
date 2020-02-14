@@ -249,6 +249,20 @@ public class AttackerManager
         }
     }
 
+    public void handleDeadPatrols(){
+        ArrayList<Patrol> destroyedPatrols = new ArrayList<>();
+
+        for (Patrol patrol : patrols) {
+            if (patrol.isDead()){
+                destroyedPatrols.add(patrol);
+            }
+        }
+
+        for (Patrol destroyedPatrol : destroyedPatrols) {
+            engines.remove(destroyedPatrol);
+        }
+    }
+
     /***
      * Renders a grid showing the player where the engine that they have pressed on can move to
      */

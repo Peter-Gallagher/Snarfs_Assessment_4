@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.septagon.entites.Attacker;
 import com.septagon.entites.Engine;
 import com.septagon.entites.Fortress;
+import com.septagon.entites.Patrol;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,12 @@ public class StatusBarGenerator
 
     private ArrayList<Engine> engines;
     private ArrayList<Fortress> fortresses;
+    private ArrayList<Patrol> patrols;
 
-    public StatusBarGenerator(ArrayList<Engine> engines, ArrayList<Fortress> fortresses){
+    public StatusBarGenerator(ArrayList<Engine> engines, ArrayList<Fortress> fortresses, ArrayList<Patrol> patrols){
         this.engines = engines;
         this.fortresses = fortresses;
+        this.patrols = patrols;
         barRenderer = new ShapeRenderer();
     }
 
@@ -41,6 +44,9 @@ public class StatusBarGenerator
         }
         for(Fortress fortress: fortresses){
             renderHealthBarForAttacker(fortress);
+        }
+        for(Patrol patrol : patrols){
+            renderHealthBarForAttacker(patrol);
         }
     }
 
@@ -91,7 +97,7 @@ public class StatusBarGenerator
     }
 
     /**
-     * Method useed to clean up the barRenderer
+     * Method used to clean up the barRenderer
      */
     public void dispose(){
         barRenderer.dispose();
