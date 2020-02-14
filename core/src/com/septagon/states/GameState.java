@@ -161,7 +161,6 @@ public class GameState extends State
         engine1.setCol(77);
         engine1.setRow(5);
 
-
         engine2.setCol(75);
         engine2.setRow(4);
 
@@ -202,43 +201,15 @@ public class GameState extends State
     }
 
     private void initializePatrols() {
-        //preset paths for the patrols
-        //TODO create preset paths
-        Tile tile1 = new Tile(8,40, null, false);
-        Tile tile2 = new Tile(72,14, null, false);
-        Tile tile3 = new Tile(53,18, null, false);
-        Tile tile4 = new Tile(19,33, null, false);
-        Tile tile5 = new Tile(22,20, null, false);
-        Tile tile6 = new Tile(35,10, null, false);
-
-        ArrayList<Tile> path1 = new ArrayList<>();
-        ArrayList<Tile> path2 = new ArrayList<>();
-        ArrayList<Tile> path3 = new ArrayList<>();
-
-        path1.add(tile1);
-        path1.add(tile2);
-
-        path2.add(tile3);
-        path2.add(tile4);
-
-        path3.add(tile5);
-        path3.add(tile6);
-
+        //create preset paths for patrols
+        ArrayList<Tile> path1 = initialisePath1();
+        ArrayList<Tile> path2 = initialisePath2();
+        ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(20, 20, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path1, tileManager);
-        Patrol patrol2 = new Patrol(21, 21, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path2, tileManager);
-        Patrol patrol3 = new Patrol(22, 22, AssetManager.getCreepyPatrol(), 100, 50, 10, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path1, tileManager);
+        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path2, tileManager);
+        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 5, 0, 10, 5, path3, tileManager);
 
-        //initialize patrols along preset paths
-        //TODO initialize with paths when implemented
-        patrol1.setCol(1);
-        patrol1.setRow(1);
-
-        patrol1.setCol(2);
-        patrol1.setRow(2);
-
-        patrol1.setCol(3);
-        patrol1.setRow(3);
 
         //Adds all the patrols to the ArrayList of patrols
         patrols = new ArrayList<Patrol>();
@@ -248,8 +219,78 @@ public class GameState extends State
 
     }
 
+    public ArrayList<Tile> initialisePath1(){
 
-        private void initializeEntityManager(){
+        ArrayList<Tile> path1 = new ArrayList<>();
+
+        Tile tile1 = new Tile(10,18, null, false);
+        Tile tile2 = new Tile(19,18, null, false);
+        Tile tile3 = new Tile(19,33, null, false);
+        Tile tile4 = new Tile(19,43, null, false);
+
+        path1.add(tile1);
+        path1.add(tile2);
+        path1.add(tile3);
+        path1.add(tile4);
+        path1.add(tile3);
+        path1.add(tile2);
+
+        return path1;
+    }
+
+    public ArrayList<Tile> initialisePath2(){
+
+        ArrayList<Tile> path2 = new ArrayList<>();
+
+        Tile tile5 = new Tile(44,35, null, false);
+        Tile tile6 = new Tile(57,35, null, false);
+        Tile tile7 = new Tile(57,28, null, false);
+        Tile tile8 = new Tile(70,28, null, false);
+
+        path2.add(tile5);
+        path2.add(tile6);
+        path2.add(tile7);
+        path2.add(tile8);
+        path2.add(tile7);
+        path2.add(tile6);
+
+        return path2;
+    }
+
+    public ArrayList<Tile> initialisePath3(){
+
+        ArrayList<Tile> path3 = new ArrayList<>();
+
+        Tile tile9 = new Tile(37,2, null, false);
+        Tile tile10 = new Tile(50,2, null, false);
+        Tile tile11 = new Tile(45,12, null, false);
+        Tile tile12 = new Tile(45,18, null, false);
+        Tile tile13 = new Tile(57,18, null, false);
+        Tile tile14 = new Tile(57,22, null, false);
+        Tile tile15 = new Tile(64,22, null, false);
+        Tile tile16 = new Tile(64,27, null, false);
+
+        path3.add(tile9);
+        path3.add(tile10);
+        path3.add(tile11);
+        path3.add(tile12);
+        path3.add(tile13);
+        path3.add(tile14);
+        path3.add(tile15);
+        path3.add(tile16);
+        path3.add(tile15);
+        path3.add(tile14);
+        path3.add(tile13);
+        path3.add(tile12);
+        path3.add(tile11);
+        path3.add(tile10);
+
+        return path3;
+    }
+
+
+
+    private void initializeEntityManager(){
         //Adds all the entities to the entity manager so all their updating and rendering can be handled
         entityManager = new EntityManager();
         entityManager.addEntity(fireStation);
@@ -456,14 +497,18 @@ public class GameState extends State
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
                 if (patrol.inRange(engine)) {
-                    patrol.shoot(engine);
+                    patrol.patrolShoot(engine);
                     //engine.takeDamage(patrol.getDamage());
+                }
+                if (engine.inRange(patrol)){
+                    engine.damageEnemyIfInRange(patrol);
                 } else {
                     patrol.move();
                 }
             }
         }
         attackerManager.handleDeadEngines();
+       // attackerManager.handleDeadPatrols();
     }
 
 

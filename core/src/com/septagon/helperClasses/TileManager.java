@@ -37,22 +37,6 @@ public class TileManager {
         adjacencyList = new int[tiles.size()][4];
     }
 
-    public Tile getTileClicked(float x, float y){
-        for(Tile tile: tiles) {
-            if(tile.checkIfClickedInside(x, y)){
-                return tile;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void setTiles(ArrayList<Tile> tiles) {
-        this.tiles = tiles;
-    }
 
     /***
      * Clear all the current moveable tiles
@@ -66,6 +50,7 @@ public class TileManager {
 
     /***
      * Sets up the tiles which contain an engine, fortress or the station to be occupied
+     * @param gameMap a tileMap containing the map of the game
      */
     //TODO there must be a better way to initialise the Fortresses than hard coding each
     public void setOccupiedTiles(TiledGameMap gameMap)
@@ -129,7 +114,9 @@ public class TileManager {
         }
     }
 
-
+    /***
+     * sets all tiles occupied by fire engines as inaccessible
+     */
     public void setEngineTilesOccupied(){
         //Set the tiles that currently have an engine on to be occupied
         for (Engine fireEngine : engines)
@@ -152,7 +139,11 @@ public class TileManager {
         }
     }
 
-
+    /***
+     * updates the adjacency list to reflect a tile becoming (un)occupied
+     * @param tileIndex the index of the tile being updated
+     * @param access indicates if the tile is to made accessible: 1 = accessible, 0 = inaccessible
+     */
     public void updateTileInAdjacencyList(int tileIndex, int access){
             try {
             adjacencyList[tileIndex - 1][1] = access;
@@ -202,7 +193,11 @@ public class TileManager {
         }
     }
 
-    //TODO: should be called on startup and then updated when fire engines move
+    /***
+     * Creates an adjacency list for all tiles in the game map
+     * @param maxWidth the width of the tileMap
+     * @param maxHeight the height of the tileMap
+     */
     public void createAdjacencyList(int maxWidth, int maxHeight){
 
         Tile checkTile;
@@ -232,10 +227,15 @@ public class TileManager {
 
     }
 
-    public ArrayList<Engine> getEngines() {
-        return engines;
-    }
 
+    /***
+     * Performs a breadth first search of tiles which a can be reached from a statring position within a given range
+     * @param tileAdjacencyList an adjacency list indicating which tiles are adjacent
+     * @param startTileIndex the index of the start tile within tiles
+     * @param width the width of the tileMap
+     * @param maxDepth the height of the tileMap
+     * @return a list containing the indexes of all tiles which can be reached
+     */
     public ArrayList<Integer> BFS(int[][] tileAdjacencyList, int startTileIndex, int width, int maxDepth) {
 
         int numNodes = tileAdjacencyList.length;
@@ -261,7 +261,7 @@ public class TileManager {
                 depth++;
                 queue.offer(null);
                 qVal = queue.poll();
-                if(depth > maxDepth || qVal == null){
+                if(depth >= maxDepth || qVal == null){
                     break;
                 }
             }
@@ -290,6 +290,13 @@ public class TileManager {
         return visitedTilesIndex;
     }
 
+    /***
+     * gets the index of a target tile in a given direction from a reference tile
+     * @param currentIndex the index of the reference tile
+     * @param i the direction of the target tile
+     * @param width the width of the tileMap
+     * @return the index of the target tile
+     */
     private int getNewIndex(int currentIndex, int i, int width){
         switch(i){
             case 0:
@@ -305,7 +312,15 @@ public class TileManager {
         }
     }
 
-
+    /***
+     * checks if a tile adjacent to a given tile exists and is unoccupied
+     * @param centreTile the tile to be used as reference
+     * @param xOffset the difference in x position of the two tiles
+     * @param yOffset the difference in y position of the two tiles
+     * @param width the width of the tileMap
+     * @param height the height of the tileMape
+     * @return true if tile exists and is unoccupied, else false
+     */
     private boolean checkTileAdjacent(Tile centreTile, int xOffset, int yOffset, int width, int height){
         int newX = centreTile.getCol() + xOffset;
         int newY = centreTile.getRow() + yOffset;
@@ -324,6 +339,11 @@ public class TileManager {
         return false;
     }
 
+    /***
+     *returns the tile in tiles located at a given index
+     * @param tileIndex the index of desired tile
+     * @return the tile located at the given index
+     */
     public Tile getTileFromIndex(int tileIndex){
         if (tileIndex >= 0 && tileIndex < tiles.size()){
             return tiles.get(tileIndex);
@@ -331,7 +351,19 @@ public class TileManager {
         return null;
     }
 
+    public ArrayList<Engine> getEngines() {
+        return engines;
+    }
+
     public int[][] getAdjacencyList(){
         return adjacencyList;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(ArrayList<Tile> tiles) {
+        this.tiles = tiles;
     }
 }

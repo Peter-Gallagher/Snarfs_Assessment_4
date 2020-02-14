@@ -156,6 +156,7 @@ public class AttackerManager
         //Loops through all tiles to see if it has been pressed
 
         currentlyTouchedTile = getTileClicked(x,y);
+        System.out.println("Clicked tile Col =" + currentlyTouchedTile.getCol() + " Row = " + currentlyTouchedTile.getRow());
 
         if (currentlyTouchedTile != null){
             //updated the pointers to the current and previous tiles
@@ -212,14 +213,16 @@ public class AttackerManager
         for (int i = 0; i < engines.size(); i++){
             engines.get(i).setMoved(false);
 
-            if(engines.get(i).DamageFortressIfInRange(fortress)){
+            if(engines.get(i).damageEnemyIfInRange(fortress)){
                 if (turnOfFirstAttack > 0){
                     turnOfFirstAttack = gameState.getTurnsPassed();
                 }
             }
 
 
-            fortress.DamageEngineIfInRange(engines.get(i));
+            if(fortress.damageIfInRange(engines.get(i))){
+                fortress.enemyBullets(engines.get(i), 25);
+            }
 
             if (engines.get(i).isDead()){
                 engines.remove(engines.get(i));
@@ -234,10 +237,16 @@ public class AttackerManager
 
 
     public void handleDeadEngines(){
+        ArrayList<Engine> destroyedEngines = new ArrayList<>();
+
         for (Engine engine : engines) {
             if (engine.isDead()){
-                engines.remove(engine);
+                destroyedEngines.add(engine);
             }
+        }
+
+        for (Engine destroyedEngine : destroyedEngines) {
+            engines.remove(destroyedEngine);
         }
     }
 

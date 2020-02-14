@@ -32,34 +32,14 @@ public class Patrol extends Vehicle  {
     }
 
 
-    //Checks whether a fireEngine is within its range. Return true if it is, return false if it isnt
-    public boolean inRange(Engine fireEngine) {
-        int engineCol = fireEngine.getCol();
-        int engineRow = fireEngine.getRow();
 
-        int xDisplacement = Math.min(Math.abs(this.getCol() - engineCol), Math.abs((this.getCol() + (this.width / 32)) - engineCol));
-        int yDisplacement = Math.min(Math.abs(this.getRow() - engineRow), Math.abs((this.getRow() + (this.height / 32)) - engineRow));
-
-        return (Math.sqrt((xDisplacement * xDisplacement) + (yDisplacement * yDisplacement)) <= this.range);
-    }
-
-    //TODO implement shooting mechanism
-    public void shoot(Engine fireEngine){
-        int numBullets = 25;
-
-        int engineX = fireEngine.getX();
-        int engineY = fireEngine.getY();
-
-        int centreX = this.x + (this.width/2);
-        int centreY = this.y + (this.height/2);
-
-        //Actual functionality
-        if(inRange(fireEngine)){
-            fireEngine.takeDamage(this.damage);
-
-            for (int i = 0; i< numBullets; i++){
-                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  engineX + 10, engineY, false));
-            }
+    public boolean patrolShoot(Engine engine){
+        if(this.inRange(engine)){
+            this.shoot(engine);
+            this.enemyBullets(engine, 25);
+            return true;
+        } else {
+            return false;
         }
     }
 

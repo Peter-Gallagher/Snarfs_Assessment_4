@@ -2,12 +2,9 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
-import jdk.internal.vm.compiler.collections.EconomicMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 
 import java.util.ArrayList;
 
@@ -160,10 +157,10 @@ class EngineTest {
     public void testCheckInRange() throws  Exception {
         Fortress testFortress1 = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
         Fortress testFortress2 = new Fortress(2, 10, 256, 256, null, null, 100, 20, 3);
-        when(testE.checkInRange(testFortress1)).thenCallRealMethod();
-        when(testE.checkInRange(testFortress2)).thenCallRealMethod();
-        assertTrue(testE.checkInRange(testFortress1));
-        assertFalse(testE.checkInRange(testFortress2));
+        when(testE.inRange(testFortress1)).thenCallRealMethod();
+        when(testE.inRange(testFortress2)).thenCallRealMethod();
+        assertTrue(testE.inRange(testFortress1));
+        assertFalse(testE.inRange(testFortress2));
 
     }
 
@@ -177,18 +174,18 @@ class EngineTest {
         GameState.bullets = new ArrayList<Bullet>();
 
         Fortress fortress = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
-        Mockito.doCallRealMethod().when(testE).DamageFortressIfInRange(fortress);
-        Mockito.doCallRealMethod().when(testE).checkInRange(fortress);
+        Mockito.doCallRealMethod().when(testE).damageEnemyIfInRange(fortress);
+        Mockito.doCallRealMethod().when(testE).inRange(fortress);
 
         try {
-            testE.DamageFortressIfInRange(null);
+            testE.damageEnemyIfInRange(null);
         } catch (Exception e) {
 
 
         }
 
         try {
-            testE.DamageFortressIfInRange(fortress);
+            testE.damageEnemyIfInRange(fortress);
         } catch (NullPointerException e) {
             System.out.println(e);
         }
