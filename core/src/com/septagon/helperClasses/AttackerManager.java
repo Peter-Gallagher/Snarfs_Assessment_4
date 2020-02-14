@@ -234,10 +234,16 @@ public class AttackerManager
 
 
     public void handleDeadEngines(){
+        ArrayList<Engine> destroyedEngines = new ArrayList<>();
+
         for (Engine engine : engines) {
             if (engine.isDead()){
-                engines.remove(engine);
+                destroyedEngines.add(engine);
             }
+        }
+
+        for (Engine destroyedEngine : destroyedEngines) {
+            engines.remove(destroyedEngine);
         }
     }
 
