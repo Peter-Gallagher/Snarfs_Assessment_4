@@ -316,7 +316,6 @@ public class MinigameState extends State
         }
 
         if(checkPuzzleComplete()){
-            System.out.println("game won");
             returnToMainGame();
         }
     }

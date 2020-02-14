@@ -152,10 +152,10 @@ public class GameState extends State
 
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 50, 100, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 8, 20, 100, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 8, 20, 100, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 8, 20, 100, 4, 04);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 100, 100, 4, 01);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 8, 100, 100, 4, 02);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 8, 100, 100, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 8, 100, 100, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -401,8 +401,8 @@ public class GameState extends State
         if(!hasChangedFortress){
             //If all fortresses have been displayed, go back to the player turn
             if(currentFortressIndex >= fortresses.size()){
-                postAlienTurn();
                 patrolTurnUpdate();
+                postAlienTurn();
                 return;
             }
             //Get the current fortress that should be displayed
@@ -456,12 +456,14 @@ public class GameState extends State
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
                 if (patrol.inRange(engine)) {
-                    engine.takeDamage(patrol.getDamage());
+                    patrol.shoot(engine);
+                    //engine.takeDamage(patrol.getDamage());
                 } else {
                     patrol.move();
                 }
             }
         }
+        attackerManager.handleDeadEngines();
     }
 
 
@@ -472,7 +474,7 @@ public class GameState extends State
 
         strengthenFortresses();
 
-        if (turnsPassed == 20){
+        if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 20){
             destroyStation();
         }
 
@@ -508,6 +510,7 @@ public class GameState extends State
         if (turnsPassed >= 10){
             for (Fortress fortress : fortresses) {
             fortress.setHealth(fortress.getHealth() + turnsPassed);
+            fortress.setMaxHealth(fortress.getMaxHealth() + turnsPassed);
 
             fortress.setDamage(fortress.getDamage() + (turnsPassed % 5));
             }

@@ -44,7 +44,7 @@ public class Patrol extends Vehicle  {
     }
 
     //TODO implement shooting mechanism
-    private void shoot(Engine fireEngine){
+    public void shoot(Engine fireEngine){
         int numBullets = 25;
 
         int engineX = fireEngine.getX();
@@ -62,6 +62,7 @@ public class Patrol extends Vehicle  {
             }
         }
     }
+
 
     //Function that returns a list of distances of possible moves from the target node
     private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
@@ -117,7 +118,6 @@ public class Patrol extends Vehicle  {
         tileToMoveTo.setOccupied(true);
         tileManager.updateTileInAdjacencyList(moves.get(moveIndex),0);
 
-        System.out.println("Moving to X:" + col + " Y:" + row);
 
         updatePathIndex(path.get(pathIndex));
         }

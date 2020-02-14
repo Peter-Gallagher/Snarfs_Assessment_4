@@ -38,13 +38,12 @@ public class Engine extends Vehicle
     public boolean ifInRangeFill(Station station){
         //TODO: make a circle
 
-        System.out.println("Checking if should fill");
         int xRange =station.getCol() + station.getWidth()/Tile.TILE_SIZE;
         int stationRow = station.getRow();
 
         if(this.col <= xRange && this.col > station.getCol() && this.row >= stationRow-5 && this.row <= stationRow-1){
             if(this.volume < this.maxVolume || this.health < this.maxHealth){
-                System.out.println("filling");
+
                 this.volume = this.maxVolume;
                 this.health = this.maxHealth;
                 return true;
@@ -86,13 +85,15 @@ public class Engine extends Vehicle
      * Method that will check if the Attacker is in range of the fortress and if so will damage it
      * @param fortress The fortress we are currently checking the bounds/range of
      */
-    public void DamageFortressIfInRange(Fortress fortress){
+    public boolean DamageFortressIfInRange(Fortress fortress){
         //this.setRangeCorners();
+        boolean attackMade = false;
 
         if(checkInRange(fortress)){
             if (this.volume >= this.damage){
                 this.fire();
                 fortress.takeDamage(this.damage);
+                attackMade = true;
 
                 int fortX = fortress.getX();
                 int fortY = fortress.getY();
@@ -104,6 +105,7 @@ public class Engine extends Vehicle
 
             }
         }
+        return attackMade;
 
     }
 

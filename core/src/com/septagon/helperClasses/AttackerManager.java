@@ -56,6 +56,8 @@ public class AttackerManager
     private Tile previouslyTouchedTile = null;
     private Engine currentEngine = null;
 
+    private int turnOfFirstAttack;
+
     public AttackerManager(ArrayList<Engine> engines, ArrayList<Tile> tiles, ArrayList<Patrol> patrols, ArrayList<Fortress> fortresses, GameState gameState){
         this.engines = engines;
         this.tiles = tiles;
@@ -209,16 +211,33 @@ public class AttackerManager
         gameState.getTileManager().resetMovableTiles();
         for (int i = 0; i < engines.size(); i++){
             engines.get(i).setMoved(false);
-            engines.get(i).DamageFortressIfInRange(fortress);
+
+            if(engines.get(i).DamageFortressIfInRange(fortress)){
+                if (turnOfFirstAttack > 0){
+                    turnOfFirstAttack = gameState.getTurnsPassed();
+                }
+            }
+
+
             fortress.DamageEngineIfInRange(engines.get(i));
+
             if (engines.get(i).isDead()){
                 engines.remove(engines.get(i));
-                break;
             }
+
             if (fortress.isDead()){
                 fortresses.remove(fortress);
             }
             //engines.get(i).ifInRangeFill(gameState.getStation());
+        }
+    }
+
+
+    public void handleDeadEngines(){
+        for (Engine engine : engines) {
+            if (engine.isDead()){
+                engines.remove(engine);
+            }
         }
     }
 
@@ -235,5 +254,9 @@ public class AttackerManager
                 }
             }
         }
+    }
+
+    public int getTurnOfFirstAttack(){
+        return turnOfFirstAttack;
     }
 }

@@ -44,7 +44,6 @@ public class Fortress extends Attacker
      * @param fireEngine The current engine that is being checked
      */
     public void DamageEngineIfInRange(Engine fireEngine) {
-        System.out.println("Checking if should damage engine");
 
         int engineCol = fireEngine.getCol();
         int engineRow = fireEngine.getRow();
