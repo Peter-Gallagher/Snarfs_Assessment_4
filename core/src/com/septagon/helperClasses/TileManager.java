@@ -239,12 +239,12 @@ public class TileManager {
     /***
      * gets the index of a target tile in a given direction from a reference tile
      * @param currentIndex the index of the reference tile
-     * @param i the direction of the target tile
+     * @param direction the direction of the target tile
      * @param width the width of the tileMap
      * @return the index of the target tile
      */
-    private int getNewIndex(int currentIndex, int i, int width){
-        switch(i){
+    private int getNewIndex(int currentIndex, int direction, int width){
+        switch(direction){
             case 0:
                 return currentIndex - 1;
             case 1:

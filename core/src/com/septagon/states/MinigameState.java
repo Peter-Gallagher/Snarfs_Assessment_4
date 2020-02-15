@@ -3,18 +3,14 @@ package com.septagon.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.Tile;
 import com.septagon.entites.TiledGameMap;
 import com.septagon.game.InputManager;
 import com.septagon.helperClasses.TileManager;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -31,7 +27,7 @@ public class MinigameState extends State
     private ArrayList<Tile> tiles = new ArrayList<Tile>();
     private OrthographicCamera camera;
     private OrthographicCamera cameraBackground;
-    private Integer[][] pipeAdjacencyDirections;
+    private Integer[][] pipeConnectionDirections;
     private TileManager tileManager;
     private static String[] pipeMaps = {"MiniGame1.tmx", "MiniGame2.tmx", "MiniGame3.tmx", "MiniGame4.tmx", "MiniGame5.tmx"};
 
@@ -54,7 +50,7 @@ public class MinigameState extends State
             }
         }
 
-        pipeAdjacencyDirections = new Integer[tiles.size()][4];
+        pipeConnectionDirections = new Integer[tiles.size()][4];
 
         tileManager = new TileManager(tiles);
         createPipeAdjacencyList(pipeMap.getMapWidth(),pipeMap.getMapHeight());
@@ -166,14 +162,14 @@ public class MinigameState extends State
 
                 int[] adjacencyDirections = new int[adjDir.length];
                 for (int i = 0; i < adjDir.length; i++){
-                    pipeAdjacencyDirections[currentIndex][i] = Integer.parseInt(adjDir[i]);
+                    pipeConnectionDirections[currentIndex][i] = Integer.parseInt(adjDir[i]);
                     adjacencyDirections[i] = Integer.parseInt(adjDir[i]);
                 }
 
                 int sourceIndex = width + (maxWidth * height);
 
-                for (int i = 0; i < pipeAdjacencyDirections[0].length; i++){
-                    currentDirectionValue = pipeAdjacencyDirections[currentIndex][i];
+                for (int i = 0; i < pipeConnectionDirections[0].length; i++){
+                    currentDirectionValue = pipeConnectionDirections[currentIndex][i];
                     if (currentDirectionValue != null){
                         int targetIndex = sourceIndex + getOffset(currentDirectionValue);
                         int indexDifference = sourceIndex - targetIndex;
@@ -263,16 +259,16 @@ public class MinigameState extends State
         Integer[] newPipeAdjacencyDirections = new Integer[4];
 
         for(int i = 0; i < 4; i++){
-            if (rotationIncrement(pipeAdjacencyDirections[sourceIndex][i]) != null){
-                newPipeAdjacencyDirections[i] = rotationIncrement(pipeAdjacencyDirections[sourceIndex][i]) % 4;
+            if (rotationIncrement(pipeConnectionDirections[sourceIndex][i]) != null){
+                newPipeAdjacencyDirections[i] = rotationIncrement(pipeConnectionDirections[sourceIndex][i]) % 4;
             }
         }
 
-        for (Integer adjacencyDirection : pipeAdjacencyDirections[sourceIndex]) {
-            if (adjacencyDirection != null){
-                targetIndex = sourceIndex + getOffset(adjacencyDirection);
+        for (Integer connectionDirection : pipeConnectionDirections[sourceIndex]) {
+            if (connectionDirection != null){
+                targetIndex = sourceIndex + getOffset(connectionDirection);
                 if(targetIndex >= 0 && targetIndex < adjacencyList.length){
-                    adjacencyList[sourceIndex][adjacencyDirection] = 0;
+                    adjacencyList[sourceIndex][connectionDirection] = 0;
                     adjacencyList[targetIndex][getRelativePosition(targetIndex, sourceIndex)] = 0;
                 }
             }
@@ -283,7 +279,7 @@ public class MinigameState extends State
                 targetIndex = sourceIndex + getOffset(newAdjacencyDirection);
 
                 if(targetIndex >= 0 && targetIndex < adjacencyList.length){
-                    for (Integer direction: pipeAdjacencyDirections[targetIndex]) {
+                    for (Integer direction: pipeConnectionDirections[targetIndex]) {
                         if (direction != null){
                             if (direction == getRelativePosition(targetIndex, sourceIndex)){
                                 adjacencyList[sourceIndex][newAdjacencyDirection] = 1;
@@ -295,7 +291,7 @@ public class MinigameState extends State
             }
         }
 
-        pipeAdjacencyDirections[sourceIndex] = newPipeAdjacencyDirections;
+        pipeConnectionDirections[sourceIndex] = newPipeAdjacencyDirections;
     }
 
     /***
@@ -397,7 +393,7 @@ public class MinigameState extends State
 
         if (targetIndex >= 0 && targetIndex < adjacencyList.length){
             if (indexDifference != 0 && !changeRow){
-                for (Integer pipeAdjacencyDirection : pipeAdjacencyDirections[targetIndex]) {
+                for (Integer pipeAdjacencyDirection : pipeConnectionDirections[targetIndex]) {
                     if(pipeAdjacencyDirection != null){
                         if (pipeAdjacencyDirection == getRelativePosition(targetIndex, sourceIndex)){
                             connectionExists = true;

@@ -548,8 +548,10 @@ public class GameState extends State
 
         strengthenFortresses();
 
-        if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 20){
-            destroyStation();
+        if(attackerManager.getTurnOfFirstAttack() != null){
+            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 20){
+                destroyStation();
+            }
         }
 
         //If the fortresses have destroyed all engines, finish the game
