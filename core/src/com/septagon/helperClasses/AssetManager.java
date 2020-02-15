@@ -7,7 +7,6 @@ package com.septagon.helperClasses;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-
 public class AssetManager {
     private static final Texture engineTexture1 = new Texture(Gdx.files.internal("images/engineSF.png"));
     private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engineRS.png"));
