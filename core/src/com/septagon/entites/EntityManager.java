@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 public class EntityManager
 {
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
+    }
+
     //ArrayList that will hold a pointer to all the entities in the game
     private ArrayList<Entity> entities;
 

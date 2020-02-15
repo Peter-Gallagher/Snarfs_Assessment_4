@@ -178,7 +178,7 @@ public class PatrolTest {
 
         Mockito.doCallRealMethod().when(mockedPatrol).move();
         Mockito.doReturn(0).when(mockedPatrol).getTileClosestToGoal(any(ArrayList.class));
-        Mockito.doReturn(new ArrayList<Integer>(Arrays.asList(0))).when(mockedPatrol).functionForLucas();
+        Mockito.doReturn(new ArrayList<Integer>(Arrays.asList(0))).when(mockedPatrol).getPossibleMoveIndexes();
 
         mockedPatrol.tileManager.getTiles().add(mockedTargetTile);
         mockedPatrol.path.add(mockedTargetTile);

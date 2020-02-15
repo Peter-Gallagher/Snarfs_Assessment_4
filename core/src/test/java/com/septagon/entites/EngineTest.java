@@ -176,6 +176,7 @@ class EngineTest {
         Fortress fortress = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
         Mockito.doCallRealMethod().when(testE).damageEnemyIfInRange(fortress);
         Mockito.doCallRealMethod().when(testE).inRange(fortress);
+        Mockito.doCallRealMethod().when(testE).shoot(fortress);
 
         try {
             testE.damageEnemyIfInRange(null);

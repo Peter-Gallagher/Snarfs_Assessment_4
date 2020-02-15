@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol
-    private int pathIndex;
-    private ArrayList<Tile> path;
+    protected int pathIndex;
+    protected ArrayList<Tile> path;
 
-    private TileManager tileManager;
+    protected TileManager tileManager;
 
     public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);
@@ -60,7 +60,7 @@ public class Patrol extends Vehicle  {
      * @param moves a list of tiles
      * @return a list of distances from moves to targetNode
      */
-    private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
+    protected ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
         ArrayList<Float> listOfDistances = new ArrayList<Float>();
         int targetX = targetNode.getCol();
         int targetY = targetNode.getRow();
@@ -85,7 +85,7 @@ public class Patrol extends Vehicle  {
      * @param moves a list of tile indexes
      * @return the index of the tile closest to the goal tile
      */
-    private int getTileClosestToGoal(ArrayList<Integer> moves){
+    protected int getTileClosestToGoal(ArrayList<Integer> moves){
         ArrayList<Float> distances = getDistanceToTarget(path.get(pathIndex), moves);
         int shortestDistanceIndex = 0;
 
