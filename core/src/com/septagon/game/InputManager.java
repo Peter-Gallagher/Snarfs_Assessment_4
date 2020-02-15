@@ -38,7 +38,6 @@ public class InputManager implements InputProcessor
     }
 
 
-    //TODO WHAT!
     /**
      * Usused method that is required since we are implementing InputProcessor
      */
@@ -55,86 +54,115 @@ public class InputManager implements InputProcessor
      */
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         //checks if the game is in the main game state
-        //TODO Redundant Fetches, MEMORY
 
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
-            //Cast the currentState to a gameState so that gameState specific methods can be used
-            GameState currentState = (GameState)stateManager.getCurrentState();
-
-            if(!currentState.isPaused() && currentState.isPlayerTurn())
-            {
-                // ignore if its not left mouse button or first touch pointer
-                if (button != Input.Buttons.LEFT || pointer > 0) return false;
-
-                //Get the positions of the input in terms of screen coords
-                hasBeenTouched = true;
-                xCoord = Gdx.input.getX();
-                yCoord = Gdx.input.getY();
-
-                //Convert input coords to screen coords
-                xCoord = xCoord + camera.position.x - (Gdx.graphics.getWidth() / 2);
-                yCoord = (Gdx.graphics.getHeight() - yCoord) + camera.position.y - (Gdx.graphics.getHeight() / 2);
-
-                //Create versions of the input that are kept in terms of screen coords
-                float onScreenXCoord = Gdx.input.getX();
-                float onScreenYCoord = Gdx.graphics.getHeight() - Gdx.input.getY();
-
-                //Check if any of the UI elements have been pressed
-                if (currentState.getUiManager().getShowStatsRect().contains(onScreenXCoord, onScreenYCoord))
-                {
-                    currentState.getUiManager().pressedShowStatsButton();
-                }
-                if (currentState.getUiManager().getMinimiseRect().contains(onScreenXCoord, onScreenYCoord))
-                {
-                    currentState.getUiManager().pressedMinimiseButton();
-                }
-
-                //call gamestate method that handles when places on the map are pressed
-                currentState.getAttackerManager().touchedTile(xCoord, yCoord);
-
-                dragging = true;
-            }
+            return gameClickInput(pointer, button);
         }
         else if(stateManager.getCurrentState().getID() == State.StateID.MENU){
-            //Cast the currentState to menuState so menuState specific methods can be used
-            MenuState currentState = (MenuState) stateManager.getCurrentState();
-
-            //Call menustate method that processes a mouse press
-            currentState.checkIfClickedOption(screenX, Gdx.graphics.getHeight() - screenY);
+            menuClickInput(screenX, screenY);
         }
         else if(stateManager.getCurrentState().getID() == State.StateID.GAME_OVER){
-            //Casts the currentState to a gameOverState so gameOverState specific methods can be used
-            GameOverState currentState = (GameOverState) stateManager.getCurrentState();
-
-            //Call gameOverState method that processes a mouse press
-            currentState.checkIfButtonPressed(screenX, Gdx.graphics.getHeight() - screenY);
+            gameOverClickInput(screenX, screenY);
         }
         else if(stateManager.getCurrentState().getID() == State.StateID.MINIGAME){
-            MinigameState currentState = (MinigameState) stateManager.getCurrentState();
-
-            //Get the positions of the input in terms of screen coords
-            xCoord = Gdx.input.getX();
-            yCoord = Gdx.input.getY();
-
-            //Convert input coords to screen coords
-            //xCoord = (xCoord * 0.3f) + (80)  - (Gdx.graphics.getWidth() / 2) * 0.3f;
-
-            xCoord = (xCoord - (Gdx.graphics.getWidth() / 2)) * 0.3f + 80;
-
-            //yCoord = (Gdx.graphics.getHeight() * 0.3f - yCoord * 0.3f) + (70) - (Gdx.graphics.getHeight() / 2) * 0.3f;
-
-            yCoord = (Gdx.graphics.getHeight() - yCoord - (Gdx.graphics.getHeight() / 2)) * 0.3f + 70;
-
-            currentState.handleInputForMinigame(xCoord,yCoord);
+            miniGameClickInput();
         }
         return true;
     }
 
+    /***
+     * Method that handles input from mouse click while in Game state
+     * @param pointer
+     * @param button The button that the input occurred with
+     * @return true if input was a left click, else false
+     */
+    private boolean gameClickInput(int pointer, int button){
+        //Cast the currentState to a gameState so that gameState specific methods can be used
+        GameState currentState = (GameState)stateManager.getCurrentState();
 
-    public Tile miniGameClickInput(float x, float y){
-        //TODO make this p.s. why is this code so shit
-        return null;
+        if(!currentState.isPaused() && currentState.isPlayerTurn())
+        {
+            // ignore if its not left mouse button or first touch pointer
+            if (button != Input.Buttons.LEFT || pointer > 0) return false;
+
+            //Get the positions of the input in terms of screen coords
+            hasBeenTouched = true;
+            xCoord = Gdx.input.getX();
+            yCoord = Gdx.input.getY();
+
+            //Convert input coords to screen coords
+            xCoord = xCoord + camera.position.x - (Gdx.graphics.getWidth() / 2);
+            yCoord = (Gdx.graphics.getHeight() - yCoord) + camera.position.y - (Gdx.graphics.getHeight() / 2);
+
+            //Create versions of the input that are kept in terms of screen coords
+            float onScreenXCoord = Gdx.input.getX();
+            float onScreenYCoord = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            //Check if any of the UI elements have been pressed
+            if (currentState.getUiManager().getShowStatsRect().contains(onScreenXCoord, onScreenYCoord))
+            {
+                currentState.getUiManager().pressedShowStatsButton();
+            }
+            if (currentState.getUiManager().getMinimiseRect().contains(onScreenXCoord, onScreenYCoord))
+            {
+                currentState.getUiManager().pressedMinimiseButton();
+            }
+
+            //call gamestate method that handles when places on the map are pressed
+            currentState.getAttackerManager().touchedTile(xCoord, yCoord);
+
+            dragging = true;
+        }
+        return true;
+    }
+
+    /***
+     * Method that handles input from mouse click while in Menu state
+     * @param screenX the X coordinate that was clicked on the screen
+     * @param screenY the Y coordinate that was clicked on the screen
+     */
+    private void menuClickInput(int screenX, int screenY){
+        //Cast the currentState to menuState so menuState specific methods can be used
+        MenuState currentState = (MenuState) stateManager.getCurrentState();
+
+        //Call menustate method that processes a mouse press
+        currentState.checkIfClickedOption(screenX, Gdx.graphics.getHeight() - screenY);
+    }
+
+    /***
+     * Method that handles input from mouse click while in gameOver state
+     * @param screenX the X coordinate that was clicked on the screen
+     * @param screenY the Y coordinate that was clicked on the screen
+     */
+    private void gameOverClickInput(int screenX, int screenY){
+        //Casts the currentState to a gameOverState so gameOverState specific methods can be used
+        GameOverState currentState = (GameOverState) stateManager.getCurrentState();
+
+        //Call gameOverState method that processes a mouse press
+        currentState.checkIfButtonPressed(screenX, Gdx.graphics.getHeight() - screenY);
+    }
+
+    /***
+     * Method that handles input from mouse click while in miniGame state
+     */
+    public void miniGameClickInput(){
+        MinigameState currentState = (MinigameState) stateManager.getCurrentState();
+
+        //Get the positions of the input in terms of screen coords
+        xCoord = Gdx.input.getX();
+        yCoord = Gdx.input.getY();
+
+        //Convert input coords to screen coords
+        //xCoord = (xCoord * 0.3f) + (80)  - (Gdx.graphics.getWidth() / 2) * 0.3f;
+
+        xCoord = (xCoord - (Gdx.graphics.getWidth() / 2)) * 0.3f + 80;
+
+        //yCoord = (Gdx.graphics.getHeight() * 0.3f - yCoord * 0.3f) + (70) - (Gdx.graphics.getHeight() / 2) * 0.3f;
+
+        yCoord = (Gdx.graphics.getHeight() - yCoord - (Gdx.graphics.getHeight() / 2)) * 0.3f + 70;
+
+        currentState.handleInputForMinigame(xCoord,yCoord);
     }
 
 
