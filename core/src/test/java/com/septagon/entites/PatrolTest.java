@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -90,10 +91,11 @@ public class PatrolTest {
         Mockito.doCallRealMethod().when(testEngine1).setDead();
 
         Mockito.doCallRealMethod().when(mockedPatrol).inRange(testEngine1);
+        Mockito.doCallRealMethod().when(mockedPatrol).patrolShoot(testEngine1);
         Mockito.doCallRealMethod().when(mockedPatrol).shoot(testEngine1);
 
         try {
-            mockedPatrol.shoot(testEngine1);
+            mockedPatrol.patrolShoot(testEngine1);
         } catch (Exception e) {
 
         }
@@ -104,7 +106,7 @@ public class PatrolTest {
         testEngine1.row = 2;
 
         try {
-            mockedPatrol.shoot(testEngine1);
+            mockedPatrol.patrolShoot(testEngine1);
         } catch (Exception e) {
 
         }
@@ -124,9 +126,8 @@ public class PatrolTest {
         Tile mockedTile = mock(Tile.class);
         Tile mockedTargetTile = mock(Tile.class);
 
+
         mockedPatrol.tileManager = new TileManager(new ArrayList<Engine>(), new ArrayList<Tile>());
-
-
 
 
         mockedTile.col = 1;
@@ -143,9 +144,62 @@ public class PatrolTest {
 
 
         mockedPatrol.tileManager.getTiles().add(mockedTargetTile);
+        ArrayList<Integer> moves = new ArrayList<Integer>(Arrays.asList(0));
+
+        Mockito.doCallRealMethod().when(mockedPatrol).getDistanceToTarget(mockedTile, moves);
+        ArrayList<Float> retVal = mockedPatrol.getDistanceToTarget(mockedTile, moves);
+        ArrayList<Float> compVal = new ArrayList<Float>(Arrays.asList(12.727922f));
+        assertEquals(retVal, compVal);
 
 
     }
+
+
+    @Test // test for move
+    public void testMove() {
+        mockedPatrol.tileManager = new TileManager(new ArrayList<Engine>(), new ArrayList<Tile>());
+        mockedPatrol.path = new ArrayList<Tile>();
+        Tile mockedTargetTile = mock(Tile.class);
+
+        mockedTargetTile.col = 10;
+        mockedTargetTile.row = 10;
+
+        mockedTargetTile.x = 10;
+        mockedTargetTile.y = 10;
+
+        mockedPatrol.col = 0;
+        mockedPatrol.row = 0;
+
+        Mockito.doCallRealMethod().when(mockedTargetTile).getCol();
+        Mockito.doCallRealMethod().when(mockedTargetTile).getRow();
+        Mockito.doCallRealMethod().when(mockedTargetTile).getX();
+        Mockito.doCallRealMethod().when(mockedTargetTile).getY();
+        //Mockito.doNothing().when(mockedPatrol).updatePathIndex(any(Tile.class));
+
+        Mockito.doCallRealMethod().when(mockedPatrol).move();
+        Mockito.doReturn(0).when(mockedPatrol).getTileClosestToGoal(any(ArrayList.class));
+        Mockito.doReturn(new ArrayList<Integer>(Arrays.asList(0))).when(mockedPatrol).functionForLucas();
+
+        mockedPatrol.tileManager.getTiles().add(mockedTargetTile);
+        mockedPatrol.path.add(mockedTargetTile);
+
+        mockedPatrol.move();
+
+        assertEquals(mockedPatrol.x, 10);
+        assertEquals(mockedPatrol.y, 10);
+
+    }
+
+
+    @Test //test for constructor
+    public void testConstructor() {
+        Patrol testPatrol = new Patrol(1,1,null,10,2,4,2,new ArrayList<Tile>(),mock(TileManager.class));
+        assertEquals(0, testPatrol.pathIndex);
+
+
+
+    }
+
 
 
 

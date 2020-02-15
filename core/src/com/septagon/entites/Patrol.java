@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol
-    private int pathIndex;
+    protected int pathIndex;
     protected ArrayList<Tile> path;
 
     protected TileManager tileManager;
@@ -45,7 +45,7 @@ public class Patrol extends Vehicle  {
 
 
     //Function that returns a list of distances of possible moves from the target node
-    private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
+    protected ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
         ArrayList<Float> listOfDistances = new ArrayList<Float>();
         int targetX = targetNode.getCol();
         int targetY = targetNode.getRow();
@@ -65,7 +65,7 @@ public class Patrol extends Vehicle  {
         return listOfDistances;
     }
 
-    private int getTileClosestToGoal(ArrayList<Integer> moves){
+    protected int getTileClosestToGoal(ArrayList<Integer> moves){
         ArrayList<Float> distances = getDistanceToTarget(path.get(pathIndex), moves);
         int shortestDistanceIndex = 0;
 
@@ -102,7 +102,7 @@ public class Patrol extends Vehicle  {
         updatePathIndex(path.get(pathIndex));
         }
 
-        private void updatePathIndex(Tile currentGoal){
+        protected void updatePathIndex(Tile currentGoal){
             if (this.col == currentGoal.getCol() && this.row == currentGoal.getRow()){
                 pathIndex = (pathIndex + 1) % path.size();
             }
