@@ -101,6 +101,10 @@ public class TiledGameMap
 		return ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getHeight();
 	}
 
+	/***
+	 * Method that gets all tiles which are passable
+	 * @return 2d array indicating tiles possibility
+	 */
 	public boolean[][] getPassable(){
 		boolean[][] passableTiles = new boolean[this.getMapHeight()][this.getMapWidth()];
 		TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);

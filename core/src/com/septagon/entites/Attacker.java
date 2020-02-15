@@ -71,6 +71,11 @@ public abstract class Attacker extends Entity
         this.rangeCorners.add(topY);
     }
 
+    /***
+     * Method that handles shooting at any enemies within range
+     * @param attacker the entity being targeted
+     * @return true if entity was shot, else false
+     */
     public boolean damageIfInRange(Attacker attacker){
         if(this.inRange(attacker)){
             shoot(attacker);
@@ -80,7 +85,12 @@ public abstract class Attacker extends Entity
         }
     }
 
-    public void enemyBullets(Engine engine, int numBullets) {
+    /***
+     * Method which handles creation of bullets being shot by an alien
+     * @param engine the fire engine being shot
+     * @param numBullets the number of bullets to be created
+     */
+    public void alienBullets(Engine engine, int numBullets) {
 
         int engineX = engine.getX();
         int engineY = engine.getY();
@@ -93,13 +103,21 @@ public abstract class Attacker extends Entity
         }
     }
 
+    /***
+     * Method which handles shooting another entity
+     * @param attacker the entity being shot at
+     */
     public void shoot(Attacker attacker){
         if(inRange(attacker)){
             attacker.takeDamage(this.damage);
         }
     }
 
-
+    /***
+     * Method to check if another entity is within range
+     * @param attacker the entity being range checked
+     * @return true if entity is within range, else false
+     */
     public boolean inRange(Attacker attacker) {
         int attackerCol = attacker.getCol();
         int attackerRow = attacker.getRow();
@@ -129,6 +147,11 @@ public abstract class Attacker extends Entity
     }
 
     //Setters
+
+    /***
+     * Method to handle being shot
+     * @param damage teh amount of damage to be taken
+     */
     public void takeDamage(int damage) {
         this.health = Math.max(this.health - damage, 0);
 

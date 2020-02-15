@@ -14,7 +14,9 @@ import com.septagon.entites.TiledGameMap;
 import com.septagon.game.InputManager;
 import com.septagon.helperClasses.TileManager;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
 Child of State class that will be used to manage the system when the user is playing the minigame
@@ -22,7 +24,6 @@ Child of State class that will be used to manage the system when the user is pla
 public class MinigameState extends State
 {
     //Used to keep track of the score in the minigame
-    private int score;
     private int[][] adjacencyList;
     int[] terminalTileIndex = new int[2];
     private TiledGameMap pipeMap;
@@ -32,16 +33,16 @@ public class MinigameState extends State
     private OrthographicCamera cameraBackground;
     private Integer[][] pipeAdjacencyDirections;
     private TileManager tileManager;
+    private static String[] pipeMaps = {"MiniGame1.tmx", "MiniGame2.tmx", "MiniGame3.tmx", "MiniGame4.tmx", "MiniGame5.tmx"};
 
     public MinigameState(InputManager inputManager, BitmapFont font, StateManager stateManager)
     {
         super(inputManager, font, StateID.MINIGAME, stateManager);
-        score = 0;
     }
 
     public void initialise()
     {
-        pipeMap = new TiledGameMap("MiniGame2.tmx");
+        pipeMap = new TiledGameMap(getRandomPipeMap());
         backGround = new TiledGameMap("MinigameBackground.tmx");
 
         for(int row = 0; row < pipeMap.getMapHeight(); row++)
@@ -61,6 +62,20 @@ public class MinigameState extends State
         initializeCamera();
     }
 
+    /***
+     * returns the file name of a random pipeMap
+     * @return the file name of a pipeMap
+     */
+    private String getRandomPipeMap(){
+        Random random = new Random();
+
+        return ( pipeMaps[random.nextInt(pipeMaps.length)]);
+        //"MinigameMaps/" +
+}
+
+    /***
+     * sets up the cameras used to render the minigame
+     */
     private void initializeCamera(){
 
         //Sets up the camera parameters and moves it to its inital position
@@ -87,6 +102,10 @@ public class MinigameState extends State
     {
     }
 
+    /***
+     * renders the whole minigame
+     * @param batch The batch which is used for all the rendering
+     */
     public void render(SpriteBatch batch)
     {
         Gdx.gl.glClearColor(0, 1, 0, 1);
@@ -103,7 +122,10 @@ public class MinigameState extends State
 
     }
 
-
+    /***
+     * Method used to rotate a tile
+     * @param tileToRotate the tile which is to be rotated
+     */
     public void rotateTile(Tile tileToRotate){
         TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
 
@@ -122,6 +144,11 @@ public class MinigameState extends State
     }
 
 
+    /***
+     * Method which creates an adjacency list for all pipes
+     * @param maxWidth the width of PipeMap
+     * @param maxHeight the height of pipeMap
+     */
     public void createPipeAdjacencyList(int maxWidth, int maxHeight){
         int terminalIndex = 0;
         int currentIndex;
@@ -169,7 +196,9 @@ public class MinigameState extends State
         ensureTwoWayRelationship();
     }
 
-
+    /***
+     * Method used to ensure that there are no one way adjacencys in adjacencyList
+     */
     private void ensureTwoWayRelationship(){
         TiledMapTileLayer pipeLayer = pipeMap.getTileLayer(0);
         int direction;
@@ -202,6 +231,12 @@ public class MinigameState extends State
     }
 
 
+    /***
+     * Method to get the direction a target tile is from a source tile
+     * @param sourceIndex the index of the source tile
+     * @param targetIndex the index of the target tile
+     * @return the direction from the source tile to the target tile
+     */
     private int getRelativePosition(int sourceIndex, int targetIndex){
         int indexDifference = sourceIndex - targetIndex;
         switch (indexDifference){
@@ -218,7 +253,10 @@ public class MinigameState extends State
         }
     }
 
-
+    /***
+     * Method to update adjacencyList when a tile is rotated
+     * @param sourceIndex the index of the tile which has been rotated
+     */
     public void updateAdjacencyMatrix(int sourceIndex){
         int targetIndex;
 
@@ -260,7 +298,11 @@ public class MinigameState extends State
         pipeAdjacencyDirections[sourceIndex] = newPipeAdjacencyDirections;
     }
 
-
+    /***
+     * Method to get the index offset of an adjacent tile in a given direction
+     * @param direction the directioon from the source tile
+     * @return
+     */
     private int getOffset(int direction){
         switch(direction){
             case 0:
@@ -268,9 +310,9 @@ public class MinigameState extends State
             case 1:
                 return 1;
             case 2:
-                return - 5;
+                return - pipeMap.getMapWidth();
             case 3:
-                return 5;
+                return pipeMap.getMapWidth();
             case 4:
                 return -1;
             default:
@@ -278,7 +320,11 @@ public class MinigameState extends State
         }
     }
 
-
+    /***
+     * Method to get the new direction a pipe end is facing after being rotated
+     * @param currentDirection the direction the pipe is end facing before being rotated
+     * @return the direction the pipe end is facing after being rotated
+     */
     private Integer rotationIncrement(Integer currentDirection){
 
         if (currentDirection == null){
@@ -299,7 +345,11 @@ public class MinigameState extends State
         }
     }
 
-
+    /***
+     * Method to handle user input when playing the minigame
+     * @param xCoord the X position of a mouse click scaled to the origin of pipeMap
+     * @param yCoord the Y position of a mouse click scaled to the origin of pipeMap
+     */
     public void handleInputForMinigame(float xCoord, float yCoord) {
         Tile tileClicked = getTileClicked(xCoord,yCoord);
         boolean isNonTerminal = false;
@@ -320,7 +370,10 @@ public class MinigameState extends State
         }
     }
 
-
+    /***
+     * Method to check if a valid solution to the puzzle has been reached
+     * @return true if puzzle complete, else false
+     */
     public boolean checkPuzzleComplete(){
         ArrayList<Integer> arr;
         arr = tileManager.BFS(adjacencyList, terminalTileIndex[0],5, 50);
@@ -328,7 +381,12 @@ public class MinigameState extends State
         return arr.contains(terminalTileIndex[1]);
     }
 
-
+    /***
+     * Method to check if there is another pipe end to connect to from a given pipe
+     * @param sourceIndex the index of the pipe being checked
+     * @param pipeEndPosition the direction the pipe end is facing
+     * @return true if two pipe ends are connected, else false
+     */
     private boolean checkConnetcsToPipe(int sourceIndex, int pipeEndPosition){
         int targetIndex = sourceIndex + getOffset(pipeEndPosition);
         int indexDifference = sourceIndex - targetIndex;
@@ -353,12 +411,19 @@ public class MinigameState extends State
         return connectionExists;
     }
 
-
+    /***
+     * Method to return player to the main game once minigmae has been completed
+     */
     private void returnToMainGame() {
         stateManager.changeToGameState();
     }
 
-
+    /***
+     * Method to find which tile has been clicked on by the user
+     * @param x the X position of a mouse press
+     * @param y the Y position of a mouse press
+     * @return the tile that was clicked on
+     */
     public Tile getTileClicked(float x, float y){
         for(Tile tile: tiles) {
             if(tile.checkIfClickedInside(x, y)){

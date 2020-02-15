@@ -2,17 +2,16 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.septagon.helperClasses.TileManager;
-import com.septagon.states.GameState;
 
 import java.util.ArrayList;
 
 public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol
-    protected int pathIndex;
-    protected ArrayList<Tile> path;
+    private int pathIndex;
+    private ArrayList<Tile> path;
 
-    protected TileManager tileManager;
+    private TileManager tileManager;
 
     public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);
@@ -24,7 +23,12 @@ public class Patrol extends Vehicle  {
 
 
     //this will return the index of all tiles within range that the patrol can move to.
-    public ArrayList<Integer> functionForLucas(){
+
+    /***
+     * Method that finds all tiles which the patrol can move to
+     * @return a list of indexes of all tiles the patrol can move to
+     */
+    public ArrayList<Integer> getPossibleMoveIndexes(){
         int startIndex = this.col + (this.row * 80);
         ArrayList<Integer> BFSReturnedValues;
         BFSReturnedValues = tileManager.BFS(tileManager.getAdjacencyList(), startIndex,80, this.speed);
@@ -32,11 +36,15 @@ public class Patrol extends Vehicle  {
     }
 
 
-
+    /***
+     * Method to handel a patrol trying to shoot at a fire engine
+     * @param engine the fire engine being shot at
+     * @return true if fire engine shot, else false
+     */
     public boolean patrolShoot(Engine engine){
         if(this.inRange(engine)){
             this.shoot(engine);
-            this.enemyBullets(engine, 25);
+            this.alienBullets(engine, 25);
             return true;
         } else {
             return false;
@@ -45,7 +53,14 @@ public class Patrol extends Vehicle  {
 
 
     //Function that returns a list of distances of possible moves from the target node
-    protected ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
+
+    /***
+     *Method which finds the distances of a list of tiles to a given target tile
+     * @param targetNode the target tile to calculate distance from
+     * @param moves a list of tiles
+     * @return a list of distances from moves to targetNode
+     */
+    private ArrayList<Float> getDistanceToTarget(Tile targetNode, ArrayList<Integer> moves) {
         ArrayList<Float> listOfDistances = new ArrayList<Float>();
         int targetX = targetNode.getCol();
         int targetY = targetNode.getRow();
@@ -65,7 +80,12 @@ public class Patrol extends Vehicle  {
         return listOfDistances;
     }
 
-    protected int getTileClosestToGoal(ArrayList<Integer> moves){
+    /***
+     * Method which finds which of a given set of tiles is closest to a target tile
+     * @param moves a list of tile indexes
+     * @return the index of the tile closest to the goal tile
+     */
+    private int getTileClosestToGoal(ArrayList<Integer> moves){
         ArrayList<Float> distances = getDistanceToTarget(path.get(pathIndex), moves);
         int shortestDistanceIndex = 0;
 
@@ -78,14 +98,16 @@ public class Patrol extends Vehicle  {
         return shortestDistanceIndex;
     }
 
-    //TODO implement movement mechanism
+    /***
+     * Method to handel the movement of patrols
+     */
     public void move(){
         ArrayList<Integer> moves = new ArrayList<Integer>();
         int currentTileIndex = this.col + (this.row * 80);
         int moveIndex;
         Tile tileToMoveTo;
 
-        moves = functionForLucas();
+        moves = getPossibleMoveIndexes();
         moveIndex = getTileClosestToGoal(moves);
         tileToMoveTo = tileManager.getTileFromIndex(moves.get(moveIndex));
 
@@ -102,7 +124,7 @@ public class Patrol extends Vehicle  {
         updatePathIndex(path.get(pathIndex));
         }
 
-        protected void updatePathIndex(Tile currentGoal){
+        private void updatePathIndex(Tile currentGoal){
             if (this.col == currentGoal.getCol() && this.row == currentGoal.getRow()){
                 pathIndex = (pathIndex + 1) % path.size();
             }

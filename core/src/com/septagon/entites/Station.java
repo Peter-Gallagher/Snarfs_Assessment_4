@@ -8,11 +8,19 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Station extends Entity
 {
+    private int fillRange;
+
     /***
      *Constructor that callS Entity constructor that is used to set up all member variables
      */
-    public Station(int col, int row, int width, int height, Texture texture)
+    public Station(int col, int row, int width, int height, Texture texture,int fillRange)
     {
         super(col,row,width,height,texture);
+        this.fillRange = fillRange;
     }
+
+    public int getFillRange(){
+        return this.fillRange;
+    }
+
 }

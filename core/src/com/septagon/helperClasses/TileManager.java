@@ -15,16 +15,10 @@ import java.util.Queue;
 
 public class TileManager {
 
-    public void setAdjacencyList(int[][] adjacencyList) {
-        this.adjacencyList = adjacencyList;
-    }
 
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private int[][] adjacencyList;
-
-
-
 
     public TileManager(ArrayList<Engine> engines, ArrayList<Tile> tiles){
         this.engines = engines;
@@ -49,10 +43,9 @@ public class TileManager {
     }
 
     /***
-     * Sets up the tiles which contain an engine, fortress or the station to be occupied
+     * Sets up all tiles which contain an engine, fortress or the station to be occupied
      * @param gameMap a tileMap containing the map of the game
      */
-    //TODO there must be a better way to initialise the Fortresses than hard coding each
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
         int width = gameMap.getMapWidth();
@@ -65,51 +58,6 @@ public class TileManager {
             for (int j = 0; j < passableTiles[0].length - 1; j++){
                 Tile tile = getTileAtLocation(j, i, width, height);
                 tile.setOccupied(passableTiles[i][j]);
-            }
-        }
-
-
-        //Set the all the tiles within the fire station fortress bounds as occupied
-        for (int x = 34; x < 42; x++)
-        {
-            for (int y = 10; y < 15; y++)
-            {
-                Tile t = getTileAtLocation(x, y, width, height);
-                if (t != null)
-                    t.setOccupied(true);
-            }
-        }
-
-        //Sets all the tiles within the minister fortress as occupied
-        for (int x = 41; x < 49; x++)
-        {
-            for (int y = 41; y < 48; y++)
-            {
-                Tile t = getTileAtLocation(x, y, width, height);
-                if (t != null)
-                    t.setOccupied(true);
-            }
-        }
-
-        //Sets all the tiles within the station fortress as occupied
-        for (int x = 71; x < 79; x++)
-        {
-            for (int y = 30; y < 34; y++)
-            {
-                Tile t = getTileAtLocation(x, y, width, height);
-                if (t != null)
-                    t.setOccupied(true);
-            }
-        }
-
-        //Sets all the tiles in the fire station as occupied
-        for (int x = 72; x < 80; x++)
-        {
-            for (int y = 6; y < 10; y++)
-            {
-                Tile t = getTileAtLocation(x, y, width, height);
-                if (t != null)
-                    t.setOccupied(true);
             }
         }
     }
@@ -178,7 +126,6 @@ public class TileManager {
     /***
      * Get the movable tiles for all the engines based on their positions
      */
-
     public void setMovableTiles(Engine currentEngine) {
         //Reset all moveable tiles from previous turn
         resetMovableTiles();
@@ -273,7 +220,6 @@ public class TileManager {
 
             visited[currentTileIndex] = true;
 
-            //TODO: can probably be done better
             for (int i = 0; i < 4; i++) {
                 if (tileAdjacencyList[currentTileIndex][i] == 1) {
                     newIndex = getNewIndex(currentTileIndex, i, width);
@@ -335,7 +281,6 @@ public class TileManager {
             return !checkTile.isOccupied();
         }
 
-
         return false;
     }
 
@@ -365,5 +310,9 @@ public class TileManager {
 
     public void setTiles(ArrayList<Tile> tiles) {
         this.tiles = tiles;
+    }
+
+    public void setAdjacencyList(int[][] adjacencyList) {
+        this.adjacencyList = adjacencyList;
     }
 }

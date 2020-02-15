@@ -24,6 +24,7 @@ public final class AssetManager {
     private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engineRS.png"));
     private static final Texture engineTexture3 = new Texture(Gdx.files.internal("images/engineMCL.png"));
     private static final Texture engineTexture4 = new Texture(Gdx.files.internal("images/engineRP.png"));
+    private static final Texture destroyedEngineTexture = new Texture(Gdx.files.internal("images/destroyedFE.png"));
     private static final Texture moveSpaceTexture = new Texture(Gdx.files.internal("move_square.png"));
 
     //TODO add extra fortress textures
@@ -39,7 +40,9 @@ public final class AssetManager {
     private static final Texture defeatedStationTexture = new Texture(Gdx.files.internal("images/DefeatedRailStation.png"));
 
     private static final Texture fireStationTexture = new Texture(Gdx.files.internal("images/fireStation.png"));
+    private static final Texture destroyedStationTexture = new Texture(Gdx.files.internal("images/destroyedFS.png"));
     private static final Texture creepyPatrol = new Texture(Gdx.files.internal("images/creepyPatrol.png"));
+    private static final Texture deadPatrol = new Texture(Gdx.files.internal("images/deadPatrol.png"));
 
     private static final Texture fortressBoundaryImage = new Texture(Gdx.files.internal("selected fortress.png"));
 

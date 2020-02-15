@@ -69,7 +69,7 @@ class EngineTest {
     @Test //A test for the Engine class' ifInRangeFill method
     public void testIfInRangeFill() throws Exception {
 
-        Station testS = new Station(0, 2, 256, 128, null);
+        Station testS = new Station(0, 2, 256, 128, null, 3);
 
 
         Mockito.doCallRealMethod().when(testE).setVolume(10);

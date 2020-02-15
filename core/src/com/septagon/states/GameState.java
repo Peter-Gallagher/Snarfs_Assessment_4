@@ -20,13 +20,9 @@ import java.util.ArrayList;
 Child class of the State class that will manage the system when the user is in the game
  */
 
-//TODO ABSOLUTELY BUTTFUCK GOD, CLASS. WE ARE GOD NOW
 
 public class GameState extends State
 {
-
-    //TODO: these shouldn't be hard coded
-    // find where window size is stored and call from there
 
     // this is our "target" resolution, note that the window can be any size, it is not bound to this one
     public final static float VP_WIDTH = 1280;
@@ -75,7 +71,6 @@ public class GameState extends State
     private UIManager uiManager;
 
     //Creates an array of bullets
-    //TODO: not public static
     public static ArrayList<Bullet> bullets;
     //private boolean shouldCreateBullets = false;
 
@@ -100,6 +95,7 @@ public class GameState extends State
      * Constructor that sets inital values for all variables and gets values of variables that are used throughout full program
      * @param inputManager The games input manager that handles all the games input
      * @param font The font being used for the game
+     * @param stateManager The games state manager for handling changing state
      * @param camera The camera that controls what is displayed on the screen
      */
     public GameState(InputManager inputManager, BitmapFont font, StateManager stateManager, OrthographicCamera camera)
@@ -120,14 +116,14 @@ public class GameState extends State
     public void initialise()
     {
         //TODO fireEngines need unique stats and textures
-        initializeFireEngines();
         //Initialises all engines, fortress and stations in the game
+        initializeFireEngines();
 
         //TODO fortresses need unique stats and textures
         initializeFortresses();
 
 
-        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture());
+        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 3);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
@@ -150,6 +146,10 @@ public class GameState extends State
         attackerManager = new AttackerManager(engines, tiles, patrols, fortresses, this);
     }
 
+
+    /***
+     * Initializes all fire engines in the game and moves them to their starting positions
+     */
     private void initializeFireEngines(){
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 100, 100, 4, 01);
@@ -180,14 +180,16 @@ public class GameState extends State
 
     }
 
-
+    /***
+     * Initializes all fortresses in the game
+     */
     private void initializeFortresses(){
         //creates all fortress objects
         Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
         Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
         Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress1 = new Fortress(9, 42, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress2 = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
         Fortress newFortress3 = new Fortress(9, 21, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
 
         //Adds all the fortresses to the ArrayList of fortresses
@@ -195,11 +197,15 @@ public class GameState extends State
         fortresses.add(fortressFire);
         fortresses.add(fortressMinister);
         fortresses.add(fortressStation);
-        fortresses.add(newFortress1);
-        fortresses.add(newFortress2);
+        fortresses.add(fortressSavlos);
+        fortresses.add(fortressCliffordsTower);
         fortresses.add(newFortress3);
     }
 
+
+    /***
+     * initialises all patrols in the game
+     */
     private void initializePatrols() {
         //create preset paths for patrols
         ArrayList<Tile> path1 = initialisePath1();
@@ -219,6 +225,10 @@ public class GameState extends State
 
     }
 
+    /***
+     * initialise the path to be taken by patrol1
+     * @return the node path of patrol1
+     */
     public ArrayList<Tile> initialisePath1(){
 
         ArrayList<Tile> path1 = new ArrayList<>();
@@ -238,6 +248,10 @@ public class GameState extends State
         return path1;
     }
 
+    /***
+     * initialise the path to be taken by patrol2
+     * @return the node path of patrol2
+     */
     public ArrayList<Tile> initialisePath2(){
 
         ArrayList<Tile> path2 = new ArrayList<>();
@@ -257,6 +271,10 @@ public class GameState extends State
         return path2;
     }
 
+    /***
+     * initialise the path to be taken by patrol3
+     * @return the node path of patrol3
+     */
     public ArrayList<Tile> initialisePath3(){
 
         ArrayList<Tile> path3 = new ArrayList<>();
@@ -289,7 +307,9 @@ public class GameState extends State
     }
 
 
-
+    /***
+     * Method to initialise the entity manager
+     */
     private void initializeEntityManager(){
         //Adds all the entities to the entity manager so all their updating and rendering can be handled
         entityManager = new EntityManager();
@@ -309,7 +329,9 @@ public class GameState extends State
         entityManager.initialise();
     }
 
-
+    /***
+     * Method to initialise the game camera
+     */
     private void initializeCamera(){
         // Intialises the game viewport and spritebatch
         viewport = new ExtendViewport(VP_WIDTH, VP_HEIGHT, camera);
@@ -322,7 +344,9 @@ public class GameState extends State
         camera.update();
     }
 
-
+    /***
+     * Method to initialise the game map
+     */
     private void initializeGameMap(){
 
         //Creates the gameMap instance that will be used to load the map from the tmx file
@@ -492,7 +516,9 @@ public class GameState extends State
         }
     }
 
-    //TODO create turn update loop for patrol. i.e. if a fireEngine is in range shoot it, else move.
+    /***
+     * Method that handles all the updating when patrols are moved
+     */
     public void patrolTurnUpdate(){
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
@@ -512,7 +538,9 @@ public class GameState extends State
         attackerManager.handleDeadPatrols();
     }
 
-
+    /***
+     * Method to handel all actions and checks to take place after an alien turn
+     */
     private void postAlienTurn(){
         boolean playMiniGame = false;
         currentFortressIndex = 0;
@@ -550,7 +578,9 @@ public class GameState extends State
 
     }
 
-
+    /***
+     * Method responsible for strengthening fortresses over time
+     */
     public void strengthenFortresses(){
 
         if (turnsPassed >= 10){
@@ -564,7 +594,9 @@ public class GameState extends State
 
     }
 
-
+    /***
+     * Method that handles the destruction of the fire station
+     */
     public void destroyStation(){
         fireStation.setDead();
         //TODO: create an asset for destroyed fire station
@@ -674,8 +706,6 @@ public class GameState extends State
         return playerTurn;
     }
 
-    //public boolean isShouldCreateBullets() { return shouldCreateBullets; }
-
     public boolean isPaused()
     {
         return paused;
@@ -698,11 +728,10 @@ public class GameState extends State
         this.turnsPassed = turnsPassed;
     }
 
-    //public void setShouldCreateBullets(boolean shouldCreateBullets) { this.shouldCreateBullets = shouldCreateBullets; }
-
     public int getMapWidth() {
         return gameMap.getMapWidth();
     }
+
     public int getMapHeight() {
         return gameMap.getMapHeight();
     }

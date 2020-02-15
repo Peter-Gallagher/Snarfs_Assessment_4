@@ -17,7 +17,6 @@ public class Bullet {
     public boolean remove = false;
 
 
-    //TODO: refactor so constant speed in all directions
     //creates a bullet with attacker and target positions
     public Bullet (float attackerX, float attackerY, float targetX, float targetY, boolean water) {
         this.x = attackerX;
