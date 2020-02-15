@@ -9,12 +9,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class AssetManager {
-    //TODO add extra fire engine textures
     private static final Texture engineTexture1 = new Texture(Gdx.files.internal("images/engineSF.png"));
     private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engineRS.png"));
     private static final Texture engineTexture3 = new Texture(Gdx.files.internal("images/engineMCL.png"));
     private static final Texture engineTexture4 = new Texture(Gdx.files.internal("images/engineRP.png"));
-    private static final Texture destroyedEngineTexture = new Texture(Gdx.files.internal("images/destroyedFE.png"));
+
+    private static final Texture destroyedEngineTexture1 = new Texture(Gdx.files.internal("images/destroyedEngineSF.png"));
+    private static final Texture destroyedEngineTexture2 = new Texture(Gdx.files.internal("images/destroyedEngineRS.png"));
+    private static final Texture destroyedEngineTexture3 = new Texture(Gdx.files.internal("images/destroyedEngineMCL.png"));
+    private static final Texture destroyedEngineTexture4 = new Texture(Gdx.files.internal("images/destroyedEngineRP.png"));
+
     private static final Texture moveSpaceTexture = new Texture(Gdx.files.internal("move_square.png"));
 
     //TODO add extra fortress textures
@@ -30,8 +34,8 @@ public class AssetManager {
     private static final Texture defeatedStationTexture = new Texture(Gdx.files.internal("images/DefeatedRailStation.png"));
 
     private static final Texture fireStationTexture = new Texture(Gdx.files.internal("images/fireStation.png"));
-    private static final Texture destroyedStationTexture = new Texture(Gdx.files.internal("images/destroyedFS.png"));
-    private static final Texture creepyPatrol = new Texture(Gdx.files.internal("images/creepyPatrol.png"));
+    private static final Texture destroyedStationTexture = new Texture(Gdx.files.internal("images/fireStationDestroyed.png"));
+    private static final Texture creepyPatrol = new Texture(Gdx.files.internal("images/xeno.png"));
     private static final Texture deadPatrol = new Texture(Gdx.files.internal("images/deadPatrol.png"));
 
     private static final Texture fortressBoundaryImage = new Texture(Gdx.files.internal("selected fortress.png"));
@@ -51,6 +55,22 @@ public class AssetManager {
 
     public static Texture getEngineTexture4() {
         return engineTexture4;
+    }
+
+    public static Texture getDestroyedEngineTexture1() {
+        return destroyedEngineTexture1;
+    }
+
+    public static Texture getDestroyedEngineTexture2() {
+        return destroyedEngineTexture2;
+    }
+
+    public static Texture getDestroyedEngineTexture3() {
+        return destroyedEngineTexture3;
+    }
+
+    public static Texture getDestroyedEngineTexture4() {
+        return destroyedEngineTexture4;
     }
 
     public static Texture getMoveSpaceTexture() {
@@ -85,6 +105,8 @@ public class AssetManager {
 
     public static  Texture getDefeatedStationTexture() { return defeatedStationTexture; }
 
+    public static  Texture getDestroyedFireStationTexture() { return destroyedStationTexture; }
+
     public static Texture getfortressPlaceHolderTexture() {
         return fortressPlaceHolderTexture;
     }
@@ -94,4 +116,5 @@ public class AssetManager {
     public static Texture getfortressCliffordsTowerTexture() { return fortressCliffordsTowerTexture; }
 
     public static Texture getCreepyPatrol() { return creepyPatrol; }
+
 }

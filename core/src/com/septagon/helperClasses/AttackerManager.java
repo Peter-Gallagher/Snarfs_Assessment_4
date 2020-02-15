@@ -247,11 +247,25 @@ public class AttackerManager
         for (Engine engine : engines) {
             if (engine.isDead()){
                 destroyedEngines.add(engine);
+                updateToDestroyedTexture(engine);
             }
         }
 
         for (Engine destroyedEngine : destroyedEngines) {
             engines.remove(destroyedEngine);
+        }
+    }
+
+
+    private void updateToDestroyedTexture(Engine engine){
+        if (engine == engines.get(0)){
+            engine.setTexture(AssetManager.getDestroyedEngineTexture1());
+        }else if (engine == engines.get(1)){
+            engine.setTexture(AssetManager.getDestroyedEngineTexture2());
+        }else if (engine == engines.get(2)){
+            engine.setTexture(AssetManager.getDestroyedEngineTexture3());
+        }else if(engine == engines.get(3)){
+            engine.setTexture(AssetManager.getDestroyedEngineTexture4());
         }
     }
 
