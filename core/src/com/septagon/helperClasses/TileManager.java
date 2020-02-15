@@ -15,16 +15,10 @@ import java.util.Queue;
 
 public class TileManager {
 
-    public void setAdjacencyList(int[][] adjacencyList) {
-        this.adjacencyList = adjacencyList;
-    }
 
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private int[][] adjacencyList;
-
-
-
 
     public TileManager(ArrayList<Engine> engines, ArrayList<Tile> tiles){
         this.engines = engines;
@@ -226,7 +220,6 @@ public class TileManager {
 
             visited[currentTileIndex] = true;
 
-            //TODO: can probably be done better
             for (int i = 0; i < 4; i++) {
                 if (tileAdjacencyList[currentTileIndex][i] == 1) {
                     newIndex = getNewIndex(currentTileIndex, i, width);
@@ -288,7 +281,6 @@ public class TileManager {
             return !checkTile.isOccupied();
         }
 
-
         return false;
     }
 
@@ -318,5 +310,9 @@ public class TileManager {
 
     public void setTiles(ArrayList<Tile> tiles) {
         this.tiles = tiles;
+    }
+
+    public void setAdjacencyList(int[][] adjacencyList) {
+        this.adjacencyList = adjacencyList;
     }
 }

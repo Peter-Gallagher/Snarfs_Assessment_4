@@ -73,7 +73,6 @@ public class AttackerManager
      */
     public void snapToAttacker(Attacker attacker, TiledGameMap gameMap, OrthographicCamera camera)
     {
-        //TODO make the snapping less spazzy if possible or change it
         //Get the positions of where the camera should move to
         int newCameraX = attacker.getX() + (attacker.getWidth() / 2);
         int newCameraY = attacker.getY() + (attacker.getHeight() / 2);
@@ -194,7 +193,12 @@ public class AttackerManager
         return false;
     }
 
-
+    /***
+     * Method to get the tile at a point that has been clicked
+     * @param x the X coordinate of the point that was clicked
+     * @param y the Y coordinate of the point that was clicked
+     * @return the tile at the point which was clicked
+     */
     public Tile getTileClicked(float x, float y){
         for(Tile tile: tiles) {
             if(tile.checkIfClickedInside(x, y)){
@@ -203,10 +207,10 @@ public class AttackerManager
         }
         return null;
     }
+
     /***
      * Method that is run for the phase of the game where damage events occur (damage, filling etc) turn
      */
-    //TODO include patrols in battleturn
     public void BattleTurn(Fortress fortress){
         //Set the moved variable to false for each engine and then check if damages can occur
         gameState.getTileManager().resetMovableTiles();
@@ -234,7 +238,9 @@ public class AttackerManager
         }
     }
 
-
+    /***
+     * Method to handle fire engines whcih have been destroyed during the aliens turn
+     */
     public void handleDeadEngines(){
         ArrayList<Engine> destroyedEngines = new ArrayList<>();
 
@@ -249,6 +255,9 @@ public class AttackerManager
         }
     }
 
+    /***
+     * Method to handle patrols which have been destroyed
+     */
     public void handleDeadPatrols(){
         ArrayList<Patrol> destroyedPatrols = new ArrayList<>();
 
