@@ -228,6 +228,7 @@ public class AttackerManager
             }
 
             if (engines.get(i).isDead()){
+                updateToDestroyedTexture(engines.get(i));
                 engines.remove(engines.get(i));
             }
 
