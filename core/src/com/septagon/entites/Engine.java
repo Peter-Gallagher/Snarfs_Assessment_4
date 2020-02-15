@@ -36,14 +36,12 @@ public class Engine extends Vehicle
      * @param station The Fire Station
      */
     public boolean ifInRangeFill(Station station){
-        //TODO: make a circle
 
-        int xRange =station.getCol() + station.getWidth()/Tile.TILE_SIZE;
-        int stationRow = station.getRow();
+        int xDisplacement = Math.min(Math.abs(station.getCol() - this.getCol()), Math.abs((station.getCol() + (station.width / 32)) - this.getCol()));
+        int yDisplacement = Math.min(Math.abs(station.getRow() - this.getRow()), Math.abs((station.getRow() + (station.height / 32)) - this.getRow()));
 
-        if(this.col <= xRange && this.col > station.getCol() && this.row >= stationRow-5 && this.row <= stationRow-1){
+        if (Math.sqrt((xDisplacement * xDisplacement) + (yDisplacement * yDisplacement)) <= station.getFillRange()){
             if(this.volume < this.maxVolume || this.health < this.maxHealth){
-
                 this.volume = this.maxVolume;
                 this.health = this.maxHealth;
                 return true;
@@ -67,7 +65,6 @@ public class Engine extends Vehicle
      * @param  attacker that is being checked
      * @return returns true if there is any overlap, false otherwise
      */
-
     public void engineBulletsFortress(Attacker attacker) {
         int attackerX = attacker.getX();
         int attackerY = attacker.getY();

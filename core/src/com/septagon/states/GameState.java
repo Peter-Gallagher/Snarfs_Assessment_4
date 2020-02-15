@@ -123,7 +123,7 @@ public class GameState extends State
         initializeFortresses();
 
 
-        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture());
+        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 3);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 

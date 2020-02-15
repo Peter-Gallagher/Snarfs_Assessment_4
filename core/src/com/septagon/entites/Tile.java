@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class Tile extends Entity
 {
     //Static variable that denotes the default size od all tiles in the game
-    //TODO: why is this public? why is this not in TileManager?
     public static final int TILE_SIZE = 32;
 
     //Variable to keep track of if there is currently an object on the tile or not
