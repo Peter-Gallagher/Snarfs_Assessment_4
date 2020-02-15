@@ -24,6 +24,7 @@ public class TiledGameMap
 	 */
 	public TiledGameMap(String mapName)
 	{
+		//TODO probably should catch a file not found exception
 		tiledMap = new TmxMapLoader().load(mapName);
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 	}
