@@ -103,7 +103,15 @@ public class Engine extends Vehicle
     }
 
 
+    public void updateToDestroyedTexture(){
+        switch (this.id){
+            case 0:
+            case 1:
+            case 2:
+            case 3:
 
+        }
+    }
 
 
     //Getters and Setters

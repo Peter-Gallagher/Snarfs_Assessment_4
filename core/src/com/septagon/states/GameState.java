@@ -600,7 +600,7 @@ public class GameState extends State
     public void destroyStation(){
         fireStation.setDead();
         //TODO: create an asset for destroyed fire station
-        fireStation.setTexture(AssetManager.getFireStationTexture());
+        fireStation.setTexture(AssetManager.getDestroyedFireStationTexture());
     }
 
 
