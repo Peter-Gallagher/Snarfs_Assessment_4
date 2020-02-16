@@ -174,19 +174,19 @@ class EngineTest {
         GameState.bullets = new ArrayList<Bullet>();
 
         Fortress fortress = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
-        Mockito.doCallRealMethod().when(testE).damageEnemyIfInRange(fortress);
+        //Mockito.doCallRealMethod().when(testE).damageEnemyIfInRange(fortress);
         Mockito.doCallRealMethod().when(testE).inRange(fortress);
-        Mockito.doCallRealMethod().when(testE).shoot(fortress);
+        Mockito.doCallRealMethod().when(testE).shoot(fortress,false);
 
         try {
-            testE.damageEnemyIfInRange(null);
+            testE.damageIfInRange(null,true);
         } catch (Exception e) {
 
 
         }
 
         try {
-            testE.damageEnemyIfInRange(fortress);
+            testE.damageIfInRange(fortress,true);
         } catch (NullPointerException e) {
             System.out.println(e);
         }

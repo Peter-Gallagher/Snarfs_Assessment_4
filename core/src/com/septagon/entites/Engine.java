@@ -59,47 +59,17 @@ public class Engine extends Vehicle
     }
 
 
+    @Override
+    public boolean damageIfInRange(Attacker attacker, boolean useWater){
 
-    /***
-     * Checks if any of the corners of the engines range are in the body of the fortress or station
-     * @param  attacker that is being checked
-     * @return returns true if there is any overlap, false otherwise
-     */
-    public void engineBulletsFortress(Attacker attacker) {
-        int attackerX = attacker.getX();
-        int attackerY = attacker.getY();
-        int numBullets = 20;
-
-        if(attacker instanceof Fortress){
-            for (int i = 0; i < numBullets; i++) {
-                GameState.bullets.add(new Bullet(this.x + (i * 2), this.y + (i * 3), attackerX + 100, attackerY + 70, true));
-               }
-        } else {
-            for (int i = 0; i < numBullets; i++) {
-                GameState.bullets.add(new Bullet(this.x + (this.width / 2) + (i * 2), this.y + (this.height / 2), attackerX + 10, attackerY, true));
+        if(this.inRange(attacker)) {
+            if (this.volume >= this.damage) {
+                shoot(attacker, useWater);
+                return true;
             }
         }
-    }
 
-    //TODO num bullets want to be a local?
-    /***
-     * Method that will check if the Attacker is in range of the fortress and if so will damage it
-     * @param attacker The fortress we are currently checking the bounds/range of
-     */
-    public boolean damageEnemyIfInRange(Attacker attacker){
-        //this.setRangeCorners();
-        boolean attackMade = false;
-
-        if(inRange(attacker)){
-            if (this.volume >= this.damage){
-                this.loseWater();
-                this.shoot(attacker);
-                attackMade = true;
-
-                engineBulletsFortress(attacker);
-            }
-        }
-        return attackMade;
+        return false;
     }
 
 

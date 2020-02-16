@@ -37,24 +37,6 @@ public class Patrol extends Vehicle  {
 
 
     /***
-     * Method to handel a patrol trying to shoot at a fire engine
-     * @param engine the fire engine being shot at
-     * @return true if fire engine shot, else false
-     */
-    public boolean patrolShoot(Engine engine){
-        if(this.inRange(engine)){
-            this.shoot(engine);
-            this.alienBullets(engine, 25);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    //Function that returns a list of distances of possible moves from the target node
-
-    /***
      *Method which finds the distances of a list of tiles to a given target tile
      * @param targetNode the target tile to calculate distance from
      * @param moves a list of tiles

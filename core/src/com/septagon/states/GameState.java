@@ -524,12 +524,12 @@ public class GameState extends State
             for (Engine engine : engines) {
                 if(!patrol.isDead()){
                     if (patrol.inRange(engine)) {
-                        patrol.patrolShoot(engine);
+                        patrol.shoot(engine,false);
                     } else {
                         patrol.move();
                     }
                     if (engine.inRange(patrol)){
-                        engine.damageEnemyIfInRange(patrol);
+                        engine.damageIfInRange(patrol, true);
                     }
                 }
             }

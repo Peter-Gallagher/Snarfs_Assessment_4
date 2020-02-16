@@ -217,15 +217,13 @@ public class AttackerManager
         for (int i = 0; i < engines.size(); i++){
             engines.get(i).setMoved(false);
 
-            if(engines.get(i).damageEnemyIfInRange(fortress)){
+            if(engines.get(i).damageIfInRange(fortress, true)){
                 if (turnOfFirstAttack == null){
                     turnOfFirstAttack = gameState.getTurnsPassed();
                 }
             }
 
-            if(fortress.damageIfInRange(engines.get(i))){
-                fortress.alienBullets(engines.get(i), 25);
-            }
+            fortress.shoot(engines.get(i), false);
 
             if (engines.get(i).isDead()){
                 updateToDestroyedTexture(engines.get(i));
@@ -239,7 +237,7 @@ public class AttackerManager
     }
 
     /***
-     * Method to handle fire engines whcih have been destroyed during the aliens turn
+     * Method to handle fire engines which have been destroyed during the aliens turn
      */
     public void handleDeadEngines(){
         ArrayList<Engine> destroyedEngines = new ArrayList<>();

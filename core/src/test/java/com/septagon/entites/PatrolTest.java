@@ -91,11 +91,11 @@ public class PatrolTest {
         Mockito.doCallRealMethod().when(testEngine1).setDead();
 
         Mockito.doCallRealMethod().when(mockedPatrol).inRange(testEngine1);
-        Mockito.doCallRealMethod().when(mockedPatrol).patrolShoot(testEngine1);
-        Mockito.doCallRealMethod().when(mockedPatrol).shoot(testEngine1);
+        //Mockito.doCallRealMethod().when(mockedPatrol).patrolShoot(testEngine1);
+        Mockito.doCallRealMethod().when(mockedPatrol).shoot(testEngine1,false);
 
         try {
-            mockedPatrol.patrolShoot(testEngine1);
+            mockedPatrol.shoot(testEngine1,false);
         } catch (Exception e) {
 
         }
@@ -106,7 +106,7 @@ public class PatrolTest {
         testEngine1.row = 2;
 
         try {
-            mockedPatrol.patrolShoot(testEngine1);
+            mockedPatrol.shoot(testEngine1,false);
         } catch (Exception e) {
 
         }

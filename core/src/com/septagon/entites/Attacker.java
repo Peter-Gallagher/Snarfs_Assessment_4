@@ -76,40 +76,56 @@ public abstract class Attacker extends Entity
      * @param attacker the entity being targeted
      * @return true if entity was shot, else false
      */
-    public boolean damageIfInRange(Attacker attacker){
+    public boolean damageIfInRange(Attacker attacker, boolean useWater){
         if(this.inRange(attacker)){
-            shoot(attacker);
+            shoot(attacker, useWater);
             return true;
         } else {
             return false;
         }
     }
 
+
     /***
      * Method which handles creation of bullets being shot by an alien
-     * @param engine the fire engine being shot
-     * @param numBullets the number of bullets to be created
+     * @param attacker the entity being shot
+     * @param useWater
      */
-    public void alienBullets(Engine engine, int numBullets) {
-
-        int engineX = engine.getX();
-        int engineY = engine.getY();
+    public void createBullets(Attacker attacker, boolean useWater) {
+        int numBullets = 20;
+        int targetX = attacker.getX();
+        int targetY = attacker.getY();
 
         int centreX = this.x + (this.width / 2);
         int centreY = this.y + (this.height / 2);
 
+
         for (int i = 0; i < numBullets; i++) {
-            GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i * 3), engineX + 10, engineY, false));
+            GameState.bullets.add(new Bullet(centreX + (i * 2), centreY, targetX + 10, targetY, useWater));
         }
+
+        /*
+        if(attacker instanceof Fortress){
+            for (int i = 0; i < numBullets; i++) {
+                GameState.bullets.add(new Bullet(centreX, this.y + (i * 3), targetX + 100, targetY + 70, useWater));
+            }
+        } else {
+            for (int i = 0; i < numBullets; i++) {
+                GameState.bullets.add(new Bullet(centreY + (this.width / 2) + (i * 2), this.y + (this.height / 2), targetX + 10, targetY, useWater));
+            }
+        }
+
+         */
     }
 
     /***
      * Method which handles shooting another entity
      * @param attacker the entity being shot at
      */
-    public void shoot(Attacker attacker){
+    public void shoot(Attacker attacker, boolean useWater){
         if(inRange(attacker)){
             attacker.takeDamage(this.damage);
+            this.createBullets(attacker,useWater);
         }
     }
 
