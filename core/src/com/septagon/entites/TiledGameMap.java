@@ -45,6 +45,7 @@ public class TiledGameMap
 	 * @param row The row of the checked tile
 	 * @return Returns true if the tile is a water tile, false if not
 	 */
+	/*This changed*/
 	public boolean checkIfWaterTile(int col, int row){
 		//TODO make dynamic
 		//Gets the cell (format used by Tiled) at the current location
@@ -106,6 +107,7 @@ public class TiledGameMap
 	 * Method that gets all tiles which are passable
 	 * @return 2d array indicating tiles possibility
 	 */
+	/*This is new*/
 	public boolean[][] getPassable(){
 		boolean[][] passableTiles = new boolean[this.getMapHeight()][this.getMapWidth()];
 		TiledMapTileLayer  passableLayer = (TiledMapTileLayer) tiledMap.getLayers().get(4);
@@ -118,7 +120,7 @@ public class TiledGameMap
 
 		return passableTiles;
 	}
-
+	/*This changed*/
 	public TiledMapTileLayer getTileLayer(int layerIndex){
 		return  (TiledMapTileLayer) tiledMap.getLayers().get(layerIndex);
 	}

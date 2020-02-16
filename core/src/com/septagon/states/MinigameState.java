@@ -18,6 +18,7 @@ import java.util.Random;
 Child of State class that will be used to manage the system when the user is playing the minigame
  */
 public class MinigameState extends State
+    /*This whole class is new*/
 {
     //Used to keep track of the score in the minigame
     private int[][] adjacencyList;

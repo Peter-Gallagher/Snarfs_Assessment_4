@@ -49,7 +49,7 @@ public class AttackerManager
     private ArrayList<Engine> engines;
     private ArrayList<Tile> tiles;
     private ArrayList<Fortress> fortresses;
-    private ArrayList<Patrol> patrols;
+    private ArrayList<Patrol> patrols;/*This is new*/
     private GameState gameState;
 
     private Tile currentlyTouchedTile = null;
@@ -153,7 +153,7 @@ public class AttackerManager
     public Boolean touchedTile(float x, float y)
     {
         //Loops through all tiles to see if it has been pressed
-
+        /*This is new*/
         currentlyTouchedTile = getTileClicked(x,y);
         System.out.println("Clicked tile Col =" + currentlyTouchedTile.getCol() + " Row = " + currentlyTouchedTile.getRow());
 
@@ -165,14 +165,14 @@ public class AttackerManager
                 if (currentlyTouchedTile.isMovable() && !currentEngine.isMoved() && !currentEngine.isDead()) {
                     currentlyTouchedTile.setOccupied(true);
                     previouslyTouchedTile.setOccupied(false);
-                    gameState.getTileManager().updateTileInAdjacencyList(previouslyTouchedTile.getIndex(), 1);
+                    gameState.getTileManager().updateTileInAdjacencyList(previouslyTouchedTile.getIndex(), 1);/*This is new*/
                     currentEngine.setX(currentlyTouchedTile.getX());
                     currentEngine.setY(currentlyTouchedTile.getY());
                     currentEngine.setMoved(true);
                 }
             }
             previouslyTouchedTile = currentlyTouchedTile;
-
+            /*This is new*/
             //If not a moveable tile pressed, check if a fortress tile has been pressed
             checkIfTouchingFortress(x, y);
             for (Engine fireEngine: engines){
@@ -211,6 +211,7 @@ public class AttackerManager
     /***
      * Method that is run for the phase of the game where damage events occur (damage, filling etc) turn
      */
+    /*This changed*/
     public void BattleTurn(Fortress fortress){
         //Set the moved variable to false for each engine and then check if damages can occur
         gameState.getTileManager().resetMovableTiles();
@@ -239,6 +240,7 @@ public class AttackerManager
     /***
      * Method to handle fire engines which have been destroyed during the aliens turn
      */
+    /*This is new*/
     public void handleDeadEngines(){
         ArrayList<Engine> destroyedEngines = new ArrayList<>();
 
@@ -254,7 +256,7 @@ public class AttackerManager
         }
     }
 
-
+    /*This is new*/
     private void updateToDestroyedTexture(Engine engine){
         if (engine == engines.get(0)){
             engine.setTexture(AssetManager.getDestroyedEngineTexture1());
@@ -270,6 +272,7 @@ public class AttackerManager
     /***
      * Method to handle patrols which have been destroyed
      */
+    /*This is new*/
     public void handleDeadPatrols(){
         ArrayList<Patrol> destroyedPatrols = new ArrayList<>();
 
@@ -301,5 +304,5 @@ public class AttackerManager
 
     public Integer getTurnOfFirstAttack(){
         return turnOfFirstAttack;
-    }
+    }/*This is new*/
 }

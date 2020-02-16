@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class EntityManager
 {
+    /*This is new*/
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
     }
@@ -39,6 +40,7 @@ public class EntityManager
      * Removes an entity from the ArrayList
      * @param entityToRemove The entity to be removed
      */
+    /*This changed*/
     public void removeEntity(Entity entityToRemove)
     {
         entities.remove(entityToRemove);
@@ -47,6 +49,7 @@ public class EntityManager
     /***
      * Calls the initialise method for all entities in the game
      */
+    /*This changed*/
     public void initialise()
     {
         for(Entity entity: entities)
@@ -65,6 +68,7 @@ public class EntityManager
     /***
      * Calls the render method for all entities in the game
      */
+    /*This changed*/
     public void render(SpriteBatch batch)
     {
         for(Entity entity: entities)
