@@ -149,10 +149,10 @@ public class GameState extends State
      */
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 20, 7, 10, 150, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 16, 15, 15, 110, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 14, 13, 23, 130, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 8, 14, 27, 120, 4, 04);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 32, 15, 15, 110, 4, 02);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 23, 130, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 27, 120, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -547,7 +547,7 @@ public class GameState extends State
         strengthenFortresses();
 
         if(attackerManager.getTurnOfFirstAttack() != null){
-            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 20){
+            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 30){
                 destroyStation();
             }
         }
