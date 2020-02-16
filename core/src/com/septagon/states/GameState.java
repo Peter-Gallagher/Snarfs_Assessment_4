@@ -120,7 +120,7 @@ public class GameState extends State
         initializeFortresses();
 
 
-        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 10);
+        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 6);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
@@ -591,8 +591,8 @@ public class GameState extends State
 
         if (turnsPassed >= 10){
             for (Fortress fortress : fortresses) {
-            fortress.setHealth(fortress.getHealth() + turnsPassed);
-            fortress.setMaxHealth(fortress.getMaxHealth() + turnsPassed);
+            fortress.setHealth(fortress.getHealth() + turnsPassed % 3);
+            fortress.setMaxHealth(fortress.getMaxHealth() + turnsPassed % 3);
 
             fortress.setDamage(fortress.getDamage() + (turnsPassed % 5));
             }
