@@ -211,9 +211,9 @@ public class GameState extends State
         ArrayList<Tile> path2 = initialisePath2();
         ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path1, tileManager);
-        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path2, tileManager);
-        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path1, tileManager);
+        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path2, tileManager);
+        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path3, tileManager);
 
 
         //Adds all the patrols to the ArrayList of patrols
