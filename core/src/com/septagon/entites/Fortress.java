@@ -39,6 +39,7 @@ public class Fortress extends Attacker
      * Method that will be called if an engine is in range of the fortress so that the engine can be damaged
      * @param fireEngine The current engine that is being checked
      */
+    /*This changed*/
     public void DamageEngineIfInRange(Engine fireEngine) {
 
         int engineCol = fireEngine.getCol();
@@ -70,6 +71,7 @@ public class Fortress extends Attacker
      * Overwritten from Attacker
      * @param batch The batch that is used to display all objects on the screen
      */
+    /*This changed*/
     public void render(SpriteBatch batch)
     {
         //If the fortress is pressed, show its boundary image

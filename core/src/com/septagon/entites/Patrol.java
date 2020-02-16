@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.septagon.helperClasses.TileManager;
 
 import java.util.ArrayList;
-
+/*Everything in this class is new*/
 public class Patrol extends Vehicle  {
 
     //keep track of where we are on the patrol

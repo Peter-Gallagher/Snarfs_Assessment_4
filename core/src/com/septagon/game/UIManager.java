@@ -105,7 +105,7 @@ public class UIManager
         enemyTurnText = new GlyphLayout(font, "Enemy Turn");
     }
 
-
+    /*This is new*/
     private void setUpStatsText(){
         showEngineStatsText = new GlyphLayout(smallFont, "Show Stats");
         maxVolumeText = new GlyphLayout(smallFont, "Max Volume: 0");
@@ -116,7 +116,7 @@ public class UIManager
         minimiseSymbol = new GlyphLayout(smallFont, "-");
     }
 
-
+    /*This is new*/
     private void setUpPauseText(){
         font.setColor(Color.RED);
         pauseText = new GlyphLayout(font, "Paused");
@@ -154,7 +154,7 @@ public class UIManager
         uiBatch.end();
     }
 
-
+    /*This is new*/
     private void renderEngineStats(){
 
         engineStatsRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -187,7 +187,7 @@ public class UIManager
 
     }
 
-
+    /*This is new*/
     private void drawText(){
         //Draws all the text to the screen in its correct place
         uiBatch.begin();

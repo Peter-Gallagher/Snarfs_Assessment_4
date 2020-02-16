@@ -23,7 +23,7 @@ public class StatusBarGenerator
     private ArrayList<Engine> engines;
     private ArrayList<Fortress> fortresses;
     private ArrayList<Patrol> patrols;
-
+    /*This changed*/
     public StatusBarGenerator(ArrayList<Engine> engines, ArrayList<Fortress> fortresses, ArrayList<Patrol> patrols){
         this.engines = engines;
         this.fortresses = fortresses;
@@ -45,6 +45,7 @@ public class StatusBarGenerator
         for(Fortress fortress: fortresses){
             renderHealthBarForAttacker(fortress);
         }
+        /*This is new*/
         for(Patrol patrol : patrols){
             renderHealthBarForAttacker(patrol);
         }

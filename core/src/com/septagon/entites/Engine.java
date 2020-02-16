@@ -34,6 +34,7 @@ public class Engine extends Vehicle
      * Checks if the engine is in range to fill and calls the fill method if it is
      * @param station The Fire Station
      */
+    /*This changed*/
     public boolean ifInRangeFill(Station station){
 
         int xDisplacement = Math.min(Math.abs(station.getCol() - this.getCol()), Math.abs((station.getCol() + (station.width / 32)) - this.getCol()));
@@ -53,12 +54,14 @@ public class Engine extends Vehicle
     /**
      * Calls to update the required variables when the engine fires at a fortress
      */
+    /*This changed*/
     public void loseWater(){
         this.volume = Math.max(this.volume - this.damage, 0) ;
     }
 
 
     @Override
+    /*This is new*/
     public boolean damageIfInRange(Attacker attacker, boolean useWater){
 
         if(this.inRange(attacker)) {

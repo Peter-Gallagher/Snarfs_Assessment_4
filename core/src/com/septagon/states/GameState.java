@@ -147,6 +147,7 @@ public class GameState extends State
     /***
      * Initializes all fire engines in the game and moves them to their starting positions
      */
+    /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
@@ -203,6 +204,7 @@ public class GameState extends State
     /***
      * initialises all patrols in the game
      */
+    /*This is new*/
     private void initializePatrols() {
         //create preset paths for patrols
         ArrayList<Tile> path1 = initialisePath1();
@@ -344,6 +346,7 @@ public class GameState extends State
     /***
      * Method to initialise the game map
      */
+    /*This is new*/
     private void initializeGameMap(){
 
         //Creates the gameMap instance that will be used to load the map from the tmx file
@@ -366,7 +369,7 @@ public class GameState extends State
         tileManager.createAdjacencyList(gameMap.getMapWidth(), gameMap.getMapHeight());
     }
 
-
+    /*This is new*/
     private void initializeUIManager(){
         //Creates instance of uiManager which will be used to render and manage all UI elements
         uiManager = new UIManager(this, font);
@@ -517,6 +520,7 @@ public class GameState extends State
     /***
      * Method that handles all the updating when patrols are moved
      */
+    /*This is new*/
     public void patrolTurnUpdate(){
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
@@ -539,6 +543,7 @@ public class GameState extends State
     /***
      * Method to handel all actions and checks to take place after an alien turn
      */
+    /*This is new*/
     private void postAlienTurn(){
         boolean playMiniGame = false;
         currentFortressIndex = 0;
@@ -581,6 +586,7 @@ public class GameState extends State
     /***
      * Method responsible for strengthening fortresses over time
      */
+    /*This is new*/
     public void strengthenFortresses(){
 
         if (turnsPassed >= 10){

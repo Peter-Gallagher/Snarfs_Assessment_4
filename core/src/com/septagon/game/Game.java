@@ -61,6 +61,7 @@ public class Game extends ApplicationAdapter
 	 * Method that is used to enter new states
 	 * Enter the desired state as a parameter and the state will be initialized
 	 */
+	/*This is new*/
 	public void initializeState(State newState){
 		stateManager.changeState(newState);
 		stateManager.initialise();
@@ -70,6 +71,7 @@ public class Game extends ApplicationAdapter
 	 * Method that is called exclusively by create
 	 * Will load the font into the game loaded from our custom font files
 	 */
+	/*This is new*/
 	public void loadFont(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
