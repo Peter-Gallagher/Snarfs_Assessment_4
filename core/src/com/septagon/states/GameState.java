@@ -152,8 +152,8 @@ public class GameState extends State
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
         Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 32, 15, 15, 110, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 23, 130, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 27, 120, 4, 04);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 20, 130, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 22, 120, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -183,12 +183,12 @@ public class GameState extends State
      */
     private void initializeFortresses(){
         //creates all fortress objects
-        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 70, 13, 15);
-        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 80, 8, 13);
-        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 7, 9);
-        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 90, 13, 9);
-        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 95, 11, 11);
-        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 85, 12, 10);
+        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 60, 13, 15);
+        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 70, 8, 13);
+        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 90, 7, 9);
+        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 80, 13, 9);
+        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 85, 11, 11);
+        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 75, 12, 10);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
