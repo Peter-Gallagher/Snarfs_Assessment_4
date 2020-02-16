@@ -147,12 +147,13 @@ public class GameState extends State
     /***
      * Initializes all fire engines in the game and moves them to their starting positions
      */
+    /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 10, 100, 100, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 10, 100, 100, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 10, 100, 100, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 10, 100, 100, 4, 04);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 32, 15, 15, 110, 4, 02);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 23, 130, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 27, 120, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -182,12 +183,12 @@ public class GameState extends State
      */
     private void initializeFortresses(){
         //creates all fortress objects
-        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
-        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
-        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 100, 20, 7);
-        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 100, 20, 7);
-        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 100, 20, 7);
+        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 70, 13, 15);
+        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 80, 8, 13);
+        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 7, 9);
+        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 90, 13, 9);
+        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 95, 11, 11);
+        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 85, 12, 10);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
@@ -203,15 +204,16 @@ public class GameState extends State
     /***
      * initialises all patrols in the game
      */
+    /*This is new*/
     private void initializePatrols() {
         //create preset paths for patrols
         ArrayList<Tile> path1 = initialisePath1();
         ArrayList<Tile> path2 = initialisePath2();
         ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path1, tileManager);
-        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 5, 0, 10, 2, path2, tileManager);
-        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 5, 0, 10, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path1, tileManager);
+        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path2, tileManager);
+        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 100, 20, 6, 5, path3, tileManager);
 
 
         //Adds all the patrols to the ArrayList of patrols
@@ -344,6 +346,7 @@ public class GameState extends State
     /***
      * Method to initialise the game map
      */
+    /*This is new*/
     private void initializeGameMap(){
 
         //Creates the gameMap instance that will be used to load the map from the tmx file
@@ -366,7 +369,7 @@ public class GameState extends State
         tileManager.createAdjacencyList(gameMap.getMapWidth(), gameMap.getMapHeight());
     }
 
-
+    /*This is new*/
     private void initializeUIManager(){
         //Creates instance of uiManager which will be used to render and manage all UI elements
         uiManager = new UIManager(this, font);
@@ -517,6 +520,7 @@ public class GameState extends State
     /***
      * Method that handles all the updating when patrols are moved
      */
+    /*This is new*/
     public void patrolTurnUpdate(){
         for (Patrol patrol : patrols) {
             for (Engine engine : engines) {
@@ -539,6 +543,7 @@ public class GameState extends State
     /***
      * Method to handel all actions and checks to take place after an alien turn
      */
+    /*This is new*/
     private void postAlienTurn(){
         boolean playMiniGame = false;
         currentFortressIndex = 0;
@@ -547,7 +552,7 @@ public class GameState extends State
         strengthenFortresses();
 
         if(attackerManager.getTurnOfFirstAttack() != null){
-            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 20){
+            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 30){
                 destroyStation();
             }
         }
@@ -581,6 +586,7 @@ public class GameState extends State
     /***
      * Method responsible for strengthening fortresses over time
      */
+    /*This is new*/
     public void strengthenFortresses(){
 
         if (turnsPassed >= 10){

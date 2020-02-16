@@ -77,6 +77,7 @@ public class InputManager implements InputProcessor
      * @param button The button that the input occurred with
      * @return true if input was a left click, else false
      */
+    /*This is new*/
     private boolean gameClickInput(int pointer, int button){
         //Cast the currentState to a gameState so that gameState specific methods can be used
         GameState currentState = (GameState)stateManager.getCurrentState();
@@ -122,6 +123,7 @@ public class InputManager implements InputProcessor
      * @param screenX the X coordinate that was clicked on the screen
      * @param screenY the Y coordinate that was clicked on the screen
      */
+    /*This is new*/
     private void menuClickInput(int screenX, int screenY){
         //Cast the currentState to menuState so menuState specific methods can be used
         MenuState currentState = (MenuState) stateManager.getCurrentState();
@@ -135,6 +137,7 @@ public class InputManager implements InputProcessor
      * @param screenX the X coordinate that was clicked on the screen
      * @param screenY the Y coordinate that was clicked on the screen
      */
+    /*This is new*/
     private void gameOverClickInput(int screenX, int screenY){
         //Casts the currentState to a gameOverState so gameOverState specific methods can be used
         GameOverState currentState = (GameOverState) stateManager.getCurrentState();
@@ -146,6 +149,7 @@ public class InputManager implements InputProcessor
     /***
      * Method that handles input from mouse click while in miniGame state
      */
+    /*This is new*/
     public void miniGameClickInput(){
         MinigameState currentState = (MinigameState) stateManager.getCurrentState();
 
@@ -223,6 +227,7 @@ public class InputManager implements InputProcessor
      * Method calls when the user presses a key on the keyboard
      * @param keycode The code of the key that is pressed
      */
+    /*This changed*/
     @Override public boolean keyDown (int keycode)
     {
         if(stateManager.getCurrentState().getID() == State.StateID.MENU)

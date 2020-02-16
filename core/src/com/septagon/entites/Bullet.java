@@ -17,6 +17,7 @@ public class Bullet {
 
 
     //creates a bullet with attacker and target positions
+    
     public Bullet (float attackerX, float attackerY, float targetX, float targetY, boolean water) {
         this.x = attackerX;
         this.y = attackerY;
@@ -38,6 +39,7 @@ public class Bullet {
     /**
      * Move bullets in required directions
      */
+    /*This changed*/
     public void update (float deltaTime) {
         y += this.ySPEED * deltaTime * 50000;
         x += this.xSPEED * deltaTime * 50000;

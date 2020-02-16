@@ -33,6 +33,7 @@ public class Tile extends Entity
      * @param y The y position of the input
      * @return returns boolean indicating whether the input is in this tile or not
      */
+    /*This changed*/
     public boolean checkIfClickedInside(float x, float y)
     {
         return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
@@ -48,6 +49,6 @@ public class Tile extends Entity
     public boolean isOccupied() { return occupied; }
     public int getIndex(){
         return col + (row * 80);
-    }
+    } /*This changed*/
 
 }

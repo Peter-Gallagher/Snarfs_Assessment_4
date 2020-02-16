@@ -75,6 +75,7 @@ public abstract class Attacker extends Entity
      * @param attacker the entity being targeted
      * @return true if entity was shot, else false
      */
+    /*This changed*/
     public boolean damageIfInRange(Attacker attacker, boolean useWater){
         if(this.inRange(attacker)){
             shoot(attacker, useWater);
@@ -90,6 +91,7 @@ public abstract class Attacker extends Entity
      * @param attacker the entity being shot
      * @param useWater
      */
+    /*This changed*/
     public void createBullets(Attacker attacker, boolean useWater) {
         int numBullets = 20;
         int targetX = attacker.getX();
@@ -169,6 +171,7 @@ public abstract class Attacker extends Entity
      * Method to handle being shot
      * @param damage teh amount of damage to be taken
      */
+    /*This changed*/
     public void takeDamage(int damage) {
         this.health = Math.max(this.health - damage, 0);
 

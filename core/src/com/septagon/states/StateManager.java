@@ -65,7 +65,7 @@ public class StateManager
     	states.add(newState);
     	currentIndex = states.indexOf(newState);
     }
-
+    /*This is new*/
     public void changeToGameState(){
         currentIndex = getState(State.StateID.GAME);
     }
@@ -74,7 +74,7 @@ public class StateManager
     public int getCurrentIndex() { return currentIndex; }
     public State getCurrentState() { return states.get(currentIndex); }
     public ArrayList<State> getStates() { return states; }
-
+    /*This is new*/
     public int getState(State.StateID stateType) {
         for (int i = 0; i < states.size(); i++){
             if (states.get(i).getID() == stateType){
