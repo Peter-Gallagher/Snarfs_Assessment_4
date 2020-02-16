@@ -158,17 +158,16 @@ public class InputManager implements InputProcessor
         yCoord = Gdx.input.getY();
 
         //Convert input coords to screen coords
-        //xCoord = (xCoord * 0.3f) + (80)  - (Gdx.graphics.getWidth() / 2) * 0.3f;
+        xCoord = (xCoord - (Gdx.graphics.getWidth() / 2)) * 0.3f   + 80;
+        xCoord = xCoord / (Gdx.graphics.getWidth() / 1280);
 
-        xCoord = (xCoord - (Gdx.graphics.getWidth() / 2)) * 0.3f + 80;
-
-        //yCoord = (Gdx.graphics.getHeight() * 0.3f - yCoord * 0.3f) + (70) - (Gdx.graphics.getHeight() / 2) * 0.3f;
 
         yCoord = (Gdx.graphics.getHeight() - yCoord - (Gdx.graphics.getHeight() / 2)) * 0.3f + 70;
+        yCoord = yCoord / (Gdx.graphics.getHeight() / 720);
 
         currentState.handleInputForMinigame(xCoord,yCoord);
-    }
 
+    }
 
 
     /**
@@ -179,7 +178,6 @@ public class InputManager implements InputProcessor
      */
     @Override public boolean touchDragged (int screenX, int screenY, int pointer)
     {
-        //TODO Redundant Fetches, MEMORY
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             //Convert currentState to gameState so that gameState specific methods can be used
