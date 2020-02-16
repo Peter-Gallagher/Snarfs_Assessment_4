@@ -104,11 +104,8 @@ public class MinigameState extends State
      */
     public void render(SpriteBatch batch)
     {
-        Gdx.gl.glClearColor(0, 1, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //final Texture tex = new Texture(Gdx.files.internal("images/fuck.png"));
-        //batch.draw(tex, -0, -0, 0, 0, 1280, 720);
 
         backGround.render(cameraBackground);
         pipeMap.render(camera);
