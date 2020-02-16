@@ -64,6 +64,7 @@ public class Engine extends Vehicle
         if(this.inRange(attacker)) {
             if (this.volume >= this.damage) {
                 shoot(attacker, useWater);
+                loseWater();
                 return true;
             }
         }
