@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.septagon.states.GameState;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Attacker extends Entity
 {
@@ -99,23 +98,25 @@ public abstract class Attacker extends Entity
         int centreX = this.x + (this.width / 2);
         int centreY = this.y + (this.height / 2);
 
-
+/*
         for (int i = 0; i < numBullets; i++) {
             GameState.bullets.add(new Bullet(centreX + (i * 2), centreY, targetX + 10, targetY, useWater));
         }
 
-        /*
+ */
+
         if(attacker instanceof Fortress){
             for (int i = 0; i < numBullets; i++) {
                 GameState.bullets.add(new Bullet(centreX, this.y + (i * 3), targetX + 100, targetY + 70, useWater));
             }
         } else {
             for (int i = 0; i < numBullets; i++) {
-                GameState.bullets.add(new Bullet(centreY + (this.width / 2) + (i * 2), this.y + (this.height / 2), targetX + 10, targetY, useWater));
+                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY, targetX + 10, targetY, useWater));
             }
         }
 
-         */
+
+
     }
 
     /***

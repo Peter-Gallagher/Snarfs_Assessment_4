@@ -6,7 +6,6 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.Texture;
-import com.septagon.states.GameState;
 
 public class Engine extends Vehicle
 {

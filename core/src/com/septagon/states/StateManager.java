@@ -5,9 +5,9 @@ Class that is used to manage all of the states within the game and manage the ch
 the different states
  */
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.ArrayList;
 
 //TODO add more functionality to this class, take methods away from GameState
 public class StateManager 

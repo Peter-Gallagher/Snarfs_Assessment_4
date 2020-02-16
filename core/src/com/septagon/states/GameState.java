@@ -82,9 +82,6 @@ public class GameState extends State
     private int counter = 0;
     private boolean hasChangedFortress = false;
 
-    //Keep track of which patrol to move
-    private int currentPatrolIndex = 0;
-
     //Adds a slight delay between switching turns so that it doesn't just happen straight away
     private int changeTurnCounter = 0;
     private boolean changingTurn = false;
@@ -123,7 +120,7 @@ public class GameState extends State
         initializeFortresses();
 
 
-        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 3);
+        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 10);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
@@ -152,10 +149,10 @@ public class GameState extends State
      */
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 8, 100, 100, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 8, 100, 100, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 8, 100, 100, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 8, 100, 100, 4, 04);
+        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 100, 15, 10, 100, 100, 4, 01);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 100, 10, 10, 100, 100, 4, 02);
+        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 100, 10, 10, 100, 100, 4, 03);
+        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 100, 10, 10, 100, 100, 4, 04);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -188,9 +185,9 @@ public class GameState extends State
         Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 100, 20, 7);
         Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 100, 20, 7);
         Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
-        Fortress newFortress3 = new Fortress(9, 21, 256, 256, AssetManager.getfortressPlaceHolderTexture(), AssetManager.getDefeatedStationTexture(), 100, 20, 7);
+        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 100, 20, 7);
+        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 100, 20, 7);
+        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 100, 20, 7);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
@@ -199,7 +196,7 @@ public class GameState extends State
         fortresses.add(fortressStation);
         fortresses.add(fortressSavlos);
         fortresses.add(fortressCliffordsTower);
-        fortresses.add(newFortress3);
+        fortresses.add(fortressCentralHall);
     }
 
 
@@ -499,7 +496,7 @@ public class GameState extends State
                 attackerManager.BattleTurn(currentFortress);
             }
             else{
-                currentFortressIndex++;
+                //currentFortressIndex++;
                 hasChangedFortress = false;
             }
             hasChangedFortress = true;
@@ -514,6 +511,7 @@ public class GameState extends State
                 counter = 0;
             }
         }
+        //currentFortressIndex++;
     }
 
     /***

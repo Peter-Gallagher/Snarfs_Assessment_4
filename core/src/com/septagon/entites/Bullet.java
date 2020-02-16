@@ -4,7 +4,6 @@ package com.septagon.entites;
  * Class that is used to create animations when the engines and fortresses are attacking each other
  */
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

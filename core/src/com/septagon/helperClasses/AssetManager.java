@@ -24,13 +24,17 @@ public class AssetManager {
     private static final Texture fortressFireTexture = new Texture(Gdx.files.internal("images/FortressFire.png"));
     private static final Texture fortressMinisterTexture = new Texture(Gdx.files.internal("images/FortressMinister.png"));
     private static final Texture fortressStationTexture = new Texture(Gdx.files.internal("images/FortressStation.png"));
-    private static final Texture fortressPlaceHolderTexture = new Texture(Gdx.files.internal("images/FortressPlaceHolder.png"));
+    private static final Texture fortressCentralHallTexture = new Texture(Gdx.files.internal("images/centralHall.png"));
     private static final Texture fortressSalvoTexture = new Texture(Gdx.files.internal("images/salvo.png"));
     private static final Texture fortressCliffordsTowerTexture = new Texture(Gdx.files.internal("images/cliffordsTower.png"));
 
     private static final Texture defeatedFireTexture = new Texture(Gdx.files.internal("images/DefeatedOldStation.png"));
     private static final Texture defeatedMinsterTexture = new Texture(Gdx.files.internal("images/DefeatedMinster.png"));
     private static final Texture defeatedStationTexture = new Texture(Gdx.files.internal("images/DefeatedRailStation.png"));
+    private static final Texture defeatedSalvoTexture = new Texture(Gdx.files.internal("images/salvoDefeated.png"));
+    private static final Texture defeatedCentralHallTexture = new Texture(Gdx.files.internal("images/centralHallWithoutPlant.png"));
+    private static final Texture defeatedCliffordsTowerTexture = new Texture(Gdx.files.internal("images/cliffordsTowerWithoutPlant.png"));
+
 
     private static final Texture fireStationTexture = new Texture(Gdx.files.internal("images/fireStation.png"));
     private static final Texture destroyedStationTexture = new Texture(Gdx.files.internal("images/fireStationDestroyed.png"));
@@ -88,6 +92,8 @@ public class AssetManager {
         return fortressMinisterTexture;
     }
 
+    public static Texture getFortressCentralHallTexture() { return fortressCentralHallTexture; }
+
     public static Texture getFireStationTexture() {
         return fireStationTexture;
     }
@@ -100,15 +106,17 @@ public class AssetManager {
         return defeatedFireTexture;
     }
 
+    public static Texture getDefeatedCliffordsTowerTexture () { return defeatedCliffordsTowerTexture; }
+
+    public static Texture getDefeatedSalvoTexture () { return defeatedSalvoTexture; }
+
+    public static Texture getDefeatedCentralHallTexture () { return defeatedCentralHallTexture; }
+
     public static Texture getDefeatedMinsterTexture(){ return  defeatedMinsterTexture; }
 
     public static  Texture getDefeatedStationTexture() { return defeatedStationTexture; }
 
     public static  Texture getDestroyedFireStationTexture() { return destroyedStationTexture; }
-
-    public static Texture getfortressPlaceHolderTexture() {
-        return fortressPlaceHolderTexture;
-    }
 
     public static Texture getfortressSalvoTexture() { return fortressSalvoTexture; }
 
