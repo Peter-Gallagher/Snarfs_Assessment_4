@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 
-//TODO add more functionality to this class, take methods away from GameState
 public class StateManager 
 {
     //List that keeps track of all the states that have been seen in the game so far

@@ -60,18 +60,18 @@ class FortressTest {
         Engine testE1 = new Engine(5,9, null, 100, 2, 4, 2, 20, 4, 01);
         Engine testE2 = new Engine(3, 3, null, 10, 2, 4, 2, 20, 4, 01);
 
-        Mockito.doCallRealMethod().when(testF).DamageEngineIfInRange(testE1);
-        Mockito.doCallRealMethod().when(testF).DamageEngineIfInRange(testE2);
+        Mockito.doCallRealMethod().when(testF).damageIfInRange(testE1, false);
+        Mockito.doCallRealMethod().when(testF).damageIfInRange(testE2, false);
         Mockito.doCallRealMethod().when(testF).setRangeCorners();
         testF.range = 100;
 
         try{
-            testF.DamageEngineIfInRange(testE1);
+            testF.damageIfInRange(testE1, false);
 
         } catch (Exception e) { }
 
         try{
-            testF.DamageEngineIfInRange(testE2);
+            testF.damageIfInRange(testE2, false);
         } catch (Exception e) { }
 
         assertEquals(testE1.health, 80);

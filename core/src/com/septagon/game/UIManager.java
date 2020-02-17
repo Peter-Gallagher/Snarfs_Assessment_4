@@ -47,7 +47,6 @@ public class UIManager
     //Booolean that will tell if the stats menu is open or closed
     private boolean displayingStats = false;
 
-    //TODO Maybe make a rectangle class
     //Position variables for all gui elements
     private int showRectX, showRectY, showRectWidth, showRectHeight;
     private int statsRectX, statsRectY, statsRectWidth, statsRectHeight;
@@ -129,8 +128,6 @@ public class UIManager
     /***
      * Render method that draws all objects to the screen
      */
-
-
     public void render()
     {
         uiBatch.begin();
@@ -247,9 +244,6 @@ public class UIManager
     }
 
 
-
-
-    //TODO Maybe make a rectangle class
     /***
      * Sets up positions for all text and UI elements on the screen
      */
@@ -338,7 +332,6 @@ public class UIManager
         this.displayingStats = displayingStats;
     }
 
-    //TODO maybe pass into the fireengine
     public void setCurrentEngine(Engine engine)
     {
         this.currentEngine = engine;

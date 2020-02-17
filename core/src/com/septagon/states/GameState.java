@@ -112,19 +112,14 @@ public class GameState extends State
      */
     public void initialise()
     {
-        //TODO fireEngines need unique stats and textures
         //Initialises all engines, fortress and stations in the game
         initializeFireEngines();
 
-        //TODO fortresses need unique stats and textures
         initializeFortresses();
-
 
         fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 6);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
-
-
 
         initializeUIManager();
 
@@ -384,7 +379,6 @@ public class GameState extends State
      */
     public void update()
     {
-        //TODO: refactor bullet removal
         this.paused = uiManager.isPaused();
         //Update the bullets
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
@@ -397,7 +391,6 @@ public class GameState extends State
         }
         bullets.removeAll(bulletToRemove);
 
-        //TODO Modify counter to only happen during shooting
         //If we are in the process of waiting to change turn, just wait until the timer says we swap turns
         if(changingTurn){
             changeTurnCounter++;
@@ -435,7 +428,6 @@ public class GameState extends State
         currentCameraX = camera.position.x;
         currentCameraY = camera.position.y;
 
-        //TODO: refactor this
         //Checks if the player has destroyed all the fortresses
         boolean hasWon = true;
         for (Fortress fortress : fortresses)
@@ -458,7 +450,6 @@ public class GameState extends State
     /**
      * Method that handles all the updating that should happen on an enemies turn
      */
-    //TODO refactor into smaller methods
     private void enemyTurnUpdate(){
         boolean shouldShowFortress = false;
 
@@ -473,10 +464,7 @@ public class GameState extends State
             //Get the current fortress that should be displayed
             Fortress currentFortress = fortresses.get(currentFortressIndex);
 
-            //TODO: figure out what the fuck this for loop is and then delete it
             //Work out if there is an engine near to the current fortress so we can display the fortress
-
-
             for(Engine fireEngine: engines){
                 int xPosition = fireEngine.getX() + (fireEngine.getWidth() / 2) - (Gdx.graphics.getWidth() / 2);
                 int yPosition = fireEngine.getY() + (fireEngine.getHeight() / 2) - (Gdx.graphics.getHeight() / 2);
@@ -494,12 +482,10 @@ public class GameState extends State
             //If there is an engine near the fortress, show it and perform the fortresses attack
             if(shouldShowFortress)
             {
-                //TODO conditional delay to occur only when shooting can be added here
                 attackerManager.snapToAttacker(currentFortress, gameMap, camera);
                 attackerManager.BattleTurn(currentFortress);
             }
             else{
-                //currentFortressIndex++;
                 hasChangedFortress = false;
             }
             hasChangedFortress = true;
@@ -514,7 +500,6 @@ public class GameState extends State
                 counter = 0;
             }
         }
-        //currentFortressIndex++;
     }
 
     /***
@@ -605,7 +590,6 @@ public class GameState extends State
      */
     public void destroyStation(){
         fireStation.setDead();
-        //TODO: create an asset for destroyed fire station
         fireStation.setTexture(AssetManager.getDestroyedFireStationTexture());
     }
 
@@ -643,7 +627,6 @@ public class GameState extends State
         uiManager.render();
     }
 
-    //TODO WHAT A STINKY UNUSED METHOD
     //Unused method that is required since this is a child of State
     public void dispose(){
 
@@ -652,7 +635,6 @@ public class GameState extends State
     /***
      * Method that handles map resizing when the window size is changed
      */
-    //TODO Broken method, completely redo
     public void hasResized()
     {
         //Checks that the change in screen size has not caused the camera to show features off the map

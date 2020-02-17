@@ -43,7 +43,6 @@ public abstract class Attacker extends Entity
     @Override
     public void initialise() {
         super.initialise();
-        //setRangeCorners();
     }
 
     /***
@@ -100,13 +99,6 @@ public abstract class Attacker extends Entity
         int centreX = this.x + (this.width / 2);
         int centreY = this.y + (this.height / 2);
 
-/*
-        for (int i = 0; i < numBullets; i++) {
-            GameState.bullets.add(new Bullet(centreX + (i * 2), centreY, targetX + 10, targetY, useWater));
-        }
-
- */
-
         if(attacker instanceof Fortress){
             for (int i = 0; i < numBullets; i++) {
                 GameState.bullets.add(new Bullet(centreX, this.y + (i * 3), targetX + 100, targetY + 70, useWater));
@@ -116,9 +108,6 @@ public abstract class Attacker extends Entity
                 GameState.bullets.add(new Bullet(centreX + (i * 2), centreY, targetX + 10, targetY, useWater));
             }
         }
-
-
-
     }
 
     /***

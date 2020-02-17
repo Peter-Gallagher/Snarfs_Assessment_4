@@ -18,7 +18,7 @@ import java.util.Random;
 Child of State class that will be used to manage the system when the user is playing the minigame
  */
 public class MinigameState extends State
-    /*This whole class is new*/
+    /*Everything in this class is new*/
 {
     //Used to keep track of the score in the minigame
     private int[][] adjacencyList;
@@ -67,7 +67,6 @@ public class MinigameState extends State
         Random random = new Random();
 
         return ( pipeMaps[random.nextInt(pipeMaps.length)]);
-        //"MinigameMaps/" +
 }
 
     /***
@@ -209,8 +208,6 @@ public class MinigameState extends State
                 direction = Integer.parseInt(adjDir[i]);
                 if(checkConnetcsToPipe(sourceIndex, direction)){
                     adjacencyList[sourceIndex][direction] = 1;
-                    //targetIndex = sourceIndex + getOffset(direction);
-                    //adjacencyList[targetIndex][getRelativePosition(sourceIndex, targetIndex)] = 1;
                 }else{
                     adjacencyList[sourceIndex][direction] = 0;
                     targetIndex = sourceIndex + getOffset(direction);

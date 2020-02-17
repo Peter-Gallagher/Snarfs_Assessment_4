@@ -98,11 +98,9 @@ public class AttackerManager
      * Checks if all engines have been moved or not so that the game knows when to end the players turn
      * @return boolean of whether all the engines have been moved or not
      */
-    //TODO why is this here? move to Fire Engine
     public boolean allEnginesMoved(){
         for(Engine fireEngine : engines){
 
-            //just return the function!?
             if(!fireEngine.isMoved()){
                 return false;
             }
@@ -138,7 +136,6 @@ public class AttackerManager
      */
     public boolean checkIfAllEnginesDead(){
         for(Engine fireEngine: engines){
-            //again?
             if(!fireEngine.isDead()) return false;
         }
         return true;
@@ -155,7 +152,6 @@ public class AttackerManager
         //Loops through all tiles to see if it has been pressed
         /*This is new*/
         currentlyTouchedTile = getTileClicked(x,y);
-        System.out.println("Clicked tile Col =" + currentlyTouchedTile.getCol() + " Row = " + currentlyTouchedTile.getRow());
 
         if (currentlyTouchedTile != null){
             //updated the pointers to the current and previous tiles
@@ -181,12 +177,6 @@ public class AttackerManager
                     gameState.getUiManager().setCurrentEngine(fireEngine);
                     gameState.getTileManager().setMovableTiles(currentEngine);
                     return true;
-                }
-        }
-        for(Tile tile: tiles) {
-            //When we have found the tile that has been pressed, perform neccessary processing
-            if(tile.checkIfClickedInside(x, y)) {
-
                 }
             }
         }

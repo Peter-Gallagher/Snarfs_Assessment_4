@@ -28,7 +28,7 @@ public class InputManager implements InputProcessor
     private float xCoord;
     private float yCoord;
 
-    //TODO create a gameInfo class to pass these on refrence when needed
+
     public InputManager(OrthographicCamera camera, StateManager stateManager, BitmapFont font, SpriteBatch batch)
     {
         this.camera = camera;

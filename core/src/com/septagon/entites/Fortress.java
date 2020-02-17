@@ -32,38 +32,6 @@ public class Fortress extends Attacker
     public void initialise()
     {
         super.initialise();
-        //setRangeCorners();
-    }
-
-    /***
-     * Method that will be called if an engine is in range of the fortress so that the engine can be damaged
-     * @param fireEngine The current engine that is being checked
-     */
-    /*This changed*/
-    public void DamageEngineIfInRange(Engine fireEngine) {
-
-        int engineCol = fireEngine.getCol();
-        int engineRow = fireEngine.getRow();
-
-        int xDisplacement = Math.min(Math.abs(this.getCol() - engineCol), Math.abs((this.getCol() + (this.width / 32)) - engineCol));
-        int yDisplacement = Math.min(Math.abs(this.getRow() - engineRow), Math.abs((this.getRow() + (this.height / 32)) - engineRow));
-
-        int engineX = fireEngine.getX();
-        int engineY = fireEngine.getY();
-
-        int centreX = this.x + (this.width/2);
-        int centreY = this.y + (this.height/2);
-
-        //define the number of projectiles are drawn when an entity is shot
-        int numBullets = 25;
-
-        if(Math.sqrt( (xDisplacement * xDisplacement) + (yDisplacement * yDisplacement) ) <= this.range){
-            fireEngine.takeDamage(this.damage);
-
-            for (int i = 0; i< numBullets; i++){
-                GameState.bullets.add(new Bullet(centreX + (i * 2), centreY + (i*3),  engineX + 10, engineY, false));
-            }
-        }
     }
 
     /***
@@ -77,10 +45,6 @@ public class Fortress extends Attacker
         //If the fortress is pressed, show its boundary image
         if(selected && !dead)
         {
-            //int imgX = (col - this.getRange()) * Tile.TILE_SIZE;
-            //int imgY = (row - this.getRange()) * Tile.TILE_SIZE;
-            //int imgWidth = ( ((int)width / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
-            //int imgHeight = ( ((int)height / Tile.TILE_SIZE) + this.range * 2) * Tile.TILE_SIZE;
             int imgX = (col ) * Tile.TILE_SIZE;
             int imgY = (row ) * Tile.TILE_SIZE;
             int imgWidth = ( (width / Tile.TILE_SIZE) ) * Tile.TILE_SIZE;

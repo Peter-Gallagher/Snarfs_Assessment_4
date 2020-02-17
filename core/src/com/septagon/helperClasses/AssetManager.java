@@ -20,7 +20,6 @@ public class AssetManager {
 
     private static final Texture moveSpaceTexture = new Texture(Gdx.files.internal("move_square.png"));
 
-    //TODO add extra fortress textures
     private static final Texture fortressFireTexture = new Texture(Gdx.files.internal("images/FortressFire.png"));
     private static final Texture fortressMinisterTexture = new Texture(Gdx.files.internal("images/FortressMinister.png"));
     private static final Texture fortressStationTexture = new Texture(Gdx.files.internal("images/FortressStation.png"));

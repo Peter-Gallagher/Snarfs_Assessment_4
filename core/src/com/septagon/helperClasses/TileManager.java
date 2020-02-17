@@ -101,9 +101,9 @@ public class TileManager {
             adjacencyList[tileIndex + 1][0] = access;
             adjacencyList[tileIndex + 80][2] = access;
             adjacencyList[tileIndex - 80][3] = access;
-        } catch (Exception e){
+            } catch (Exception e){
 
-        }
+            }
 
         }
 
