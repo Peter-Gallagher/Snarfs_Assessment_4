@@ -723,4 +723,12 @@ public class GameState extends State
     public int getMapHeight() {
         return gameMap.getMapHeight();
     }
+
+    /**
+     * public void saveData() {
+        if (gameData != null) {
+            fileHandle.writeString(Base64Coder.encodeString(json.prettyPrint(gameData)),
+                    false);
+        }
+    }*/
 }
