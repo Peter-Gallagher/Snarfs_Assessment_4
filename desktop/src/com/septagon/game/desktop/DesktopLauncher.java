@@ -13,6 +13,7 @@ public class DesktopLauncher
 		config.height = 720;
 		config.forceExit = true;
 		config.resizable = true;
+		config.fullscreen = true;
 		new LwjglApplication(new Game(), config);
 	}
 }
