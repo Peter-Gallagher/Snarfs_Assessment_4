@@ -27,7 +27,6 @@ public class AssetManager {
     private static final Texture fortressSalvoTexture = new Texture(Gdx.files.internal("images/salvo.png"));
     private static final Texture fortressCliffordsTowerTexture = new Texture(Gdx.files.internal("images/cliffordsTower.png"));
 
-
     private static final Texture defeatedFireTexture = new Texture(Gdx.files.internal("images/DefeatedOldStation.png"));
     private static final Texture defeatedMinsterTexture = new Texture(Gdx.files.internal("images/DefeatedMinster.png"));
     private static final Texture defeatedStationTexture = new Texture(Gdx.files.internal("images/DefeatedRailStation.png"));
