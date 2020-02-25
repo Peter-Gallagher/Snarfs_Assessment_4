@@ -23,6 +23,7 @@ public class MenuState extends State
     //Variables with the text that will be displayed to the screen
     private String titleLabel;
     private String playLabel;
+    private String loadLabel;
     private String exitLabel;
     private int menuPosition;
 
@@ -37,6 +38,7 @@ public class MenuState extends State
     //Create bounding boxes which are used to act like buttons
     private Rectangle playBox;
     private Rectangle exitBox;
+    private Rectangle loadBox;
 
     /***
      * Constructor that set initial values for all class member variables
@@ -49,6 +51,7 @@ public class MenuState extends State
         this.gameCamera = camera;
         titleLabel = "Kroy - Septagon";
         playLabel = "Play";
+        loadLabel = "Load";
         exitLabel = "Exit";
         menuPosition = 0;
         layout = new GlyphLayout(font, titleLabel);
@@ -93,7 +96,8 @@ public class MenuState extends State
         font.draw(menuBatch, titleLabel, titleCentreX, (Gdx.graphics.getHeight()) - 30);
 
         drawString(menuBatch, 0, playLabel, 100, (Gdx.graphics.getHeight()) - 100);
-        drawString(menuBatch, 1, exitLabel,  100, (Gdx.graphics.getHeight()) - 150);
+        drawString(menuBatch, 2, exitLabel,  100, (Gdx.graphics.getHeight()) - 200);
+        drawString(menuBatch, 1, loadLabel, 100, (Gdx.graphics.getHeight() - 150));
 
         menuBatch.end();
     }
@@ -147,10 +151,13 @@ public class MenuState extends State
      */
     private void setupRectanglePositions(){
         playBox = new Rectangle();
-        playBox.setBounds(80, Gdx.graphics.getHeight() - 130, 100, 50);
-
+        playBox.setBounds(100, Gdx.graphics.getHeight() - 130, 100, 50);
+        System.out.println(Gdx.graphics.getHeight());
         exitBox = new Rectangle();
-        exitBox.setBounds(180, Gdx.graphics.getHeight() - 180, 100,50);
+        exitBox.setBounds(180, Gdx.graphics.getHeight() - 210, 100,50);
+        loadBox = new Rectangle();
+        loadBox.setBounds(100, Gdx.graphics.getHeight()-180, 100, 50);
+
     }
 
     /**
