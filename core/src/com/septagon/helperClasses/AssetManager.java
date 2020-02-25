@@ -38,7 +38,6 @@ public class AssetManager {
     private static final Texture fireStationTexture = new Texture(Gdx.files.internal("images/fireStation.png"));
     private static final Texture destroyedStationTexture = new Texture(Gdx.files.internal("images/fireStationDestroyed.png"));
     private static final Texture creepyPatrol = new Texture(Gdx.files.internal("images/xeno.png"));
-    private static final Texture deadPatrol = new Texture(Gdx.files.internal("images/deadPatrol.png"));
 
     private static final Texture fortressBoundaryImage = new Texture(Gdx.files.internal("selected fortress.png"));
 
