@@ -1,9 +1,12 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.septagon.helperClasses.AssetManager;
 import com.septagon.helperClasses.TileManager;
+import com.septagon.states.GameState;
 
 import java.util.ArrayList;
+
 /*Everything in this class is new*/
 public class Patrol extends Vehicle  {
 
@@ -12,6 +15,7 @@ public class Patrol extends Vehicle  {
     protected ArrayList<Tile> path;
 
     protected TileManager tileManager;
+    private boolean hasDropped = false;
 
     public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
         super(col, row, texture, health, damage, range, speed);
@@ -93,7 +97,7 @@ public class Patrol extends Vehicle  {
         moveIndex = getTileClosestToGoal(moves);
         tileToMoveTo = tileManager.getTileFromIndex(moves.get(moveIndex));
 
-        tileManager.getTileAtLocation(this.col, this.row,80,50).setOccupied(false);
+        tileManager.getTileAtLocation(this.col, this.row).setOccupied(false);
         tileManager.updateTileInAdjacencyList(currentTileIndex,1);
         this.col = tileToMoveTo.getCol();
         this.row = tileToMoveTo.getRow();
@@ -104,12 +108,22 @@ public class Patrol extends Vehicle  {
 
 
         updatePathIndex(path.get(pathIndex));
-        }
+    }
 
-        private void updatePathIndex(Tile currentGoal){
-            if (this.col == currentGoal.getCol() && this.row == currentGoal.getRow()){
-                pathIndex = (pathIndex + 1) % path.size();
-            }
+    private void updatePathIndex(Tile currentGoal){
+        if (this.col == currentGoal.getCol() && this.row == currentGoal.getRow()){
+            pathIndex = (pathIndex + 1) % path.size();
         }
     }
+
+    public void cleanup(GameState gameState){
+        if(!hasDropped) {
+            hasDropped = true;
+            setTexture(AssetManager.getNull());
+            gameState.getTileManager().getTileFromIndex(row+80*col);
+            gameState.getEntityManager().dropPowerup(col, row, gameState);
+        }
+    }
+}
+
 

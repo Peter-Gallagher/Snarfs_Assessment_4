@@ -158,7 +158,7 @@ public abstract class Attacker extends Entity
 
     /***
      * Method to handle being shot
-     * @param damage teh amount of damage to be taken
+     * @param damage the amount of damage to be taken
      */
     /*This changed*/
     public void takeDamage(int damage) {

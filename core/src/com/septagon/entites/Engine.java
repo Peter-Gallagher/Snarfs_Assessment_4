@@ -6,6 +6,8 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.Texture;
+import com.septagon.helperClasses.TileManager;
+import com.septagon.states.GameState;
 
 public class Engine extends Vehicle
 {
@@ -19,9 +21,11 @@ public class Engine extends Vehicle
     private boolean moved = false;
 
     //Values used to track and control powerups
-    private boolean poweredUp = false;
-    private int powerupType = 0;
-    private int turnsPowered = 0;
+    protected boolean poweredUp = false;
+    protected int powerupType = 0;
+    protected int turnsPowered = 0;
+    private int baseHealth, baseDamage, baseRange, baseSpeed;
+    private boolean invulnerable = false;
 
     /***
      * Constructor that Sets up the member variables for engine
@@ -32,6 +36,10 @@ public class Engine extends Vehicle
         this.maxVolume = maxVolume;
         this.fillSpeed = fillSpeed;
         this.id = id;
+        this.baseHealth = health;
+        this.baseDamage = damage;
+        this.baseRange = range;
+        this.baseSpeed = speed;
     }
 
 
@@ -64,7 +72,6 @@ public class Engine extends Vehicle
         this.volume = Math.max(this.volume - this.damage, 0) ;
     }
 
-
     @Override
     /*This is new*/
     public boolean damageIfInRange(Attacker attacker, boolean useWater){
@@ -88,13 +95,29 @@ public class Engine extends Vehicle
     private void powerupToggle(boolean tog){
         if(tog) {
             switch (powerupType) {
-                case (1): //Health
+                case (1): //Instant heal / refill
+                    health = maxHealth;
+                    volume = maxVolume;
+                    poweredUp = false;
+                    break;
                 case (2): //Damage
+                    damage = (int) Math.ceil(baseDamage * 1.5);
+                    break;
                 case (3): //Attack Range
+                    range = (int) Math.ceil(baseRange * 1.2);
+                    break;
                 case (4): //Move Range
+                    speed = (int) Math.ceil(baseSpeed * 1.2);
+                    break;
                 case (5): //Temporary Invulnerability
+                    invulnerable = true;
                     break;
             }
+        } else {
+            damage = baseDamage;
+            range = baseRange;
+            speed = baseSpeed;
+            invulnerable = false;
         }
     }
 
@@ -117,20 +140,31 @@ public class Engine extends Vehicle
         }
     }
 
+    /**
+     * Checks if Fire Engine is invulnerable from powerups, if it isn't
+     * then it takes damage
+     * New for Assessment 4
+     * @param damage the amount of damage to be taken
+     */
+    @Override
+    public void takeDamage(int damage) {
+        if (!invulnerable){
+            this.health = Math.max(this.health - damage, 0);
+
+            if (this.health <= 0) {
+                this.setDead();
+            }
+        }
+    }
+
+
+
 
     //Getters and Setters
-    public int getMaxVolume()
-    {
-        return this.maxVolume;
-    }
+    public int getMaxVolume() { return this.maxVolume; }
     public int getVolume() { return this.volume; }
     public int getFillSpeed() { return fillSpeed; }
-
-    public Integer getID()
-    {
-        return this.id;
-    }
-
+    public Integer getID() { return this.id; }
     public boolean isMoved(){return this.moved;}
 
     public void setMoved(boolean moved){this.moved = moved;}

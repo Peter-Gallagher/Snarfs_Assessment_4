@@ -6,11 +6,17 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.septagon.helperClasses.AssetManager;
+import com.septagon.helperClasses.TileManager;
+import com.septagon.states.GameState;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class EntityManager
-{
+public class EntityManager {
+
+    private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
+
     /*This is new*/
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
@@ -73,6 +79,21 @@ public class EntityManager
     {
         for(Entity entity: entities)
             entity.render(batch);
+    }
+
+    protected void dropPowerup(int row, int col, GameState gameState){
+        int randInt = new Random().nextInt(5);
+        Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getPowerup(randInt), gameState, randInt);
+        powerups.add(powerup);
+        entities.add(powerup);
+    }
+    public void checkPowerups(TileManager tileManager, GameState gameState){
+        System.out.println(powerups.size());
+        if(powerups.size() > 0){
+            for(Powerup p : powerups){
+                p.checkContact(tileManager, gameState);
+            }
+        }
     }
 
     //Getters

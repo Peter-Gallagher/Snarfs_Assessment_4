@@ -49,15 +49,13 @@ public class TileManager {
     /*This is new*/
     public void setOccupiedTiles(TiledGameMap gameMap)
     {
-        int width = gameMap.getMapWidth();
-        int height = gameMap.getMapHeight();
         setEngineTilesOccupied();
 
         boolean[][]  passableTiles = gameMap.getPassable();
 
         for (int i = 0; i < passableTiles.length - 1; i++){
             for (int j = 0; j < passableTiles[0].length - 1; j++){
-                Tile tile = getTileAtLocation(j, i, width, height);
+                Tile tile = getTileAtLocation(j, i);
                 tile.setOccupied(passableTiles[i][j]);
             }
         }
@@ -114,16 +112,14 @@ public class TileManager {
      * @param row The row of the tile you want to get
      * @return The tile at the location asked for
      */
-    public Tile getTileAtLocation(int col, int row, int width, int height)
+    public Tile getTileAtLocation(int col, int row)
     {
-        int tileIndex = col + (row * width);
-
-        if (tileIndex >= 0 && tileIndex < (width * height)){
-            Tile tile = tiles.get(tileIndex);
-            return  tile;
-        }else{
-            return null;
+        for(Tile t: tiles)
+        {
+            if(t.getCol() == col && t.getRow() == row)
+                return t;
         }
+        return null;
     }
 
     /***
@@ -139,7 +135,7 @@ public class TileManager {
         int startTileIndex = currentEngine.getCol() + (currentEngine.getRow() * 80);
 
         for (Integer index: BFS(adjacencyList, startTileIndex, 80, currentEngine.getSpeed())) {
-            accessTile = this.getTileAtLocation(index % 80, index / 80, 80, 50);
+            accessTile = this.getTileAtLocation(index % 80, index / 80);
             accessTile.setMovable(true);
         }
     }
@@ -157,7 +153,7 @@ public class TileManager {
         for (int width = 0; width <= maxWidth; width++) {
             for (int height = 0; height <= maxHeight; height++) {
 
-                checkTile = this.getTileAtLocation(width, height,maxWidth, maxHeight);
+                checkTile = this.getTileAtLocation(width, height);
                 int tileIndex = width + (maxWidth * height);
 
                 if (checkTile != null){
@@ -283,7 +279,7 @@ public class TileManager {
             return false;
         }
 
-        Tile checkTile = this.getTileAtLocation(newX, newY, width, height);
+        Tile checkTile = this.getTileAtLocation(newX, newY);
 
         if (checkTile != null){
             return !checkTile.isOccupied();

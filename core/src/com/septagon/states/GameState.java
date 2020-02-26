@@ -146,7 +146,7 @@ public class GameState extends State
     private void initializeFireEngines(){
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 32, 15, 15, 110, 4, 02);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 15, 15, 15, 110, 4, 02);
         Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 20, 130, 4, 03);
         Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 22, 120, 4, 04);
 
@@ -417,6 +417,10 @@ public class GameState extends State
         //Call the update method for all entities in our game
         entityManager.update();
 
+        for(Engine e : engines){
+            e.updatePowerup();
+        }
+
         //If all the engines have been moved on the current turn, make it the enemies turn
         if (attackerManager.allEnginesMoved())
         {
@@ -451,6 +455,7 @@ public class GameState extends State
      * Method that handles all the updating that should happen on an enemies turn
      */
     private void enemyTurnUpdate(){
+        entityManager.checkPowerups(tileManager, this);
         boolean shouldShowFortress = false;
 
         //Work out what should happen if we need to display a new fortress
@@ -677,16 +682,22 @@ public class GameState extends State
         return uiManager;
     }
 
-    public TileManager getTileManager(){
-        return tileManager;
-    }
+    public TileManager getTileManager(){ return tileManager; }
 
     public AttackerManager getAttackerManager(){
         return attackerManager;
     }
 
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
     public Station getStation(){
         return fireStation;
+    }
+
+    public ArrayList<Engine> getEngines(){
+        return engines;
     }
 
     public boolean isPlayerTurn()

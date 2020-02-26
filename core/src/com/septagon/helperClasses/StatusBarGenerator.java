@@ -47,7 +47,9 @@ public class StatusBarGenerator
         }
         /*This is new*/
         for(Patrol patrol : patrols){
-            renderHealthBarForAttacker(patrol);
+            if(!patrol.isDead()) {
+                renderHealthBarForAttacker(patrol);
+            }
         }
     }
 
