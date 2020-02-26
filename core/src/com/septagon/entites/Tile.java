@@ -17,6 +17,9 @@ public class Tile extends Entity
     //Variable to see if the tile can be moved to by one of the engines
     protected boolean movable = false;
 
+    //Variable to see what powerup (if any) this tile holds
+    private int powerup;
+
     /***
      *Constructor that sets up initial values for all member variables
      */
@@ -24,6 +27,7 @@ public class Tile extends Entity
     {
         super(col,row,Tile.TILE_SIZE,Tile.TILE_SIZE,texture);
         this.occupied = occupied;
+        this.powerup = 0;
     }
 
 
@@ -43,10 +47,12 @@ public class Tile extends Entity
     //Setters
     public void setMovable(boolean value) { movable = value; }
     public void setOccupied(boolean occupied) { this.occupied = occupied; }
+    public void setPowerup(int power) { this.powerup = power; }
 
     //Getters
     public boolean isMovable() { return movable; }
     public boolean isOccupied() { return occupied; }
+    public int getPowerup() { return powerup; }
     public int getIndex(){
         return col + (row * 80);
     } /*This changed*/

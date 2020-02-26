@@ -18,6 +18,11 @@ public class Engine extends Vehicle
     //Keeps track of whether the engine has moved on the current player turn
     private boolean moved = false;
 
+    //Values used to track and control powerups
+    private boolean poweredUp = false;
+    private int powerupType = 0;
+    private int turnsPowered = 0;
+
     /***
      * Constructor that Sets up the member variables for engine
      */
@@ -73,6 +78,43 @@ public class Engine extends Vehicle
         }
 
         return false;
+    }
+
+    /**
+     * Method used to powerup or debuff fire engines
+     * New for Assessment 4
+     * @param tog true if toggling on, false if toggling off
+     */
+    private void powerupToggle(boolean tog){
+        if(tog) {
+            switch (powerupType) {
+                case (1): //Health
+                case (2): //Damage
+                case (3): //Attack Range
+                case (4): //Move Range
+                case (5): //Temporary Invulnerability
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Method used to control powerup logic for fire engines
+     * New for Assessment 4
+     */
+    public void updatePowerup(){
+        if(poweredUp){
+            if(turnsPowered == 0){
+                powerupToggle(true);    //toggles on
+            } else if (turnsPowered > 4){
+                poweredUp = false;
+                turnsPowered = 0;   //resets associated values
+                powerupType = 0;
+                powerupToggle(false);   //toggles off
+                return;
+            }
+            turnsPowered++;
+        }
     }
 
 
