@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
+import com.septagon.game.Difficulty;
 import com.septagon.game.InputManager;
 import com.septagon.game.UIManager;
 import com.septagon.helperClasses.AssetManager;
@@ -560,7 +561,7 @@ public class GameState extends State
                 fireEngine.setMoved(false);
                 if (!fireStation.isDead()){
                     if (fireEngine.ifInRangeFill(fireStation)){
-                        playMiniGame = true;
+                        playMiniGame = Difficulty.shouldTriggerMinigame();
                     }
                 }
             }

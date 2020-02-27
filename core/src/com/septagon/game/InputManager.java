@@ -212,6 +212,7 @@ public class InputManager implements InputProcessor
      * @param button The mouse button that performed the input
      */
      @Override public boolean touchUp (int screenX, int screenY, int pointer, int button) {
+         System.out.println(screenX + "  ,  " + screenY);
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             if (button != Input.Buttons.LEFT || pointer > 0) return false;
@@ -239,10 +240,20 @@ public class InputManager implements InputProcessor
             switch(keycode){
                 case Input.Keys.DOWN:
                     currentState.setMenuPosition(currentState.getMenuPosition() + 1);
+                    System.out.println(currentState.getMenuPosition());
+                    break;
 
                 case Input.Keys.UP:
                     currentState.setMenuPosition(currentState.getMenuPosition() - 1);
+                    System.out.println(currentState.getMenuPosition());
+                    break;
 
+                case Input.Keys.LEFT:
+                    Difficulty.previousDifficulty();
+                    break;
+                case Input.Keys.RIGHT:
+                    Difficulty.nextDifficulty();
+                    break;
                 //If enter pressed, perform action depending on the position of the menu
                 case Input.Keys.ENTER:
 
@@ -252,10 +263,16 @@ public class InputManager implements InputProcessor
                             stateManager.changeState(new GameState(this, font, stateManager, camera));
                             break;
                         case 1:
+                            Difficulty.nextDifficulty();
+                            break;
+                        case 2:
+                            System.out.println("Loading not implemented yet ;)");
+                            break;
+                        case 3:
                             Gdx.app.exit();
                             break;
                         default:
-                            System.err.println("Something went wrong with the menu system");
+                            System.err.println("Something went wrong with the menu system, (No case for: " + currentState.getMenuPosition());
                             break;
                     }
 
