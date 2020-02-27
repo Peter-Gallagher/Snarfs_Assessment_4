@@ -26,11 +26,15 @@ public class Powerup extends Entity {
             curTile = gameState.getTileManager().getTileAtLocation(col, row);
         }
         curTile.setOccupied(false);
-        //curTile.setPowerup(randInt+1);
-        curTile.setPowerup(1); //TODO =======================
+        curTile.setMovable(true);
         this.powerupValue = randInt;
     }
 
+    /**
+     *
+     * @param tileManager
+     * @param gameState
+     */
     public void checkContact(TileManager tileManager, GameState gameState){
         if(!usedUp) {
             for (Engine e : gameState.getEngines()) {
@@ -39,9 +43,9 @@ public class Powerup extends Entity {
                     System.out.println("Powering up! " + e.powerupType);
                     e.poweredUp = true;
                     e.turnsPowered = 0; //Overwrites any existing powerup when a new one is picked up
+                    e.updatePowerup();
 
                     setTexture(AssetManager.getNull());
-                    tileManager.getTileAtLocation(col, row).setPowerup(0);
                     this.usedUp = true;
                 }
             }

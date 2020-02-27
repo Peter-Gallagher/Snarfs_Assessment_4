@@ -43,7 +43,6 @@ public class GameState extends State
 
     private int turnsPassed;
     private boolean paused = false;
-    private int minigameScore;
 
     //Loads textures and creates objects for the engines
     private ArrayList<Engine> engines;
@@ -100,7 +99,6 @@ public class GameState extends State
         super(inputManager, font, StateID.GAME, stateManager);
         this.camera = camera;
         turnsPassed = 0;
-        minigameScore = 0;
         currentCameraX = 0;
         currentCameraY = 0;
 
@@ -417,15 +415,14 @@ public class GameState extends State
         //Call the update method for all entities in our game
         entityManager.update();
 
-        for(Engine e : engines){
-            e.updatePowerup();
-        }
-
         //If all the engines have been moved on the current turn, make it the enemies turn
         if (attackerManager.allEnginesMoved())
         {
             this.changingTurn = true;
             changeTurnCounter = 0;
+            for(Engine e : engines){
+                e.updatePowerup();
+            }
         }
 
         //Updates the pointers to the current x and y positions of the camera
@@ -708,14 +705,6 @@ public class GameState extends State
     public boolean isPaused()
     {
         return paused;
-    }
-
-    public int getMinigameScore() {
-        return minigameScore;
-    }
-
-    public void setMinigameScore(int minigameScore) {
-        this.minigameScore = minigameScore;
     }
 
     public void setPaused(boolean paused) {
