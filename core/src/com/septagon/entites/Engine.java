@@ -95,18 +95,18 @@ public class Engine extends Vehicle
     private void powerupToggle(boolean tog){
         if(tog) {
             switch (powerupType) {
-                case (1): //Instant heal / refill
+                case (1): //Instant heal & refill
                     health = maxHealth;
                     volume = maxVolume;
                     poweredUp = false;
                     break;
-                case (2): //Damage
+                case (2): //Damage+
                     damage = (int) Math.ceil(baseDamage * 1.5);
                     break;
-                case (3): //Attack Range
+                case (3): //Attack Range+
                     range = (int) Math.ceil(baseRange * 1.2);
                     break;
-                case (4): //Move Range
+                case (4): //Move Range+
                     speed = (int) Math.ceil(baseSpeed * 1.2);
                     break;
                 case (5): //Temporary Invulnerability
@@ -127,6 +127,7 @@ public class Engine extends Vehicle
      */
     public void updatePowerup(){
         if(poweredUp){
+            System.out.println("Engine "+id+" is powered up");
             if(turnsPowered == 0){
                 powerupToggle(true);    //toggles on
             } else if (turnsPowered > 4){
@@ -141,8 +142,7 @@ public class Engine extends Vehicle
     }
 
     /**
-     * Checks if Fire Engine is invulnerable from powerups, if it isn't
-     * then it takes damage
+     * Checks if Fire Engine is invulnerable from powerups, if it isn't then it takes damage
      * New for Assessment 4
      * @param damage the amount of damage to be taken
      */

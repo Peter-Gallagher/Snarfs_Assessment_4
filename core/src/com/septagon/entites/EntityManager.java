@@ -81,14 +81,25 @@ public class EntityManager {
             entity.render(batch);
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @param gameState
+     */
     protected void dropPowerup(int row, int col, GameState gameState){
         int randInt = new Random().nextInt(5);
         Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getPowerup(randInt), gameState, randInt);
         powerups.add(powerup);
         entities.add(powerup);
     }
+
+    /**
+     *
+     * @param tileManager
+     * @param gameState
+     */
     public void checkPowerups(TileManager tileManager, GameState gameState){
-        System.out.println(powerups.size());
         if(powerups.size() > 0){
             for(Powerup p : powerups){
                 p.checkContact(tileManager, gameState);
