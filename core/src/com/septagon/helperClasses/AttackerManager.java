@@ -268,6 +268,7 @@ public class AttackerManager
 
         for (Patrol patrol : patrols) {
             if (patrol.isDead()){
+                patrol.cleanup(gameState);
                 destroyedPatrols.add(patrol);
             }
         }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.septagon.game.Difficulty;
 import com.septagon.game.InputManager;
 
 import java.awt.*;
@@ -23,6 +24,7 @@ public class MenuState extends State
     //Variables with the text that will be displayed to the screen
     private String titleLabel;
     private String playLabel;
+    private String difficultyLabel;
     private String loadLabel;
     private String exitLabel;
     private int menuPosition;
@@ -36,9 +38,7 @@ public class MenuState extends State
     private OrthographicCamera gameCamera;
 
     //Create bounding boxes which are used to act like buttons
-    private Rectangle playBox;
-    private Rectangle exitBox;
-    private Rectangle loadBox;
+    private Rectangle playBox, difficultyBox, exitBox, loadBox;
 
     /***
      * Constructor that set initial values for all class member variables
@@ -51,6 +51,7 @@ public class MenuState extends State
         this.gameCamera = camera;
         titleLabel = "Kroy - Septagon";
         playLabel = "Play";
+        difficultyLabel = "Difficulty: " + Difficulty.current;
         loadLabel = "Load";
         exitLabel = "Exit";
         menuPosition = 0;
@@ -96,8 +97,10 @@ public class MenuState extends State
         font.draw(menuBatch, titleLabel, titleCentreX, (Gdx.graphics.getHeight()) - 30);
 
         drawString(menuBatch, 0, playLabel, 100, (Gdx.graphics.getHeight()) - 100);
-        drawString(menuBatch, 2, exitLabel,  100, (Gdx.graphics.getHeight()) - 200);
-        drawString(menuBatch, 1, loadLabel, 100, (Gdx.graphics.getHeight() - 150));
+        difficultyLabel = "Difficulty: " + Difficulty.current;
+        drawString(menuBatch, 1, difficultyLabel, 100, (Gdx.graphics.getHeight() - 150));
+        drawString(menuBatch, 2, loadLabel, 100, (Gdx.graphics.getHeight() - 200));
+        drawString(menuBatch, 3, exitLabel,  100, (Gdx.graphics.getHeight()) - 250);
 
         menuBatch.end();
     }
@@ -124,12 +127,14 @@ public class MenuState extends State
     }
 
     //Getters and Setters for member variable menuPosition
-    public void setMenuPosition(int menuPosition)
-    {
-        if(menuPosition < 0 || menuPosition >= NUM_MENU_ITEMS)
-            return;
-
-        this.menuPosition = menuPosition;
+    public void setMenuPosition(int menuPosition) {
+        if (menuPosition < 0) {
+            this.menuPosition = NUM_MENU_ITEMS - 1;
+        } else if (menuPosition >= NUM_MENU_ITEMS){
+        this.menuPosition = 0;
+        } else {
+            this.menuPosition = menuPosition;
+        }
     }
 
     /**
@@ -151,12 +156,13 @@ public class MenuState extends State
      */
     private void setupRectanglePositions(){
         playBox = new Rectangle();
-        playBox.setBounds(100, Gdx.graphics.getHeight() - 130, 100, 50);
-        System.out.println(Gdx.graphics.getHeight());
-        exitBox = new Rectangle();
-        exitBox.setBounds(180, Gdx.graphics.getHeight() - 210, 100,50);
+        playBox.setBounds(100, Gdx.graphics.getHeight() - 130, 55, 50);
+        difficultyBox = new Rectangle();
+        difficultyBox.setBounds(100, Gdx.graphics.getHeight() - 180, 250, 50);
         loadBox = new Rectangle();
-        loadBox.setBounds(100, Gdx.graphics.getHeight()-180, 100, 50);
+        loadBox.setBounds(100, Gdx.graphics.getHeight() - 230, 70, 50);
+        exitBox = new Rectangle();
+        exitBox.setBounds(100, Gdx.graphics.getHeight() - 280, 55,50);
 
     }
 
@@ -166,12 +172,14 @@ public class MenuState extends State
      * @param y The y position of the input
      */
     public void checkIfClickedOption(float x, float y){
-        if(x >= playBox.x && x <= playBox.x + playBox.width){
-            if(y >= playBox.y && y <= playBox.y + playBox.height){
-                stateManager.changeState(new GameState(inputManager, font, stateManager, gameCamera));
-            }else if(y >= exitBox.y && y <= exitBox.y + exitBox.height){
-                Gdx.app.exit();
-            }
+        if(playBox.contains(x, y)){
+            stateManager.changeState(new GameState(inputManager, font, stateManager, gameCamera));
+        } else if(difficultyBox.contains(x, y)){
+            Difficulty.nextDifficulty();
+        } else if(loadBox.contains(x, y)){
+            System.out.println("Load no implemented yet ;)");
+        } else if(exitBox.contains(x, y)){
+            Gdx.app.exit();
         }
     }
 

@@ -11,7 +11,7 @@ public class Station extends Entity
     private int fillRange;
 
     /***
-     *Constructor that callS Entity constructor that is used to set up all member variables
+     *Constructor that calls Entity constructor that is used to set up all member variables
      */
     /*This changed*/
     public Station(int col, int row, int width, int height, Texture texture,int fillRange)

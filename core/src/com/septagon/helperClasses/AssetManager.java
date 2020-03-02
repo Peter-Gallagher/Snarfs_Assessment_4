@@ -41,7 +41,16 @@ public class AssetManager {
 
     private static final Texture fortressBoundaryImage = new Texture(Gdx.files.internal("selected fortress.png"));
 
+    private static final Texture powerup1 = new Texture(Gdx.files.internal("images/powerups/1.png"));
+    private static final Texture powerup2 = new Texture(Gdx.files.internal("images/powerups/2.png"));
+    private static final Texture powerup3 = new Texture(Gdx.files.internal("images/powerups/3.png"));
+    private static final Texture powerup4 = new Texture(Gdx.files.internal("images/powerups/4.png"));
+    private static final Texture powerup5 = new Texture(Gdx.files.internal("images/powerups/5.png"));
+
+    private static final Texture nullTex = new Texture(Gdx.files.internal("images/nullTex.png"));
+
     //Getters
+    public static Texture getNull(){ return nullTex; }
     public static Texture getEngineTexture1() {
         return engineTexture1;
     }
@@ -122,4 +131,13 @@ public class AssetManager {
 
     public static Texture getCreepyPatrol() { return creepyPatrol; }
 
+    public static Texture getPowerup(int power) {
+        switch(power){
+            case(1): return powerup1;
+            case(2): return powerup2;
+            case(3): return powerup3;
+            case(4): return powerup4;
+            default: return powerup5;
+        }
+    }
 }

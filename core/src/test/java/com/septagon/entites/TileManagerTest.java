@@ -107,9 +107,9 @@ public class TileManagerTest {
             testTM.getTiles().add(testTile1);
         }
 
-        assertEquals(testTile1, testTM.getTileAtLocation(1,1,5,2));
-        assertEquals(testTile1, testTM.getTileAtLocation(4,1,5,2));
-        assertEquals(null, testTM.getTileAtLocation(20,20,1,1));
+        assertEquals(testTile1, testTM.getTileAtLocation(1,1));
+        assertEquals(testTile1, testTM.getTileAtLocation(4,1));
+        assertEquals(null, testTM.getTileAtLocation(20,20));
 
     }
 

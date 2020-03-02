@@ -17,6 +17,7 @@ public class Tile extends Entity
     //Variable to see if the tile can be moved to by one of the engines
     protected boolean movable = false;
 
+
     /***
      *Constructor that sets up initial values for all member variables
      */

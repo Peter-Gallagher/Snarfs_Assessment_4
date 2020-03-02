@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
+import com.septagon.game.Difficulty;
 import com.septagon.game.InputManager;
 import com.septagon.game.UIManager;
 import com.septagon.helperClasses.AssetManager;
@@ -43,7 +44,6 @@ public class GameState extends State
 
     private int turnsPassed;
     private boolean paused = false;
-    private int minigameScore;
 
     //Loads textures and creates objects for the engines
     private ArrayList<Engine> engines;
@@ -100,7 +100,6 @@ public class GameState extends State
         super(inputManager, font, StateID.GAME, stateManager);
         this.camera = camera;
         turnsPassed = 0;
-        minigameScore = 0;
         currentCameraX = 0;
         currentCameraY = 0;
 
@@ -146,7 +145,7 @@ public class GameState extends State
     private void initializeFireEngines(){
         //create all Fire Engine objects
         Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 150, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 32, 15, 15, 110, 4, 02);
+        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 15, 15, 15, 110, 4, 02);
         Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 20, 130, 4, 03);
         Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 22, 120, 4, 04);
 
@@ -422,6 +421,9 @@ public class GameState extends State
         {
             this.changingTurn = true;
             changeTurnCounter = 0;
+            for(Engine e : engines){
+                e.updatePowerup();
+            }
         }
 
         //Updates the pointers to the current x and y positions of the camera
@@ -451,6 +453,7 @@ public class GameState extends State
      * Method that handles all the updating that should happen on an enemies turn
      */
     private void enemyTurnUpdate(){
+        entityManager.checkPowerups(tileManager, this);
         boolean shouldShowFortress = false;
 
         //Work out what should happen if we need to display a new fortress
@@ -555,7 +558,7 @@ public class GameState extends State
                 fireEngine.setMoved(false);
                 if (!fireStation.isDead()){
                     if (fireEngine.ifInRangeFill(fireStation)){
-                        playMiniGame = true;
+                        playMiniGame = Difficulty.shouldTriggerMinigame();
                     }
                 }
             }
@@ -677,16 +680,22 @@ public class GameState extends State
         return uiManager;
     }
 
-    public TileManager getTileManager(){
-        return tileManager;
-    }
+    public TileManager getTileManager(){ return tileManager; }
 
     public AttackerManager getAttackerManager(){
         return attackerManager;
     }
 
+    public EntityManager getEntityManager(){
+        return entityManager;
+    }
+
     public Station getStation(){
         return fireStation;
+    }
+
+    public ArrayList<Engine> getEngines(){
+        return engines;
     }
 
     public boolean isPlayerTurn()
@@ -697,14 +706,6 @@ public class GameState extends State
     public boolean isPaused()
     {
         return paused;
-    }
-
-    public int getMinigameScore() {
-        return minigameScore;
-    }
-
-    public void setMinigameScore(int minigameScore) {
-        this.minigameScore = minigameScore;
     }
 
     public void setPaused(boolean paused) {
