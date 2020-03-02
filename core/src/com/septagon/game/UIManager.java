@@ -6,7 +6,6 @@ Class that is used for rendering and managing all the heads up display
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -58,6 +57,8 @@ public class UIManager
     //Variables to keep track of the pause state
     private boolean paused = false;
     private int pausePosition = 1;
+    private Rectangle resumeBox;
+    private Rectangle exitBox;
 
     public UIManager(GameState gameState, BitmapFont font)
     {
@@ -89,9 +90,10 @@ public class UIManager
     }
 
     private void generateFont(){
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 16;
+        parameter.size = 24;
         parameter.color = Color.GREEN;
         parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:-";
         smallFont = generator.generateFont(parameter);
@@ -297,6 +299,24 @@ public class UIManager
         if(displayingStats) displayingStats = false;
     }
 
+    private void setupRectanglePositions(){
+        resumeBox = new Rectangle();
+        resumeBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2), pauseRectY + pauseRectHeight - 75, 55, 50);
+        exitBox = new Rectangle();
+        exitBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 125, 55, 50);
+
+    }
+
+    public boolean checkPausedButtonClicked(float x, float y){
+        if (paused && resumeBox.contains(x,y)){
+            isNotPaused();
+        }
+        else if (paused && exitBox.contains(x,y)){
+            Gdx.app.exit();
+        }
+        return false;
+    }
+
     //When game has ended, dispose of all objects
     public void dispose()
     {
@@ -309,6 +329,11 @@ public class UIManager
     {
         return displayingStats;
     }
+
+    public boolean isNotPaused() {
+        return paused = false;
+    }
+
 
     public boolean isPaused()
     {

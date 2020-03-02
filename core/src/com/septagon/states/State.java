@@ -11,7 +11,7 @@ Abstract class that defines what all states within the game should contain
 public abstract class State
 {
     //Enum used to keep track of what type of state each state is
-    public enum StateID { GAME_OVER, GAME, MENU, MINIGAME }
+    public enum StateID { GAME_OVER, GAME, MENU, MINIGAME ,PAUSED}
 
     protected StateID id;
     protected InputManager inputManager;
