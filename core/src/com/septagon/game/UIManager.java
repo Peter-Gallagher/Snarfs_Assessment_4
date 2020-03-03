@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -87,6 +88,9 @@ public class UIManager
 
         //Sets up positions for all text on the screen
         setupPositions();
+
+        //Sets up the pause menu textbox
+        setupRectanglePositions();
     }
 
     private void generateFont(){
@@ -301,20 +305,21 @@ public class UIManager
 
     private void setupRectanglePositions(){
         resumeBox = new Rectangle();
-        resumeBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2), pauseRectY + pauseRectHeight - 75, 55, 50);
+        resumeBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2), pauseRectY + pauseRectHeight - 125, 55, 50);
         exitBox = new Rectangle();
-        exitBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 125, 55, 50);
+        exitBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 175, 55, 50);
 
     }
 
-    public boolean checkPausedButtonClicked(float x, float y){
-        if (paused && resumeBox.contains(x,y)){
+    public void checkPausedButtonClicked(float x, float y) {
+        GameData data = new GameData();
+        GameData gamedata = data.newGameData(gameState);
+        if (paused && resumeBox.contains(x, y)) {
             isNotPaused();
-        }
-        else if (paused && exitBox.contains(x,y)){
+        } else if (paused && exitBox.contains(x, y)) {
+            data.save(gamedata);
             Gdx.app.exit();
         }
-        return false;
     }
 
     //When game has ended, dispose of all objects

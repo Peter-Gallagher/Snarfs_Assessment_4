@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
 import com.septagon.game.Difficulty;
+import com.septagon.game.GameData;
 import com.septagon.game.InputManager;
 import com.septagon.game.UIManager;
 import com.septagon.helperClasses.AssetManager;
@@ -112,9 +113,9 @@ public class GameState extends State
     public void initialise()
     {
         //Initialises all engines, fortress and stations in the game
-        initializeFireEngines();
-
-        initializeFortresses();
+        if (engines == null) {;
+            initializeFireEngines();}
+        if (fortresses == null) {initializeFortresses();}
 
         fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 6);
 
@@ -123,8 +124,7 @@ public class GameState extends State
         initializeUIManager();
 
         initializeGameMap();
-
-        initializePatrols();
+        if (patrols == null) {initializePatrols();}
 
         initializeEntityManager();
 
@@ -135,6 +135,7 @@ public class GameState extends State
 
         //Initialise the AttackerManager
         attackerManager = new AttackerManager(engines, tiles, patrols, fortresses, this);
+
     }
 
 
@@ -168,8 +169,7 @@ public class GameState extends State
         engines.add(engine2);
         engines.add(engine3);
         engines.add(engine4);
-
-
+        System.out.println(engine1);
     }
 
     /***
@@ -222,7 +222,7 @@ public class GameState extends State
      * initialise the path to be taken by patrol1
      * @return the node path of patrol1
      */
-    public ArrayList<Tile> initialisePath1(){
+    protected ArrayList<Tile> initialisePath1(){
 
         ArrayList<Tile> path1 = new ArrayList<>();
 
@@ -245,7 +245,7 @@ public class GameState extends State
      * initialise the path to be taken by patrol2
      * @return the node path of patrol2
      */
-    public ArrayList<Tile> initialisePath2(){
+    protected ArrayList<Tile> initialisePath2(){
 
         ArrayList<Tile> path2 = new ArrayList<>();
 
@@ -268,7 +268,7 @@ public class GameState extends State
      * initialise the path to be taken by patrol3
      * @return the node path of patrol3
      */
-    public ArrayList<Tile> initialisePath3(){
+    protected ArrayList<Tile> initialisePath3(){
 
         ArrayList<Tile> path3 = new ArrayList<>();
 
@@ -725,11 +725,9 @@ public class GameState extends State
         return gameMap.getMapHeight();
     }
 
-    /**
-     * public void saveData() {
-        if (gameData != null) {
-            fileHandle.writeString(Base64Coder.encodeString(json.prettyPrint(gameData)),
-                    false);
-        }
-    }*/
+    public ArrayList<Fortress> getFortresses() { return fortresses; }
+
+    public ArrayList<Patrol> getPatrols() { return patrols; }
+
+
 }

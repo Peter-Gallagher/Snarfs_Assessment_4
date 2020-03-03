@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.Base64Coder;
 import com.septagon.states.GameState;
 import com.septagon.states.MenuState;
 import com.septagon.states.State;
@@ -143,4 +144,5 @@ public class Game extends ApplicationAdapter
 		batch.dispose();
 		font.dispose();
 	}
+
 }

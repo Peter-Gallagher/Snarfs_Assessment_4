@@ -110,10 +110,30 @@ public class InputManager implements InputProcessor
                 currentState.getUiManager().pressedMinimiseButton();
             }
 
+
             //call gamestate method that handles when places on the map are pressed
             currentState.getAttackerManager().touchedTile(xCoord, yCoord);
 
             dragging = true;
+        }
+        if (currentState.isPaused()){
+            if (button != Input.Buttons.LEFT || pointer > 0) return false;
+
+            hasBeenTouched = true;
+            xCoord = Gdx.input.getX();
+            yCoord = Gdx.input.getY();
+
+            //Convert input coords to screen coords
+            xCoord = xCoord + camera.position.x - (Gdx.graphics.getWidth() / 2);
+            yCoord = (Gdx.graphics.getHeight() - yCoord) + camera.position.y - (Gdx.graphics.getHeight() / 2);
+
+            //Create versions of the input that are kept in terms of screen coords
+            float onScreenXCoord = Gdx.input.getX();
+            float onScreenYCoord = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            currentState.getUiManager().checkPausedButtonClicked(onScreenXCoord,onScreenYCoord);
+
+
         }
         return true;
     }
