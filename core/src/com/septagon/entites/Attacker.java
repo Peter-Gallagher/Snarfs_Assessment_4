@@ -113,10 +113,26 @@ public abstract class Attacker extends Entity
     /***
      * Method which handles shooting another entity
      * @param attacker the entity being shot at
+     * @param useWater True if the bullets fired should look like water
      */
     public void shoot(Attacker attacker, boolean useWater){
         if(inRange(attacker)){
             attacker.takeDamage(this.damage);
+            this.createBullets(attacker,useWater);
+        }
+    }
+
+    /**
+     * Method which handles shooting another entity if an engines volume < an engines damage
+     * New for Assessment 4
+     *
+     * @param attacker the entity being shot at
+     * @param useWater True if the bullets fired should look like water
+     * @param remainingVolume the damage to be dealt to the target
+     */
+    public void shoot(Attacker attacker, boolean useWater, int remainingVolume){
+        if(inRange(attacker)){
+            attacker.takeDamage(remainingVolume);
             this.createBullets(attacker,useWater);
         }
     }

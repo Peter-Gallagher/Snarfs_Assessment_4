@@ -39,10 +39,9 @@ public class Powerup extends Entity {
         if(!usedUp) {
             for (Engine e : gameState.getEngines()) {
                 if ((e.getRow() == row) && (e.getCol() == col)) {
-                    e.powerupType = powerupValue;
-                    System.out.println("Powering up! " + e.powerupType);
-                    e.poweredUp = true;
-                    e.turnsPowered = 0; //Overwrites any existing powerup when a new one is picked up
+                    e.powerupsActive[powerupValue] = 1;
+                    System.out.println("Powering up! " + powerupValue);
+                    e.powerupTurnsLeft[powerupValue] = 5;
                     e.updatePowerup();
 
                     setTexture(AssetManager.getNull());

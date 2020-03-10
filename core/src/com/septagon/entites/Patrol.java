@@ -122,6 +122,9 @@ public class Patrol extends Vehicle  {
             setTexture(AssetManager.getNull());
             gameState.getTileManager().getTileFromIndex(row+80*col);
             gameState.getEntityManager().dropPowerup(col, row, gameState);
+            //16
+            this.setCol(62);
+            this.setRow(0);
 
         }
     }

@@ -21,9 +21,8 @@ public class Engine extends Vehicle
     private boolean moved = false;
 
     //Values used to track and control powerups
-    protected boolean poweredUp = false;
-    protected int powerupType = 0;
-    protected int turnsPowered = 0;
+    protected int[] powerupTurnsLeft = new int[]{0,0,0,0,0};
+    protected int[] powerupsActive = new int[]{0,0,0,0,0};
     private int baseHealth, baseDamage, baseRange, baseSpeed;
     private boolean invulnerable = false;
 
@@ -81,6 +80,10 @@ public class Engine extends Vehicle
                 shoot(attacker, useWater);
                 loseWater();
                 return true;
+            } else if(this.volume > 0){ //This is new for Assessment 4**
+                shoot(attacker, useWater, volume);
+                loseWater();
+                return true;
             }
         }
 
@@ -88,58 +91,66 @@ public class Engine extends Vehicle
     }
 
     /**
-     * Method used to powerup or debuff fire engines
+     * Method called to check for powerups on Fire Engines every turn and handle them accordingly
      * New for Assessment 4
-     * @param tog true if toggling on, false if toggling off
      */
-    private void powerupToggle(boolean tog){
-        if(tog) {
-            switch (powerupType) {
-                case (1): //Instant heal & refill
-                    health = maxHealth;
-                    volume = maxVolume;
-                    poweredUp = false;
-                    break;
-                case (2): //Damage+
-                    damage = (int) Math.ceil(baseDamage * 1.5);
-                    break;
-                case (3): //Attack Range+
-                    range = (int) Math.ceil(baseRange * 1.2);
-                    break;
-                case (4): //Move Range+
-                    speed = (int) Math.ceil(baseSpeed * 1.2);
-                    break;
-                case (5): //Temporary Invulnerability
-                    invulnerable = true;
-                    break;
-            }
-        } else {
-            damage = baseDamage;
-            range = baseRange;
-            speed = baseSpeed;
-            invulnerable = false;
+    public void updatePowerup(){
+        for(int i = 0; i < powerupsActive.length; i++){
+           if(powerupsActive[i] == 1){
+               if(powerupTurnsLeft[i] == 0){
+                   togglePowerup(i, false); //Toggles powerup with powerupID i off
+                   powerupsActive[i] = 0;
+               } else if(powerupTurnsLeft[i] == 5){
+                   powerupTurnsLeft[i] --;
+                   togglePowerup(i, true); //Toggles powerup with powerupID i on
+               } else {
+                   powerupTurnsLeft[i]--;
+               }
+           }
         }
     }
 
     /**
-     * Method used to control powerup logic for fire engines
+     * Method used to modify (buff or de-buff) a Fire Engines stats or properties based on the given
+     * powerup related inputs
      * New for Assessment 4
+     *
+     * @param powerID Position of the powerup to be toggled in powerupsActive
+     * @param toggle True if the powerup is being toggled on, false if toggling off
      */
-    public void updatePowerup(){
-        if(poweredUp){
-            System.out.println("Engine "+id+" is powered up");
-            if(turnsPowered == 0){
-                powerupToggle(true);    //toggles on
-            } else if (turnsPowered > 4){
-                poweredUp = false;
-                turnsPowered = 0;   //resets associated values
-                powerupType = 0;
-                powerupToggle(false);   //toggles off
-                return;
-            }
-            turnsPowered++;
+    public void togglePowerup(int powerID, boolean toggle){
+        switch(powerID){
+            case(0): //Restores hp and volume to full
+                if(toggle){
+                    health = maxHealth;
+                    volume = maxVolume;
+                    powerupTurnsLeft[powerID] = 0; //This powerup isnt turn based, so it is instantly turned off
+                }
+                break;
+            case(1): //Increases the damage dealt by this Engine by 50%
+                if(toggle){
+                    damage = (int) Math.ceil(baseDamage * 1.5);
+                } else { damage = baseDamage; }
+                break;
+            case(2): //Increases the range this Engine can attack at by 20%
+                if(toggle){
+                    range = (int) Math.ceil(baseRange * 1.2);
+                } else { range = baseRange; }
+                break;
+            case(3): //Increases the range this Engine can move by 20%
+                if(toggle){
+                    speed = (int) Math.ceil(baseSpeed * 1.2);
+                } else { speed = baseSpeed; }
+                break;
+            case(4): //Makes this Engine temporarily invulnerable
+                if(toggle){
+                    invulnerable = true;
+                } else { invulnerable = false; }
+                break;
         }
     }
+
+
 
     /**
      * Checks if Fire Engine is invulnerable from powerups, if it isn't then it takes damage
@@ -148,7 +159,7 @@ public class Engine extends Vehicle
      */
     @Override
     public void takeDamage(int damage) {
-        if (!invulnerable){
+        if (!this.invulnerable){
             this.health = Math.max(this.health - damage, 0);
 
             if (this.health <= 0) {
