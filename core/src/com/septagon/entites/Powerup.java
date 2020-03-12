@@ -1,11 +1,13 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.septagon.helperClasses.AssetManager;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
 
-public class Powerup extends Entity {
+public class Powerup extends Entity implements Json.Serializable{
 
     private int powerupValue;
     private boolean usedUp = false;
@@ -49,5 +51,25 @@ public class Powerup extends Entity {
                 }
             }
         }
+    }
+
+    public Powerup(){
+        super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, AssetManager.getPowerup(1));//TODO: allow texture to be saved
+    }
+    @Override
+    public void write(Json json) {
+        json.writeValue("col", getCol());
+        json.writeValue("row", getRow());
+        json.writeValue("powerupValue", this.powerupValue);
+        json.writeValue("usedUp", this.usedUp);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        String test = jsonMap.toString();
+        this.setCol(jsonMap.get("col").asInt());
+        this.setRow(jsonMap.get("row").asInt());
+        this.powerupValue = jsonMap.get("powerupValue").asInt();
+        this.usedUp = jsonMap.get("usedUp").asBoolean();
     }
 }

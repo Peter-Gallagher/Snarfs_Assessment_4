@@ -6,10 +6,13 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.septagon.helperClasses.AssetManager;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
 
-public class Engine extends Vehicle
+public class Engine extends Vehicle implements Json.Serializable
 {
     //Member variables that will be unique stats of each engine
     protected int volume;
@@ -182,7 +185,52 @@ public class Engine extends Vehicle
     public void setVolume(int volume) { this.volume = volume; }
     public void setFillSpeed(int fillSpeed) { this.fillSpeed = fillSpeed; }
 
+    public Engine(){
+        super(1, 1, AssetManager.getEngineTexture1(), 1,1,1,1);
+        this.id = 0; //TODO: remove field?
+
+    }
 
 
+    @Override
+    public void write(Json json) {
+        json.writeValue("col", getCol());
+        json.writeValue("row", getRow());
+        json.writeValue("health", getHealth());
+        json.writeValue("damage", getRange());
+        json.writeValue("speed", getSpeed());
+        json.writeValue("volume", getVolume());
+        json.writeValue("maxVolume", getMaxVolume());
+        json.writeValue("fillSpeed", getFillSpeed());
+        json.writeValue("baseHealth", this.baseHealth);
+        json.writeValue("baseDamage", this.baseDamage);
+        json.writeValue("baseRange", this.baseRange);
+        json.writeValue("baseSpeed", this.baseSpeed);
+        json.writeValue("moved", this.moved);
+        json.writeValue("powerupTurnsLeft", this.powerupTurnsLeft);
+        json.writeValue("powerupsActive", this.powerupsActive);
+        json.writeValue("invulnerable", this.invulnerable);
 
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        String test = jsonMap.toString();
+        this.setCol(jsonMap.get("col").asInt());
+        this.setRow(jsonMap.get("row").asInt());
+        this.setHealth(jsonMap.get("health").asInt());
+        this.setDamage(jsonMap.get("damage").asInt());
+        this.setSpeed(jsonMap.get("speed").asInt());
+        this.volume = jsonMap.get("volume").asInt();
+        this.maxVolume  = jsonMap.get("maxVolume").asInt();
+        this.fillSpeed = jsonMap.get("fillSpeed").asInt();
+        this.baseHealth = jsonMap.get("baseHealth").asInt();
+        this.baseDamage = jsonMap.get("baseDamage").asInt();
+        this.baseRange = jsonMap.get("baseRange").asInt();
+        this.baseSpeed = jsonMap.get("baseSpeed").asInt();
+        this.moved = jsonMap.get("moved").asBoolean();
+        this.powerupTurnsLeft = jsonMap.get("powerupTurnsLeft").asIntArray();
+        this.powerupsActive = jsonMap.get("powerupsActive").asIntArray();
+        this.invulnerable = jsonMap.get("invulnerable").asBoolean();
+    }
 }

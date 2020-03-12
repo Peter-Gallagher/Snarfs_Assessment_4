@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
+import com.septagon.entites.Engine;
 import com.septagon.entites.Tile;
 import com.septagon.states.*;
 
@@ -16,6 +18,8 @@ Class used to handle all inputs from the user
 
 public class InputManager implements InputProcessor
 {
+    private String savetest = "";
+
     private boolean dragging;
     private OrthographicCamera camera;
     private StateManager stateManager;
@@ -232,7 +236,7 @@ public class InputManager implements InputProcessor
      * @param button The mouse button that performed the input
      */
      @Override public boolean touchUp (int screenX, int screenY, int pointer, int button) {
-         System.out.println(screenX + "  ,  " + screenY);
+        //System.out.println(screenX + "  ,  " + screenY);
         if(stateManager.getCurrentState().getID() == State.StateID.GAME)
         {
             if (button != Input.Buttons.LEFT || pointer > 0) return false;
@@ -310,6 +314,27 @@ public class InputManager implements InputProcessor
             if(keycode == Input.Keys.ESCAPE){
                 currentState.setPaused(!currentState.isPaused());
             }
+
+            //TODO: remove debug lines
+            if(keycode == Input.Keys.S){
+                Json json = new Json();
+                //json.setSerializer(Engine.class, new Json.Serializer<Engine>());
+                this.savetest = json.toJson(currentState.getEngines().get(2));
+                System.out.println("Saved!!");
+
+            }
+            if(keycode == Input.Keys.L){
+                Json json = new Json();
+                if(this.savetest != "") {
+
+                    Engine engine = json.fromJson(Engine.class, savetest);
+                    System.out.println("Loaded!!");
+                    currentState.getEngines().set(2, engine);
+                } else{
+                    System.out.println("Save not initialized!!");
+                }
+            }
+
 
             if(currentState.isPaused()){
 
