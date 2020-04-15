@@ -6,10 +6,12 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.septagon.helperClasses.AssetManager;
 import com.septagon.states.GameState;
 
-public class Fortress extends Attacker
+public class Fortress extends Attacker implements Json.Serializable
 {
     //Stores if an engine is currently active/pressed on
     protected boolean selected = false;
@@ -64,5 +66,39 @@ public class Fortress extends Attacker
     //Setters
     public void setSelected(boolean selected) { this.selected = selected; }
 
+    public Fortress(){
+        super(1, 1,1,1, AssetManager.getFortressMinisterTexture(), 1,1,1);
 
+
+    }
+
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("col", getCol());
+        json.writeValue("row", getRow());
+        json.writeValue("health", getHealth());
+        json.writeValue("damage", getRange());
+        json.writeValue("width", getWidth());
+        json.writeValue("height", getHeight());
+        json.writeValue("health", getHealth());
+        json.writeValue("damage", getDamage());
+        json.writeValue("range", getRange());
+        json.writeValue("dead", this.dead);
+        json.writeValue("defeatedTexture", this.defeatedTexture);
+
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonMap) {
+        String test = jsonMap.toString();
+        this.setCol(jsonMap.get("col").asInt());
+        this.setRow(jsonMap.get("row").asInt());
+        this.setHealth(jsonMap.get("health").asInt());
+        this.setDamage(jsonMap.get("damage").asInt());
+        this.dead = jsonMap.get("dead").asBoolean();
+        this.setWidth(jsonMap.get("width").asInt());
+        this.setHeight(jsonMap.get("height").asInt());
+        this.setRange(jsonMap.get("range").asInt());
+    }
 }

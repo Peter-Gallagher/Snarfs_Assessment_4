@@ -83,6 +83,15 @@ public abstract class Entity
         this.row = row;
         this.y = row * Tile.TILE_SIZE;
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public void setTexture(Texture texture){ this.texture = texture; }
 
     public void setDead(){
