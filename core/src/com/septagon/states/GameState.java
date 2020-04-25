@@ -422,7 +422,7 @@ public class GameState extends State
             this.changingTurn = true;
             changeTurnCounter = 0;
             for(Engine e : engines){
-                e.updatePowerup();
+                e.updatePowerup(entityManager, tileManager, this);
             }
         }
 

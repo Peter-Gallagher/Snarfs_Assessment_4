@@ -10,7 +10,9 @@ import com.septagon.states.GameState;
 public class Powerup extends Entity implements Json.Serializable{
 
     private int powerupValue;
-    private boolean usedUp = false;
+    protected boolean usedUp, inUse = false;
+    protected Engine affectedEngine;
+    private Tile curTile; //currentTile
 
 
     /***
@@ -23,7 +25,7 @@ public class Powerup extends Entity implements Json.Serializable{
      */
     public Powerup(int row, int col, int width, int height, Texture texture, GameState gameState, int randInt) {
         super(col, row, width, height, texture);
-        Tile curTile = gameState.getTileManager().getTileFromIndex(row+80*col);
+        curTile = gameState.getTileManager().getTileFromIndex(row+80*col);
         if(curTile == null){
             curTile = gameState.getTileManager().getTileAtLocation(col, row);
         }
@@ -37,19 +39,32 @@ public class Powerup extends Entity implements Json.Serializable{
      * @param tileManager
      * @param gameState
      */
-    public void checkContact(TileManager tileManager, GameState gameState){
-        if(!usedUp) {
+    public void powerupUpdate(EntityManager entityManager, TileManager tileManager, GameState gameState){
+        if(!inUse) {
+            curTile.setOccupied(false);
+            curTile.setMovable(true);
             for (Engine e : gameState.getEngines()) {
                 if ((e.getRow() == row) && (e.getCol() == col)) {
-                    e.powerupsActive[powerupValue] = 1;
+                    this.affectedEngine = e;
+                    affectedEngine.powerupsActive[powerupValue] = 1;
                     System.out.println("Powering up! " + powerupValue);
-                    e.powerupTurnsLeft[powerupValue] = 5;
-                    e.updatePowerup();
+                    affectedEngine.powerupTurnsLeft[powerupValue] = 5;
+                    affectedEngine.updatePowerup(entityManager, tileManager, gameState);
 
-                    setTexture(AssetManager.getNull());
-                    this.usedUp = true;
+                    //setTexture(AssetManager.getNull());
+                    this.inUse = true;
+                    this.setCol(affectedEngine.getCol());
+                    this.setRow(affectedEngine.getRow()+1);
                 }
             }
+        } else if(!usedUp){
+            this.setCol(affectedEngine.getCol());
+            this.setRow(affectedEngine.getRow()+1);
+            if(this.affectedEngine.powerupTurnsLeft[powerupValue] <= 0){
+                this.usedUp = true;
+            }
+        } else {
+            setTexture(AssetManager.getNull());
         }
     }
 
@@ -62,6 +77,9 @@ public class Powerup extends Entity implements Json.Serializable{
         json.writeValue("row", getRow());
         json.writeValue("powerupValue", this.powerupValue);
         json.writeValue("usedUp", this.usedUp);
+        json.writeValue("inUse", this.inUse);
+        json.writeValue("affectedEngine",this.affectedEngine);
+
     }
 
     @Override
@@ -71,5 +89,6 @@ public class Powerup extends Entity implements Json.Serializable{
         this.setRow(jsonMap.get("row").asInt());
         this.powerupValue = jsonMap.get("powerupValue").asInt();
         this.usedUp = jsonMap.get("usedUp").asBoolean();
+        this.inUse = jsonMap.get("inUse").asBoolean();
     }
 }

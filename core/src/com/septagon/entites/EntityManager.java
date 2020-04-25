@@ -17,6 +17,7 @@ public class EntityManager {
 
     private ArrayList<Powerup> powerups = new ArrayList<Powerup>();
 
+
     /*This is new*/
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
@@ -70,7 +71,6 @@ public class EntityManager {
         for(Entity entity: entities)
             entity.update();
     }
-
     /***
      * Calls the render method for all entities in the game
      */
@@ -102,10 +102,21 @@ public class EntityManager {
     public void checkPowerups(TileManager tileManager, GameState gameState){
         if(powerups.size() > 0){
             for(Powerup p : powerups){
-                p.checkContact(tileManager, gameState);
+                p.powerupUpdate(this, tileManager, gameState);
             }
         }
     }
+
+    public void movePowerup(Engine engine, TileManager tileManager, GameState gameState) {
+        for(Powerup p : powerups){
+            if(p.inUse) {
+                if (p.affectedEngine.id == engine.id) {
+                    p.powerupUpdate(this, tileManager, gameState);
+                }
+            }
+        }
+    }
+
 
     //Getters
     public ArrayList<Entity> getEntities() { return entities; }

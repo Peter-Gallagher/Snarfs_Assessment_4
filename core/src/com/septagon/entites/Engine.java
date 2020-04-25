@@ -26,6 +26,7 @@ public class Engine extends Vehicle implements Json.Serializable
     //Values used to track and control powerups
     protected int[] powerupTurnsLeft = new int[]{0,0,0,0,0};
     protected int[] powerupsActive = new int[]{0,0,0,0,0};
+    private boolean poweredUp = false;
     private int baseHealth, baseDamage, baseRange, baseSpeed;
     private boolean invulnerable = false;
 
@@ -97,15 +98,17 @@ public class Engine extends Vehicle implements Json.Serializable
      * Method called to check for powerups on Fire Engines every turn and handle them accordingly
      * New for Assessment 4
      */
-    public void updatePowerup(){
+    public void updatePowerup(EntityManager entityManager, TileManager tileManager, GameState gameState){
         for(int i = 0; i < powerupsActive.length; i++){
            if(powerupsActive[i] == 1){
                if(powerupTurnsLeft[i] == 0){
                    togglePowerup(i, false); //Toggles powerup with powerupID i off
+                   poweredUp = false;
                    powerupsActive[i] = 0;
                } else if(powerupTurnsLeft[i] == 5){
                    powerupTurnsLeft[i] --;
                    togglePowerup(i, true); //Toggles powerup with powerupID i on
+                   poweredUp = true;
                } else {
                    powerupTurnsLeft[i]--;
                }
@@ -122,6 +125,9 @@ public class Engine extends Vehicle implements Json.Serializable
      * @param toggle True if the powerup is being toggled on, false if toggling off
      */
     public void togglePowerup(int powerID, boolean toggle){
+        if(toggle){
+            poweredUp = true;
+        }
         switch(powerID){
             case(0): //Restores hp and volume to full
                 if(toggle){
@@ -180,6 +186,7 @@ public class Engine extends Vehicle implements Json.Serializable
     public int getFillSpeed() { return fillSpeed; }
     public Integer getID() { return this.id; }
     public boolean isMoved(){return this.moved;}
+    public boolean poweredUp(){ return this.poweredUp;}
 
     public void setMoved(boolean moved){this.moved = moved;}
     public void setVolume(int volume) { this.volume = volume; }

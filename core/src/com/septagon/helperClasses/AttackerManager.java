@@ -165,6 +165,9 @@ public class AttackerManager
                     currentEngine.setX(currentlyTouchedTile.getX());
                     currentEngine.setY(currentlyTouchedTile.getY());
                     currentEngine.setMoved(true);
+                    gameState.getEntityManager().movePowerup(currentEngine, gameState.getTileManager(), gameState);
+                } else if(currentlyTouchedTile.getCol() == currentEngine.getCol() && currentlyTouchedTile.getRow() == currentEngine.getRow()){
+                    currentEngine.setMoved(true);
                 }
             }
             previouslyTouchedTile = currentlyTouchedTile;
