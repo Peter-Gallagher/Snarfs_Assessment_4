@@ -195,7 +195,11 @@ public class MenuState extends State
             Difficulty.nextDifficulty();
         } else if(loadBox.contains(x, y)){
             if (this.saveList.size() > 0) {
-                this.stateManager.changeState(SaveManager.loadSave(this.saveList.get(saveIndex)));
+                GameState gs = SaveManager.loadSave(this.saveList.get(saveIndex));
+                gs.setInputManager(this.inputManager);
+                gs.setStateManager(this.stateManager);
+                gs.setCamera(this.gameCamera);
+                this.stateManager.changeState(gs);
             }
         } else if(exitBox.contains(x, y)){
             Gdx.app.exit();
