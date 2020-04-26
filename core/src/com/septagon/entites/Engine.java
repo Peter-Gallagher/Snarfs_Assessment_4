@@ -8,6 +8,7 @@ package com.septagon.entites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.septagon.game.Difficulty;
 import com.septagon.helperClasses.AssetManager;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
@@ -18,7 +19,6 @@ public class Engine extends Vehicle implements Json.Serializable
     protected int volume;
     protected int maxVolume;
     protected int fillSpeed;
-    protected Integer id;
 
     //Keeps track of whether the engine has moved on the current player turn
     private boolean moved = false;
@@ -33,12 +33,13 @@ public class Engine extends Vehicle implements Json.Serializable
     /***
      * Constructor that Sets up the member variables for engine
      */
-    public Engine(int col, int row, Texture texture, int health, int damage, int range, int speed, int maxVolume, int fillSpeed, Integer id) {
-        super(col, row, texture, health, damage, range, speed);
-        this.volume = maxVolume;
+    public Engine(int col, int row, String textureId, int health, int damage, int range, int speed, int maxVolume, int fillSpeed) {
+        super(col, row, textureId, health, damage, range, speed);
+        this.setDamage((int) (damage * Difficulty.getEngineDamageMod()));
+
+        this.volume = (int) (maxVolume * Difficulty.getEngineVolumeMod());
         this.maxVolume = maxVolume;
         this.fillSpeed = fillSpeed;
-        this.id = id;
         this.baseHealth = health;
         this.baseDamage = damage;
         this.baseRange = range;
@@ -184,7 +185,6 @@ public class Engine extends Vehicle implements Json.Serializable
     public int getMaxVolume() { return this.maxVolume; }
     public int getVolume() { return this.volume; }
     public int getFillSpeed() { return fillSpeed; }
-    public Integer getID() { return this.id; }
     public boolean isMoved(){return this.moved;}
     public boolean poweredUp(){ return this.poweredUp;}
 
@@ -193,8 +193,7 @@ public class Engine extends Vehicle implements Json.Serializable
     public void setFillSpeed(int fillSpeed) { this.fillSpeed = fillSpeed; }
 
     public Engine(){
-        super(1, 1, AssetManager.getEngineTexture1(), 1,1,1,1);
-        this.id = 0; //TODO: remove field?
+        super(1, 1, "engineTexture1", 1,1,1,1);
 
     }
 
@@ -203,8 +202,11 @@ public class Engine extends Vehicle implements Json.Serializable
     public void write(Json json) {
         json.writeValue("col", getCol());
         json.writeValue("row", getRow());
+        json.writeValue("textureId", this.textureId);
         json.writeValue("health", getHealth());
-        json.writeValue("damage", getRange());
+        json.writeValue("maxHealth", getMaxHealth());
+        json.writeValue("damage", getDamage());
+        json.writeValue("range", getRange());
         json.writeValue("speed", getSpeed());
         json.writeValue("volume", getVolume());
         json.writeValue("maxVolume", getMaxVolume());
@@ -222,11 +224,14 @@ public class Engine extends Vehicle implements Json.Serializable
 
     @Override
     public void read(Json json, JsonValue jsonMap) {
-        String test = jsonMap.toString();
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
+        this.textureId = jsonMap.get("textureId").asString();
+        this.texture = AssetManager.getTextureFromId(this.textureId);
         this.setHealth(jsonMap.get("health").asInt());
+        this.setMaxHealth(jsonMap.get("maxHealth").asInt());
         this.setDamage(jsonMap.get("damage").asInt());
+        this.setRange(jsonMap.get("range").asInt());
         this.setSpeed(jsonMap.get("speed").asInt());
         this.volume = jsonMap.get("volume").asInt();
         this.maxVolume  = jsonMap.get("maxVolume").asInt();

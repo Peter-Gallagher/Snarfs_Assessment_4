@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
 import com.septagon.game.Difficulty;
@@ -17,13 +21,15 @@ import com.septagon.helperClasses.StatusBarGenerator;
 import com.septagon.helperClasses.TileManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*
 Child class of the State class that will manage the system when the user is in the game
  */
 
 
-public class GameState extends State
+public class GameState extends State implements Json.Serializable
 {
 
     // this is our "target" resolution, note that the window can be any size, it is not bound to this one
@@ -47,7 +53,7 @@ public class GameState extends State
     private boolean paused = false;
 
     //Loads textures and creates objects for the engines
-    private ArrayList<Engine> engines;
+    public ArrayList<Engine> engines;
 
     //Loads textures and creates objects for the fortresses
     private ArrayList<Fortress> fortresses;
@@ -55,7 +61,40 @@ public class GameState extends State
     //Loads textures and creates objects for the patrols
     private ArrayList<Patrol> patrols;
 
+    //The paths that each patrol can take
+    public static List<Tile> path1 = Arrays.asList(
+            new Tile(10,18,null, false),
+            new Tile(19,18, null, false),
+            new Tile(19,33, null, false),
+            new Tile(19,43, null, false),
+            new Tile(19,33, null, false),
+            new Tile(19,18, null, false));
 
+    public static List<Tile> path2 = Arrays.asList(
+            new Tile(44,35, null, false),
+            new Tile(57,35, null, false),
+            new Tile(57,28, null, false),
+            new Tile(70,28, null, false),
+            new Tile(57,28, null, false),
+            new Tile(57,35, null, false));
+
+    public static List<Tile> path3 = Arrays.asList(
+            new Tile(37,2, null, false),
+            new Tile(50,2, null, false),
+            new Tile(45,12, null, false),
+            new Tile(45,18, null, false),
+            new Tile(57,18, null, false),
+            new Tile(57,22, null, false),
+            new Tile(64,22, null, false),
+            new Tile(64,27, null, false),
+            new Tile(64,22, null, false),
+            new Tile(57,22, null, false),
+            new Tile(57,18, null, false),
+            new Tile(45,18, null, false),
+            new Tile(45,12, null, false),
+            new Tile(50,2, null, false));
+
+    private ArrayList<Powerup> powerups = new ArrayList<>();
     //Loads textures and creates an object for the fire station
     private Station fireStation;
 
@@ -72,7 +111,7 @@ public class GameState extends State
     private UIManager uiManager;
 
     //Creates an array of bullets
-    public static ArrayList<Bullet> bullets;
+    public static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     //private boolean shouldCreateBullets = false;
 
     private StatusBarGenerator statusBarGenerator;
@@ -117,14 +156,22 @@ public class GameState extends State
             initializeFireEngines();}
         if (fortresses == null) {initializeFortresses();}
 
-        fireStation = new Station(72, 6, 256, 128, AssetManager.getFireStationTexture(), 6);
+        fireStation = new Station(72, 6, 256, 128, "fireStationTexture", 6);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
         initializeUIManager();
 
         initializeGameMap();
-        if (patrols == null) {initializePatrols();}
+        if (patrols == null) {
+            initializePatrols();
+        } else{
+            //Otherwise we've loaded the patrols from serialization, and need to set the tileManager
+            //now we have initialized it in GameState.
+            for (Patrol patrol: patrols){
+                patrol.setTileManager(this.tileManager);
+            }
+        }
 
         initializeEntityManager();
 
@@ -145,10 +192,10 @@ public class GameState extends State
     /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, AssetManager.getEngineTexture1(), 150, 40, 7, 10, 1500, 4, 01);
-        Engine engine2 = new Engine(0,0, AssetManager.getEngineTexture2(), 80, 15, 15, 15, 1100, 4, 02);
-        Engine engine3 = new Engine(0,0, AssetManager.getEngineTexture3(), 90, 28, 13, 20, 1300, 4, 03);
-        Engine engine4 = new Engine(0,0, AssetManager.getEngineTexture4(), 110, 16, 14, 22, 1200, 4, 04);
+        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 1500, 4);
+        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 1100, 4);
+        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 1300, 4);
+        Engine engine4 = new Engine(0,0, "engineTexture4", 110, 16, 14, 22, 1200, 4);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -177,12 +224,12 @@ public class GameState extends State
      */
     private void initializeFortresses(){
         //creates all fortress objects
-        Fortress fortressFire = new Fortress(34, 10, 256, 256, AssetManager.getFortressFireTexture(), AssetManager.getDefeatedFireTexture(), 60, 13, 15);
-        Fortress fortressMinister = new Fortress(41, 41, 256, 256, AssetManager.getFortressMinisterTexture(), AssetManager.getDefeatedMinsterTexture(), 70, 8, 13);
-        Fortress fortressStation = new Fortress(65, 30, 256, 256, AssetManager.getFortressStationTexture(), AssetManager.getDefeatedStationTexture(), 90, 7, 9);
-        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, AssetManager.getfortressSalvoTexture(), AssetManager.getDefeatedSalvoTexture(), 80, 13, 9);
-        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, AssetManager.getfortressCliffordsTowerTexture(), AssetManager.getDefeatedCliffordsTowerTexture(), 85, 11, 11);
-        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, AssetManager.getFortressCentralHallTexture(), AssetManager.getDefeatedCentralHallTexture(), 75, 12, 10);
+        Fortress fortressFire = new Fortress(34, 10, 256, 256, "fortressFireTexture", "defeatedFireTexture", 60, 13, 15);
+        Fortress fortressMinister = new Fortress(41, 41, 256, 256, "fortressMinisterTexture", "defeatedMinsterTexture", 70, 8, 13);
+        Fortress fortressStation = new Fortress(65, 30, 256, 256, "fortressStationTexture", "defeatedStationTexture", 90, 7, 9);
+        Fortress fortressSavlos = new Fortress(9, 41, 256, 256, "fortressSalvoTexture", "defeatedSalvoTexture", 80, 13, 9);
+        Fortress fortressCliffordsTower = new Fortress(1, 4, 256, 256, "fortressCliffordsTowerTexture", "defeatedCliffordsTowerTexture", 85, 11, 11);
+        Fortress fortressCentralHall = new Fortress(9, 21, 256, 256, "fortressCentralHallTexture", "defeatedCentralHallTexture", 75, 12, 10);
 
         //Adds all the fortresses to the ArrayList of fortresses
         fortresses = new ArrayList<Fortress>();
@@ -205,9 +252,9 @@ public class GameState extends State
         ArrayList<Tile> path2 = initialisePath2();
         ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
-        Patrol patrol1 = new Patrol(10, 4, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path1, tileManager);
-        Patrol patrol2 = new Patrol(44, 40, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path2, tileManager);
-        Patrol patrol3 = new Patrol(37, 9, AssetManager.getCreepyPatrol(), 130, 20, 6, 5, path3, tileManager);
+        Patrol patrol1 = new Patrol(10, 4, "creepyPatrol", 130, 20, 6, 5, this.path1, "path1", tileManager);
+        Patrol patrol2 = new Patrol(44, 40, "creepyPatrol", 130, 20, 6, 5, this.path2, "path2", tileManager);
+        Patrol patrol3 = new Patrol(37, 9, "creepyPatrol", 130, 20, 6, 5, this.path3, "path3", tileManager);
 
 
         //Adds all the patrols to the ArrayList of patrols
@@ -319,6 +366,8 @@ public class GameState extends State
         {
             entityManager.addEntity(patrol);
         }
+        entityManager.setPowerups(powerups);
+        entityManager.getEntities().addAll(powerups);
         entityManager.initialise();
     }
 
@@ -729,5 +778,69 @@ public class GameState extends State
 
     public ArrayList<Patrol> getPatrols() { return patrols; }
 
+    public GameState(){
+        super(null, null, StateID.GAME, null);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 32;
+        parameter.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:-";
+        this.font = generator.generateFont(parameter);
+        
 
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("turnsPassed", this.turnsPassed);
+        json.writeValue("engines", this.engines);
+        json.writeValue("fortresses", this.fortresses);
+        json.writeValue("powerups", this.entityManager.getPowerups());
+        json.writeValue("patrols", this.patrols);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        JsonValue jsonEngines = jsonData.get("engines");
+        this.engines = new ArrayList<>();
+        for (int i = 0; i < jsonEngines.size; i++){
+            Engine engine = new Engine();
+            engine.read(json, jsonEngines.get(i));
+            this.engines.add(engine);
+        }
+
+        JsonValue jsonFortresses = jsonData.get("fortresses");
+        this.fortresses = new ArrayList<>();
+        for (int i = 0; i < jsonFortresses.size; i++){
+            Fortress fortress = new Fortress();
+            fortress.read(json, jsonFortresses.get(i));
+            this.fortresses.add(fortress);
+        }
+
+        JsonValue jsonPowerups = jsonData.get("powerups");
+        ArrayList<Powerup> powerups = new ArrayList<>();
+        for (int i = 0; i < jsonPowerups.size; i++){
+            Powerup powerup = new Powerup();
+            powerup.read(json, jsonPowerups.get(i));
+            powerups.add(powerup);
+        }
+        this.powerups = powerups;
+
+        JsonValue jsonPatrols = jsonData.get("patrols");
+        this.patrols = new ArrayList<>();
+        for (int i = 0; i < jsonPatrols.size; i++){
+            Patrol patrol = new Patrol();
+            patrol.read(json, jsonPatrols.get(i));
+            this.patrols.add(patrol);
+        }
+    }
+
+    public void setStateManager(StateManager sm){
+        this.stateManager = sm;
+    }
+    public void setInputManager(InputManager im){
+        this.inputManager = im;
+    }
+    public void setCamera(OrthographicCamera cam){
+        this.camera = cam;
+    }
 }

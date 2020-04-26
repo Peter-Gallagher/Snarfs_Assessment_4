@@ -89,7 +89,7 @@ public class EntityManager {
      */
     protected void dropPowerup(int row, int col, GameState gameState){
         int randInt = new Random().nextInt(5);
-        Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getPowerup(randInt), gameState, randInt);
+        Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getRandPowerupId(), gameState, randInt);
         powerups.add(powerup);
         entities.add(powerup);
     }
@@ -110,7 +110,7 @@ public class EntityManager {
     public void movePowerup(Engine engine, TileManager tileManager, GameState gameState) {
         for(Powerup p : powerups){
             if(p.inUse) {
-                if (p.affectedEngine.id == engine.id) {
+                if (p.affectedEngine == engine) {
                     p.powerupUpdate(this, tileManager, gameState);
                 }
             }
@@ -120,4 +120,9 @@ public class EntityManager {
 
     //Getters
     public ArrayList<Entity> getEntities() { return entities; }
+    public ArrayList<Powerup> getPowerups() { return powerups; }
+
+    public void setPowerups(ArrayList<Powerup> powerups){
+        this.powerups = powerups;
+    }
 }

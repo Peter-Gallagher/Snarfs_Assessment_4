@@ -23,7 +23,7 @@ class EngineTest {
     @BeforeEach //A set up function for the tests
     public void setUp() {
         //Texture testTexture = new Teture(Gdx.files.internal("images/engine1.png"));
-        testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 4, 01);
+        testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 4);
         testE = mock(Engine.class);
         testE.col = 1;
         testE.row = 1;
@@ -33,7 +33,6 @@ class EngineTest {
         testE.speed = 2;
         testE.maxVolume = 20;
         testE.fillSpeed = 4;
-        testE.id = 01;
         testE.x = 32;
         testE.y = 32;
         testE.height = 32;
@@ -60,7 +59,6 @@ class EngineTest {
         assertEquals(testE.range, 4);
         assertEquals(testE.speed, 2);
         assertEquals(testE.maxVolume, 20);
-        assertEquals(testE.id, 01);
         assertEquals(testE.volume, 20);
         assertEquals(testE.fillSpeed, 4);
 
@@ -91,12 +89,6 @@ class EngineTest {
     public void testGetMaxVolume() throws Exception {
         when(testE.getMaxVolume()).thenCallRealMethod();
         assertEquals(testE.getMaxVolume(), 20);
-    }
-
-    @Test //A test for the Engine class' getID method
-    public void testGetID() throws Exception {
-        when(testE.getID()).thenCallRealMethod();
-        assertEquals(testE.getID(), 01);
     }
 
     @Test //A test for the Engine class' isMoved method

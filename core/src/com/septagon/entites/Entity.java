@@ -6,6 +6,7 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.septagon.helperClasses.AssetManager;
 
 public abstract class Entity
 {
@@ -15,15 +16,17 @@ public abstract class Entity
     protected int row, col;
     //Creates variables to store the width and height of the entity
     protected int width, height;
+    //Used to store the texture for serialization
+    protected String textureId;
     //Creates variables to store the texture of the entity
-    protected Texture texture;
+    protected transient Texture texture;
     //boolean value for if the entity is dead
     protected boolean dead = false;
 
     /***
      * Constructor that sets initial values for class members based on given input
      */
-    public Entity(int col, int row, int width, int height, Texture texture)
+    public Entity(int col, int row, int width, int height, String textureId)
     {
         this.col = col;
         this.row = row;
@@ -31,7 +34,8 @@ public abstract class Entity
         this.y = row * Tile.TILE_SIZE;
         this.width = width;
         this.height = height;
-        this.texture = texture;
+        this.textureId = textureId;
+        this.texture = AssetManager.getTextureFromId(textureId);
     }
 
     /***
@@ -58,6 +62,7 @@ public abstract class Entity
     public int getWidth(){ return this.width;}
     public int getHeight(){ return this.height;}
     public Texture getTexture() { return this.texture;}
+    public String getTextureId() { return this.textureId;}
     public boolean isDead() {
         return dead;
     }

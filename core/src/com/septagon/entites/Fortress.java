@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.septagon.game.Difficulty;
 import com.septagon.helperClasses.AssetManager;
 import com.septagon.states.GameState;
 
@@ -15,15 +16,18 @@ public class Fortress extends Attacker implements Json.Serializable
 {
     //Stores if an engine is currently active/pressed on
     protected boolean selected = false;
+    private String defeatedTextureId;
     private Texture defeatedTexture;
 
     /***
      * Constructor that calls the Entity constructor to set up all the member variables
      */
-    public Fortress(int col, int row, int width, int height, Texture texture, Texture defeatedTexture, int health, int damage, int range)
+    public Fortress(int col, int row, int width, int height, String textureId, String defeatedTextureId, int health, int damage, int range)
     {
-        super(col,row, width, height, texture, health, damage, range);
-        this.defeatedTexture = defeatedTexture;
+        super(col,row, width, height, textureId, health, damage, range);
+        this.setDamage((int) (damage * Difficulty.getFortressDamageMod()));
+        this.defeatedTextureId = defeatedTextureId;
+        this.defeatedTexture = AssetManager.getTextureFromId(defeatedTextureId);
     }
 
 
@@ -67,7 +71,7 @@ public class Fortress extends Attacker implements Json.Serializable
     public void setSelected(boolean selected) { this.selected = selected; }
 
     public Fortress(){
-        super(1, 1,1,1, AssetManager.getFortressMinisterTexture(), 1,1,1);
+        super(1, 1,1,1, "fortressMinisterTexture", 1,1,1);
 
 
     }
@@ -77,7 +81,10 @@ public class Fortress extends Attacker implements Json.Serializable
     public void write(Json json) {
         json.writeValue("col", getCol());
         json.writeValue("row", getRow());
+        json.writeValue("textureId", this.textureId);
+        json.writeValue("defeatedTextureId", this.defeatedTextureId);
         json.writeValue("health", getHealth());
+        json.writeValue("maxHealth", getMaxHealth());
         json.writeValue("damage", getRange());
         json.writeValue("width", getWidth());
         json.writeValue("height", getHeight());
@@ -94,7 +101,12 @@ public class Fortress extends Attacker implements Json.Serializable
         String test = jsonMap.toString();
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
+        this.textureId = jsonMap.get("textureId").asString();
+        this.texture = AssetManager.getTextureFromId(this.textureId);
+        this.defeatedTextureId = jsonMap.get("defeatedTextureId").asString();
+        this.defeatedTexture = AssetManager.getTextureFromId(this.defeatedTextureId);
         this.setHealth(jsonMap.get("health").asInt());
+        this.setMaxHealth(jsonMap.get("maxHealth").asInt());
         this.setDamage(jsonMap.get("damage").asInt());
         this.dead = jsonMap.get("dead").asBoolean();
         this.setWidth(jsonMap.get("width").asInt());

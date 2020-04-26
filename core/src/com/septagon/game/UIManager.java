@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.septagon.entites.Engine;
+import com.septagon.helperClasses.SaveManager;
 import com.septagon.states.GameState;
 import java.awt.*;
 
@@ -38,6 +39,7 @@ public class UIManager
     private GlyphLayout minimiseSymbol;
     private GlyphLayout pauseText;
     private GlyphLayout resumeText;
+    private GlyphLayout saveText;
     private GlyphLayout exitText;
 
     //Create objects of the current instance of gamestate and for the currently pressed engine
@@ -53,12 +55,13 @@ public class UIManager
     private int minimiseX, minimiseY, minimiseWidth, minimiseHeight;
     private float playerTurnX, playerTurnY, enemyTurnX, enemyTurnY;
     private int pauseRectX, pauseRectY, pauseRectWidth, pauseRectHeight;
-    private int pauseTextX, pauseTextY, resumeTextX, resumeTextY, exitTextX, exitTextY;
+    private int pauseTextX, pauseTextY, resumeTextX, resumeTextY, saveTextX, saveTextY, exitTextX, exitTextY;
 
     //Variables to keep track of the pause state
     private boolean paused = false;
     private int pausePosition = 1;
     private Rectangle resumeBox;
+    private Rectangle saveBox;
     private Rectangle exitBox;
 
     public UIManager(GameState gameState, BitmapFont font)
@@ -123,10 +126,11 @@ public class UIManager
 
     /*This is new*/
     private void setUpPauseText(){
-        font.setColor(Color.RED);
+        font.setColor(Color.DARK_GRAY);
         pauseText = new GlyphLayout(font, "Paused");
         font.setColor(Color.WHITE);
         resumeText = new GlyphLayout(font, "Resume");
+        saveText = new GlyphLayout(font, "Save");
         exitText = new GlyphLayout(font, "Exit");
     }
 
@@ -152,7 +156,8 @@ public class UIManager
 
             font.draw(uiBatch, pauseText, pauseTextX, pauseTextY);
             drawPauseString(1, "Resume", resumeTextX, resumeTextY, resumeText);
-            drawPauseString(2, "Exit", exitTextX, exitTextY, exitText);
+            drawPauseString(2, "Save", saveTextX, saveTextY, saveText);
+            drawPauseString(3, "Exit", exitTextX, exitTextY, exitText);
         }
         uiBatch.end();
     }
@@ -287,8 +292,11 @@ public class UIManager
         resumeTextX = (int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2);
         resumeTextY = pauseRectY + pauseRectHeight - 75;
 
+        saveTextX = (int)(Gdx.graphics.getWidth() / 2 - saveText.width / 2);
+        saveTextY = pauseRectY + pauseRectHeight - 125;
+
         exitTextX = (int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2);
-        exitTextY = pauseRectY + pauseRectHeight - 125;
+        exitTextY = pauseRectY + pauseRectHeight - 175;
     }
 
     //Called by InputManager when the use presses the showStats button
@@ -306,8 +314,10 @@ public class UIManager
     private void setupRectanglePositions(){
         resumeBox = new Rectangle();
         resumeBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - resumeText.width / 2), pauseRectY + pauseRectHeight - 125, 55, 50);
+        saveBox = new Rectangle();
+        saveBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 175, 55, 50);
         exitBox = new Rectangle();
-        exitBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 175, 55, 50);
+        exitBox.setBounds((int)(Gdx.graphics.getWidth() / 2 - exitText.width / 2), pauseRectY + pauseRectHeight - 225, 55, 50);
 
     }
 
@@ -316,6 +326,8 @@ public class UIManager
         GameData gamedata = data.newGameData(gameState);
         if (paused && resumeBox.contains(x, y)) {
             isNotPaused();
+        } else if (paused && saveBox.contains(x, y)){
+            SaveManager.makeNewSave(this.gameState);
         } else if (paused && exitBox.contains(x, y)) {
             data.save(gamedata);
             Gdx.app.exit();

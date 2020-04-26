@@ -193,7 +193,7 @@ public class PatrolTest {
 
     @Test //test for constructor
     public void testConstructor() {
-        Patrol testPatrol = new Patrol(1,1,null,10,2,4,2,new ArrayList<Tile>(),mock(TileManager.class));
+        Patrol testPatrol = new Patrol(1,1,null,10,2,4,2,new ArrayList<Tile>(), null, mock(TileManager.class));
         assertEquals(0, testPatrol.pathIndex);
 
 

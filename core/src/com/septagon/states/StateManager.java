@@ -61,6 +61,10 @@ public class StateManager
     public void changeState(State newState)
     {
         newState.initialise();
+        if (newState.id == State.StateID.GAME){
+            //So we can't go back to a previous GameState
+            deleteAllInstancesOf(State.StateID.GAME);
+        }
     	states.add(newState);
     	currentIndex = states.indexOf(newState);
     }
@@ -69,10 +73,24 @@ public class StateManager
         currentIndex = getState(State.StateID.GAME);
     }
 
+    /**
+     * ASSESSMENT 4
+     */
+    public void deleteAllInstancesOf(State.StateID id){
+        ArrayList<State> toRemove = new ArrayList<>();
+        for (State state: this.states){
+            if (state.id == id){
+                toRemove.add(state);
+            }
+        }
+        this.states.removeAll(toRemove);
+
+    }
     //Getters
     public int getCurrentIndex() { return currentIndex; }
     public State getCurrentState() { return states.get(currentIndex); }
     public ArrayList<State> getStates() { return states; }
+
     /*This is new*/
     public int getState(State.StateID stateType) {
         for (int i = 0; i < states.size(); i++){
@@ -82,4 +100,6 @@ public class StateManager
         }
         return 0;
     }
+
+
 }

@@ -10,7 +10,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.septagon.entites.Engine;
 import com.septagon.entites.Tile;
+import com.septagon.helperClasses.SaveManager;
 import com.septagon.states.*;
+
+import java.util.ArrayList;
 
 /**
 Class used to handle all inputs from the user
@@ -18,7 +21,8 @@ Class used to handle all inputs from the user
 
 public class InputManager implements InputProcessor
 {
-    private String savetest = "";
+    private String savetest = "";//TODO: remove
+    private GameState gs;
 
     private boolean dragging;
     private OrthographicCamera camera;
@@ -264,19 +268,38 @@ public class InputManager implements InputProcessor
             switch(keycode){
                 case Input.Keys.DOWN:
                     currentState.setMenuPosition(currentState.getMenuPosition() + 1);
-                    System.out.println(currentState.getMenuPosition());
+                    System.out.println("<>");
+                    //System.out.println(currentState.getMenuPosition());
                     break;
 
                 case Input.Keys.UP:
                     currentState.setMenuPosition(currentState.getMenuPosition() - 1);
-                    System.out.println(currentState.getMenuPosition());
+                    //System.out.println(currentState.getMenuPosition());
                     break;
 
                 case Input.Keys.LEFT:
-                    Difficulty.previousDifficulty();
+                    if (currentState.getMenuPosition() == 1){
+                        Difficulty.previousDifficulty();
+                    } else if (currentState.getMenuPosition() == 2){
+                        if (currentState.saveIndex == 0){
+                            currentState.saveIndex = currentState.getSaveList().size() - 1;
+                        } else {
+                            currentState.saveIndex -= 1;
+                        }
+                    }
+
                     break;
                 case Input.Keys.RIGHT:
-                    Difficulty.nextDifficulty();
+                    if (currentState.getMenuPosition() == 1){
+                        Difficulty.nextDifficulty();
+                    } else if (currentState.getMenuPosition() == 2){
+                        if (currentState.saveIndex == currentState.getSaveList().size() - 1){
+                            currentState.saveIndex = 0;
+                        } else {
+                            currentState.saveIndex += 1;
+                        }
+                    }
+
                     break;
                 //If enter pressed, perform action depending on the position of the menu
                 case Input.Keys.ENTER:
@@ -290,7 +313,11 @@ public class InputManager implements InputProcessor
                             Difficulty.nextDifficulty();
                             break;
                         case 2:
-                            System.out.println("Loading not implemented yet ;)");
+                            GameState loadedState = SaveManager.loadSave(currentState.getSaveList().get(currentState.saveIndex));
+                            loadedState.setStateManager(this.stateManager);
+                            loadedState.setCamera(this.camera);
+                            loadedState.setInputManager(this);
+                            stateManager.changeState(loadedState);
                             break;
                         case 3:
                             Gdx.app.exit();
@@ -317,22 +344,15 @@ public class InputManager implements InputProcessor
 
             //TODO: remove debug lines
             if(keycode == Input.Keys.S){
-                Json json = new Json();
-                //json.setSerializer(Engine.class, new Json.Serializer<Engine>());
-                this.savetest = json.toJson(currentState.getEngines().get(2));
+                SaveManager.makeNewSave(currentState);
                 System.out.println("Saved!!");
-
             }
             if(keycode == Input.Keys.L){
-                Json json = new Json();
-                if(this.savetest != "") {
-
-                    Engine engine = json.fromJson(Engine.class, savetest);
-                    System.out.println("Loaded!!");
-                    currentState.getEngines().set(2, engine);
-                } else{
-                    System.out.println("Save not initialized!!");
-                }
+                this.gs = SaveManager.loadMostRecentSave();
+                this.gs.setStateManager(this.stateManager);
+                this.gs.setInputManager(this);
+                this.gs.setCamera(this.camera);
+                this.stateManager.changeState(this.gs);
             }
 
 
@@ -341,18 +361,24 @@ public class InputManager implements InputProcessor
                 switch (keycode){
                     //If up or down pressed, move pause position accordingly
                     case Input.Keys.DOWN:
-                        if(currentPausePosition == 1){
-                            currentState.getUiManager().setPausePosition(2);
+                        if(currentPausePosition == 3){ //If at the end of pause menu
+                            currentState.getUiManager().setPausePosition(1);//Then go back to top
+                        } else {
+                            currentState.getUiManager().setPausePosition(currentState.getUiManager().getPausePosition() + 1);
                         }
                     case Input.Keys.UP:
-                        if(currentPausePosition == 2){
-                            currentState.getUiManager().setPausePosition(1);
+                        if(currentPausePosition == 1){//If at the top of pause menu
+                            currentState.getUiManager().setPausePosition(3);//Go to bottom
+                        } else {
+                            currentState.getUiManager().setPausePosition(currentState.getUiManager().getPausePosition() - 1);
                         }
                     //If enter pressed, perform action depending on where in the pause menu the user is
                     case Input.Keys.ENTER:
                         if(currentPausePosition == 1){
                             currentState.setPaused(false);
-                        }else{
+                        }else if (currentPausePosition == 2) {
+                            SaveManager.makeNewSave(currentState);
+                        } else {
                             stateManager.changeState(new MenuState(this, font, stateManager, camera));
                         }
                     default:

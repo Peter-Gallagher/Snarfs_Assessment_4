@@ -21,10 +21,10 @@ public class Powerup extends Entity implements Json.Serializable{
      * @param row
      * @param width
      * @param height
-     * @param texture
+     * @param textureId
      */
-    public Powerup(int row, int col, int width, int height, Texture texture, GameState gameState, int randInt) {
-        super(col, row, width, height, texture);
+    public Powerup(int row, int col, int width, int height, String textureId, GameState gameState, int randInt) {
+        super(col, row, width, height, textureId);
         curTile = gameState.getTileManager().getTileFromIndex(row+80*col);
         if(curTile == null){
             curTile = gameState.getTileManager().getTileAtLocation(col, row);
@@ -69,26 +69,30 @@ public class Powerup extends Entity implements Json.Serializable{
     }
 
     public Powerup(){
-        super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, AssetManager.getPowerup(1));//TODO: allow texture to be saved
+        super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, "powerup1");
     }
+
     @Override
     public void write(Json json) {
         json.writeValue("col", getCol());
         json.writeValue("row", getRow());
+        json.writeValue("textureId", this.textureId);
         json.writeValue("powerupValue", this.powerupValue);
         json.writeValue("usedUp", this.usedUp);
         json.writeValue("inUse", this.inUse);
-        json.writeValue("affectedEngine",this.affectedEngine);
-
     }
 
     @Override
     public void read(Json json, JsonValue jsonMap) {
-        String test = jsonMap.toString();
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
+        this.textureId = jsonMap.get("textureId").asString();
+        this.texture = AssetManager.getTextureFromId(this.textureId);
         this.powerupValue = jsonMap.get("powerupValue").asInt();
         this.usedUp = jsonMap.get("usedUp").asBoolean();
         this.inUse = jsonMap.get("inUse").asBoolean();
+        if (this.usedUp){
+            setTexture(AssetManager.getNull());
+        }
     }
 }

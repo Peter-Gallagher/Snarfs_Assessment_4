@@ -6,6 +6,7 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.Texture;
+import com.septagon.helperClasses.AssetManager;
 
 public class Tile extends Entity
 {
@@ -23,7 +24,8 @@ public class Tile extends Entity
      */
     public Tile(int col, int row, Texture texture, Boolean occupied)
     {
-        super(col,row,Tile.TILE_SIZE,Tile.TILE_SIZE,texture);
+        super(col,row,Tile.TILE_SIZE,Tile.TILE_SIZE, null);
+        this.texture = texture;
         this.occupied = occupied;
     }
 

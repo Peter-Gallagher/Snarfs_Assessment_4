@@ -1,26 +1,33 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.septagon.helperClasses.AssetManager;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*Everything in this class is new*/
-public class Patrol extends Vehicle  {
+public class Patrol extends Vehicle implements Json.Serializable {
 
     //keep track of where we are on the patrol
     protected int pathIndex;
-    protected ArrayList<Tile> path;
+    protected List<Tile> path;
+    private String pathId;
 
     protected TileManager tileManager;
     private boolean hasDropped = false;
 
-    public Patrol(int col, int row, Texture texture, int health, int damage, int range, int speed, ArrayList<Tile> path, TileManager tileManager){
-        super(col, row, texture, health, damage, range, speed);
+
+    public Patrol(int col, int row, String textureId, int health, int damage, int range, int speed, List<Tile> path, String pathId, TileManager tileManager){
+        super(col, row, textureId, health, damage, range, speed);
         this.tileManager = tileManager;
         this.path = path;
+        this.pathId = pathId;
         pathIndex = 0;
     }
 
@@ -88,7 +95,7 @@ public class Patrol extends Vehicle  {
      * Method to handel the movement of patrols
      */
     public void move(){
-        ArrayList<Integer> moves = new ArrayList<Integer>();
+        ArrayList<Integer> moves = new ArrayList<>();
         int currentTileIndex = this.col + (this.row * 80);
         int moveIndex;
         Tile tileToMoveTo;
@@ -126,6 +133,48 @@ public class Patrol extends Vehicle  {
             this.setCol(62);
             this.setRow(0);
 
+        }
+    }
+
+    public String getPathId(){ return this.pathId; }
+
+    public void setTileManager(TileManager tileManager){
+        this.tileManager = tileManager;
+    }
+
+    public Patrol(){
+        super(1, 1, "", 1, 1,1, 1);
+
+    }
+    @Override
+    public void write(Json json) {
+        json.writeValue("col", getCol());
+        json.writeValue("row", getRow());
+        json.writeValue("textureId", this.textureId);
+        json.writeValue("health", getHealth());
+        json.writeValue("maxHealth", getMaxHealth());
+        json.writeValue("damage", getDamage());
+        json.writeValue("range", getRange());
+        json.writeValue("speed", getSpeed());
+        json.writeValue("pathId", this.pathId);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonValue) {
+        this.setCol(jsonValue.get("col").asInt());
+        this.setRow(jsonValue.get("row").asInt());
+        this.textureId = jsonValue.get("textureId").asString();
+        this.texture = AssetManager.getTextureFromId(this.textureId);
+        this.setHealth(jsonValue.get("health").asInt());
+        this.setMaxHealth(jsonValue.get("maxHealth").asInt());
+        this.setDamage(jsonValue.get("damage").asInt());
+        this.setRange(jsonValue.get("range").asInt());
+        this.setSpeed(jsonValue.get("speed").asInt());
+        this.pathId = jsonValue.get("pathId").asString();
+        switch (this.pathId){
+            case("path1"): this.path = GameState.path1;
+            case("path2"): this.path = GameState.path2;
+            case("path3"): this.path = GameState.path3;
         }
     }
 }

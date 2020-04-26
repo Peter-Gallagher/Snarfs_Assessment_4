@@ -57,8 +57,8 @@ class FortressTest {
 
         testF.setRangeCorners();
         //Texture testTexture2 = new Texture(Gdx.files.internal("images/engine1.png"));
-        Engine testE1 = new Engine(5,9, null, 100, 2, 4, 2, 20, 4, 01);
-        Engine testE2 = new Engine(3, 3, null, 10, 2, 4, 2, 20, 4, 01);
+        Engine testE1 = new Engine(5,9, null, 100, 2, 4, 2, 20, 4);
+        Engine testE2 = new Engine(3, 3, null, 10, 2, 4, 2, 20, 4);
 
         Mockito.doCallRealMethod().when(testF).damageIfInRange(testE1, false);
         Mockito.doCallRealMethod().when(testF).damageIfInRange(testE2, false);

@@ -6,6 +6,7 @@ package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.septagon.helperClasses.AssetManager;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,9 @@ public class TestingFortress extends Attacker
     /***
      * Constructor that calls the Entity constructor to set up all the member variables
      */
-    public TestingFortress(int col, int row, int width, int height, Texture texture, int health, int damage, int range)
+    public TestingFortress(int col, int row, int width, int height, String textureId, int health, int damage, int range)
     {
-        super(col,row, width, height, texture, health, damage, range);
+        super(col,row, width, height, textureId, health, damage, range);
     }
 
     /***

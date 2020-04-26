@@ -17,13 +17,13 @@ public class Difficulty {
     public static float getFortressDamageMod(){
         switch (current){
             case EASY:
-                return 0.75f;
+                return 0.85f;
             case MEDIUM:
                 return 1f;
             case HARD:
-                return 1.25f;
+                return 1.15f;
         }
-        System.err.println("Difficulty: " + current + " getFortressDamageMod");
+        System.err.println("Difficulty: " + current + " not configured for getFortressDamageMod");
         return 1f;
     }
 
@@ -36,7 +36,21 @@ public class Difficulty {
             case HARD:
                 return 1.25f;
         }
-        System.err.println("Difficulty: " + current + " not configured for getEngineDamageMod!!");
+        System.err.println("Difficulty: " + current + " not configured for getEngineDamageMod!");
+        return 1f;
+    }
+
+    public static float getEngineVolumeMod(){
+        switch(current){
+            case EASY:
+                return 0.8f;
+            case MEDIUM:
+                return 1f;
+            case HARD:
+                return 1.2f;
+
+        }
+        System.err.println("Difficulty: " + current + " not configured for getEngineVolumeMod()!");
         return 1f;
     }
 
@@ -55,7 +69,7 @@ public class Difficulty {
             case HARD:
                 return rand.nextFloat() < 0.4f;
         }
-        System.err.println("Difficulty: " + current + " not configured for shouldTriggerMiniGame!!");
+        System.err.println("Difficulty: " + current + " not configured for shouldTriggerMiniGame!");
         return true;
     }
 

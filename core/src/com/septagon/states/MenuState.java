@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.septagon.game.Difficulty;
 import com.septagon.game.GameData;
 import com.septagon.game.InputManager;
+import com.septagon.helperClasses.SaveManager;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /*
 Child of the State class that will be used to manage the system when the user is in the menu
@@ -26,6 +28,8 @@ public class MenuState extends State
     private String titleLabel;
     private String playLabel;
     private String difficultyLabel;
+    private ArrayList<String> saveList; //List of all saves
+    public int saveIndex; //Keeps track of which save is selected in the laod box
     private String loadLabel;
     private String exitLabel;
     private int menuPosition;
@@ -53,7 +57,15 @@ public class MenuState extends State
         titleLabel = "Kroy - Septagon";
         playLabel = "Play";
         difficultyLabel = "Difficulty: " + Difficulty.current;
-        loadLabel = "Load";
+
+        this.saveList = SaveManager.getAllSaveNames();
+        if (this.saveList.size() == 0){
+            this.saveIndex = -1;
+            loadLabel = "Load: <No save games found>";
+        } else {
+            this.saveIndex = 0;
+            loadLabel = "Load: " + this.saveList.get(0);
+        }
         exitLabel = "Exit";
         menuPosition = 0;
         layout = new GlyphLayout(font, titleLabel);
@@ -100,6 +112,9 @@ public class MenuState extends State
         drawString(menuBatch, 0, playLabel, 100, (Gdx.graphics.getHeight()) - 100);
         difficultyLabel = "Difficulty: " + Difficulty.current;
         drawString(menuBatch, 1, difficultyLabel, 100, (Gdx.graphics.getHeight() - 150));
+        if (saveList.size() > 0) {
+            loadLabel = "Load: " + saveList.get(saveIndex);
+        }
         drawString(menuBatch, 2, loadLabel, 100, (Gdx.graphics.getHeight() - 200));
         drawString(menuBatch, 3, exitLabel,  100, (Gdx.graphics.getHeight()) - 250);
 
@@ -179,8 +194,9 @@ public class MenuState extends State
         } else if(difficultyBox.contains(x, y)){
             Difficulty.nextDifficulty();
         } else if(loadBox.contains(x, y)){
-            data.load();
-            //System.out.println("Load no implemented yet ;)");
+            if (this.saveList.size() > 0) {
+                this.stateManager.changeState(SaveManager.loadSave(this.saveList.get(saveIndex)));
+            }
         } else if(exitBox.contains(x, y)){
             Gdx.app.exit();
         }
@@ -197,4 +213,5 @@ public class MenuState extends State
     //Getters
     public int getMenuPosition() { return menuPosition; }
     public OrthographicCamera getMenuCamera() { return menuCamera; }
+    public ArrayList<String> getSaveList(){ return saveList; }
 }

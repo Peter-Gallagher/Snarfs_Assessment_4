@@ -249,16 +249,14 @@ public class AttackerManager
         }
     }
 
-    /*This is new*/
+    /*Changed in ASSESSMENT 4 to use texure ids rather than position in array
+    * to determine defeated texture*/
     private void updateToDestroyedTexture(Engine engine){
-        if (engine == engines.get(0)){
-            engine.setTexture(AssetManager.getDestroyedEngineTexture1());
-        }else if (engine == engines.get(1)){
-            engine.setTexture(AssetManager.getDestroyedEngineTexture2());
-        }else if (engine == engines.get(2)){
-            engine.setTexture(AssetManager.getDestroyedEngineTexture3());
-        }else if(engine == engines.get(3)){
-            engine.setTexture(AssetManager.getDestroyedEngineTexture4());
+        switch(engine.getTextureId()){
+            case "engineTexture1": engine.setTexture(AssetManager.getDestroyedEngineTexture1()); break;
+            case "engineTexture2": engine.setTexture(AssetManager.getDestroyedEngineTexture2()); break;
+            case "engineTexture3": engine.setTexture(AssetManager.getDestroyedEngineTexture3()); break;
+            case "engineTexture4": engine.setTexture(AssetManager.getDestroyedEngineTexture4()); break;
         }
     }
 

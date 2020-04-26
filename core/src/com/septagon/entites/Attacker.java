@@ -5,6 +5,7 @@ package com.septagon.entites;
  */
 
 import com.badlogic.gdx.graphics.Texture;
+import com.septagon.helperClasses.AssetManager;
 import com.septagon.states.GameState;
 
 import java.util.ArrayList;
@@ -16,26 +17,25 @@ public abstract class Attacker extends Entity
     protected int maxHealth;
     protected int damage;
     protected int range;
-    protected ArrayList<Integer> rangeCorners;
+    protected ArrayList<Integer> rangeCorners = new ArrayList<>();
 
 
     /***
      * Constructor that sets up values based on inputs (also refers to Entity constructor)
      * @param col The map column of the Attacker
      * @param row The map row of the Attacker
-     * @param texture The texture of the Attacker
+     * @param textureId The texture id of the Attacker
      * @param health The health of the Attacker
      * @param damage The damage dealt by the Attacker
      * @param range The range of attacks for the Attacker
      */
-    public Attacker(int col, int row, int width, int height, Texture texture, int health, int damage, int range)
+    public Attacker(int col, int row, int width, int height, String textureId, int health, int damage, int range)
     {
-        super(col,row,width,height,texture);
+        super(col,row,width,height,textureId);
         this.health = health;
         this.maxHealth = health;
         this.damage = damage;
         this.range = range;
-        this.rangeCorners = new ArrayList<Integer>();
     }
 
 

@@ -7,7 +7,12 @@ package com.septagon.helperClasses;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+
+import java.util.Random;
+
 public class AssetManager {
+
+
     private static final Texture engineTexture1 = new Texture(Gdx.files.internal("images/engineSF.png"));
     private static final Texture engineTexture2 = new Texture(Gdx.files.internal("images/engineRS.png"));
     private static final Texture engineTexture3 = new Texture(Gdx.files.internal("images/engineMCL.png"));
@@ -48,8 +53,56 @@ public class AssetManager {
     private static final Texture powerup5 = new Texture(Gdx.files.internal("images/powerups/5.png"));
 
     private static final Texture nullTex = new Texture(Gdx.files.internal("images/nullTex.png"));
+    private static final Texture missingTexture = new Texture(Gdx.files.internal("images/missingTexture.png"));
 
     //Getters
+    public static Texture getTextureFromId(String textureId){
+        if (textureId == null){
+            return missingTexture;
+        }
+        switch(textureId) {
+            case "engineTexture1": return engineTexture1;
+            case "engineTexture2": return engineTexture2;
+            case "engineTexture3": return engineTexture3;
+            case "engineTexture4": return engineTexture4;
+
+            case "destroyedEngineTexture1": return destroyedEngineTexture1;
+            case "destroyedEngineTexture2": return destroyedEngineTexture2;
+            case "destroyedEngineTexture3": return destroyedEngineTexture3;
+            case "destroyedEngineTexture4": return destroyedEngineTexture4;
+
+            case "moveSpaceTexture": return moveSpaceTexture;
+
+            case "fortressFireTexture": return fortressFireTexture;
+            case "fortressMinisterTexture": return fortressMinisterTexture;
+            case "fortressStationTexture": return fortressStationTexture;
+            case "fortressCentralHallTexture": return fortressCentralHallTexture;
+            case "fortressSalvoTexture": return fortressSalvoTexture;
+            case "fortressCliffordsTowerTexture": return fortressCliffordsTowerTexture;
+
+            case "defeatedFireTexture": return defeatedFireTexture;
+            case "defeatedMinsterTexture": return defeatedMinsterTexture;
+            case "defeatedStationTexture": return defeatedStationTexture;
+            case "defeatedSalvoTexture": return defeatedSalvoTexture;
+            case "defeatedCentralHallTexture": return defeatedCentralHallTexture;
+            case "defeatedCliffordsTowerTexture": return defeatedCliffordsTowerTexture;
+
+            case "fireStationTexture": return fireStationTexture;
+            case "destroyedStationTexture": return destroyedStationTexture;
+            case "creepyPatrol": return creepyPatrol;
+
+            case "fortressBoundaryImage": return fortressBoundaryImage;
+
+            case "powerup1": return powerup1;
+            case "powerup2": return powerup2;
+            case "powerup3": return powerup3;
+            case "powerup4": return powerup4;
+            case "powerup5": return powerup5;
+
+            default: return missingTexture;
+        }
+    }
+
     public static Texture getNull(){ return nullTex; }
     public static Texture getEngineTexture1() {
         return engineTexture1;
@@ -138,6 +191,17 @@ public class AssetManager {
             case(3): return powerup3;
             case(4): return powerup4;
             default: return powerup5;
+        }
+    }
+
+    public static String getRandPowerupId(){
+        int randInt = new Random().nextInt(5);
+        switch (randInt){
+            case(1): return "powerup1";
+            case(2): return "powerup2";
+            case(3): return "powerup3";
+            case(4): return "powerup4";
+            default: return "powerup5";
         }
     }
 }
