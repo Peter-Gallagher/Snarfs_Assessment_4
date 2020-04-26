@@ -5,7 +5,10 @@ Class that is used for rendering and managing all the heads up display
  */
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -15,6 +18,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.septagon.entites.Engine;
 import com.septagon.helperClasses.SaveManager;
 import com.septagon.states.GameState;
+import com.septagon.states.MenuState;
+import com.septagon.states.StateManager;
+
 import java.awt.*;
 
 public class UIManager
@@ -45,6 +51,9 @@ public class UIManager
     //Create objects of the current instance of gamestate and for the currently pressed engine
     private GameState gameState;
     private Engine currentEngine;
+    private InputManager inputManager;
+    private StateManager stateManager;
+    private OrthographicCamera camera;
 
     //Booolean that will tell if the stats menu is open or closed
     private boolean displayingStats = false;
@@ -64,10 +73,13 @@ public class UIManager
     private Rectangle saveBox;
     private Rectangle exitBox;
 
-    public UIManager(GameState gameState, BitmapFont font)
+    public UIManager(GameState gameState, BitmapFont font, StateManager stateManager, InputManager inputManager, OrthographicCamera camera)
     {
         this.gameState = gameState;
         this.font = font;
+        this.stateManager = stateManager;
+        this.inputManager = inputManager;
+        this.camera = camera;
     }
 
 
@@ -329,8 +341,7 @@ public class UIManager
         } else if (paused && saveBox.contains(x, y)){
             SaveManager.makeNewSave(this.gameState);
         } else if (paused && exitBox.contains(x, y)) {
-            data.save(gamedata);
-            Gdx.app.exit();
+            this.stateManager.changeState(new MenuState(inputManager, font, stateManager, camera));
         }
     }
 

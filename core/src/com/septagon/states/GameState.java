@@ -415,7 +415,7 @@ public class GameState extends State implements Json.Serializable
     /*This is new*/
     private void initializeUIManager(){
         //Creates instance of uiManager which will be used to render and manage all UI elements
-        uiManager = new UIManager(this, font);
+        uiManager = new UIManager(this, font, stateManager, inputManager, camera);
 
         //Intialises all entities and all ui elements
         uiManager.initialise();
