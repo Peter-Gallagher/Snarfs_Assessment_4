@@ -172,9 +172,9 @@ public class Patrol extends Vehicle implements Json.Serializable {
         this.setSpeed(jsonValue.get("speed").asInt());
         this.pathId = jsonValue.get("pathId").asString();
         switch (this.pathId){
-            case("path1"): this.path = GameState.path1;
-            case("path2"): this.path = GameState.path2;
-            case("path3"): this.path = GameState.path3;
+            case("path1"): this.path = GameState.path1; break;
+            case("path2"): this.path = GameState.path2; break;
+            case("path3"): this.path = GameState.path3; break;
         }
     }
 }
