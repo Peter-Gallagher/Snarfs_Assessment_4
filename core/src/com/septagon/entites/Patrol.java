@@ -157,6 +157,7 @@ public class Patrol extends Vehicle implements Json.Serializable {
         json.writeValue("range", getRange());
         json.writeValue("speed", getSpeed());
         json.writeValue("pathId", this.pathId);
+        json.writeValue("hasDropped", this.hasDropped);
     }
 
     @Override
@@ -171,10 +172,15 @@ public class Patrol extends Vehicle implements Json.Serializable {
         this.setRange(jsonValue.get("range").asInt());
         this.setSpeed(jsonValue.get("speed").asInt());
         this.pathId = jsonValue.get("pathId").asString();
+        this.hasDropped = jsonValue.get("hasDropped").asBoolean();
         switch (this.pathId){
             case("path1"): this.path = GameState.path1; break;
             case("path2"): this.path = GameState.path2; break;
             case("path3"): this.path = GameState.path3; break;
+        }
+        if(this.hasDropped){
+            setTexture(AssetManager.getNull());
+            this.setDead();
         }
     }
 }

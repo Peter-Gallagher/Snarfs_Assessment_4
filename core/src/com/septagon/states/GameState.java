@@ -192,9 +192,9 @@ public class GameState extends State implements Json.Serializable
     /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 1500, 4);
-        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 1100, 4);
-        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 1300, 4);
+        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 1500, 1);
+        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 1100, 2);
+        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 1300, 3);
         Engine engine4 = new Engine(0,0, "engineTexture4", 110, 16, 14, 22, 1200, 4);
 
         //Sets the engines positions so that they start from the fireStation
@@ -502,7 +502,7 @@ public class GameState extends State implements Json.Serializable
      * Method that handles all the updating that should happen on an enemies turn
      */
     private void enemyTurnUpdate(){
-        entityManager.checkPowerups(tileManager, this);
+        entityManager.checkPowerups(this);
         boolean shouldShowFortress = false;
 
         //Work out what should happen if we need to display a new fortress

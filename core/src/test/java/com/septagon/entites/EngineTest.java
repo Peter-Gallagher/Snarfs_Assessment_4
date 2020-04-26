@@ -23,7 +23,7 @@ class EngineTest {
     @BeforeEach //A set up function for the tests
     public void setUp() {
         //Texture testTexture = new Teture(Gdx.files.internal("images/engine1.png"));
-        testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 4);
+        testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 5);
         testE = mock(Engine.class);
         testE.col = 1;
         testE.row = 1;
@@ -32,7 +32,7 @@ class EngineTest {
         testE.range = 4;
         testE.speed = 2;
         testE.maxVolume = 20;
-        testE.fillSpeed = 4;
+        testE.id = 5;
         testE.x = 32;
         testE.y = 32;
         testE.height = 32;
@@ -60,7 +60,7 @@ class EngineTest {
         assertEquals(testE.speed, 2);
         assertEquals(testE.maxVolume, 20);
         assertEquals(testE.volume, 20);
-        assertEquals(testE.fillSpeed, 4);
+        assertEquals(testE.id, 5);
 
     }
 
@@ -113,9 +113,9 @@ class EngineTest {
     }
 
     @Test //A test for the Engine class' getID method
-    public void testGetFillSpeed() throws Exception {
-        when(testE.getFillSpeed()).thenCallRealMethod();
-        assertEquals(testE.getFillSpeed(), 4);
+    public void testID() throws Exception {
+        when(testE.getID()).thenCallRealMethod();
+        assertEquals(testE.getID(), 5);
     }
 
     @Test //A test for the Engine class' fire method
@@ -137,12 +137,12 @@ class EngineTest {
     }
 
     @Test //A test for the Engine class' setFillSpeed method
-    public void testSetFillSpeed() throws Exception {
-        when(testE.getFillSpeed()).thenCallRealMethod();
-        Mockito.doCallRealMethod().when(testE).setFillSpeed(6);
+    public void testSetID() throws Exception {
+        when(testE.getID()).thenCallRealMethod();
+        Mockito.doCallRealMethod().when(testE).setID(6);
 
-        testE.setFillSpeed(6);
-        assertEquals(testE.getFillSpeed(), 6);
+        testE.setID(6);
+        assertEquals(testE.getID(), 6);
     }
 
     @Test //A test for the checkInRange function

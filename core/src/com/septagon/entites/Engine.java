@@ -18,7 +18,7 @@ public class Engine extends Vehicle implements Json.Serializable
     //Member variables that will be unique stats of each engine
     protected int volume;
     protected int maxVolume;
-    protected int fillSpeed;
+    protected int id;
 
     //Keeps track of whether the engine has moved on the current player turn
     private boolean moved = false;
@@ -33,13 +33,13 @@ public class Engine extends Vehicle implements Json.Serializable
     /***
      * Constructor that Sets up the member variables for engine
      */
-    public Engine(int col, int row, String textureId, int health, int damage, int range, int speed, int maxVolume, int fillSpeed) {
+    public Engine(int col, int row, String textureId, int health, int damage, int range, int speed, int maxVolume, int id) {
         super(col, row, textureId, health, damage, range, speed);
         this.setDamage((int) (damage * Difficulty.getEngineDamageMod()));
 
         this.volume = (int) (maxVolume * Difficulty.getEngineVolumeMod());
         this.maxVolume = maxVolume;
-        this.fillSpeed = fillSpeed;
+        this.id = id;
         this.baseHealth = health;
         this.baseDamage = damage;
         this.baseRange = range;
@@ -184,13 +184,13 @@ public class Engine extends Vehicle implements Json.Serializable
     //Getters and Setters
     public int getMaxVolume() { return this.maxVolume; }
     public int getVolume() { return this.volume; }
-    public int getFillSpeed() { return fillSpeed; }
+    public int getID() { return this.id; }
     public boolean isMoved(){return this.moved;}
     public boolean poweredUp(){ return this.poweredUp;}
 
     public void setMoved(boolean moved){this.moved = moved;}
     public void setVolume(int volume) { this.volume = volume; }
-    public void setFillSpeed(int fillSpeed) { this.fillSpeed = fillSpeed; }
+    public void setID(int id) { this.id = id; }
 
     public Engine(){
         super(1, 1, "engineTexture1", 1,1,1,1);
@@ -210,7 +210,7 @@ public class Engine extends Vehicle implements Json.Serializable
         json.writeValue("speed", getSpeed());
         json.writeValue("volume", getVolume());
         json.writeValue("maxVolume", getMaxVolume());
-        json.writeValue("fillSpeed", getFillSpeed());
+        json.writeValue("id", getID());
         json.writeValue("baseHealth", this.baseHealth);
         json.writeValue("baseDamage", this.baseDamage);
         json.writeValue("baseRange", this.baseRange);
@@ -235,7 +235,7 @@ public class Engine extends Vehicle implements Json.Serializable
         this.setSpeed(jsonMap.get("speed").asInt());
         this.volume = jsonMap.get("volume").asInt();
         this.maxVolume  = jsonMap.get("maxVolume").asInt();
-        this.fillSpeed = jsonMap.get("fillSpeed").asInt();
+        this.id = jsonMap.get("id").asInt();
         this.baseHealth = jsonMap.get("baseHealth").asInt();
         this.baseDamage = jsonMap.get("baseDamage").asInt();
         this.baseRange = jsonMap.get("baseRange").asInt();

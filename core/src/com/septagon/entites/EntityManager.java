@@ -96,13 +96,12 @@ public class EntityManager {
 
     /**
      *
-     * @param tileManager
      * @param gameState
      */
-    public void checkPowerups(TileManager tileManager, GameState gameState){
+    public void checkPowerups( GameState gameState){
         if(powerups.size() > 0){
             for(Powerup p : powerups){
-                p.powerupUpdate(this, tileManager, gameState);
+                p.powerupUpdate(gameState);
             }
         }
     }
@@ -110,8 +109,8 @@ public class EntityManager {
     public void movePowerup(Engine engine, TileManager tileManager, GameState gameState) {
         for(Powerup p : powerups){
             if(p.inUse) {
-                if (p.affectedEngine == engine) {
-                    p.powerupUpdate(this, tileManager, gameState);
+                if (p.engineID == engine.getID()) {
+                    p.powerupUpdate(gameState);
                 }
             }
         }
