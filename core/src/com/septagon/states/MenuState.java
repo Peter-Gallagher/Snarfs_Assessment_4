@@ -176,7 +176,7 @@ public class MenuState extends State
         difficultyBox = new Rectangle();
         difficultyBox.setBounds(100, Gdx.graphics.getHeight() - 180, 250, 50);
         loadBox = new Rectangle();
-        loadBox.setBounds(100, Gdx.graphics.getHeight() - 230, 70, 50);
+        loadBox.setBounds(100, Gdx.graphics.getHeight() - 230, 350, 50);
         exitBox = new Rectangle();
         exitBox.setBounds(100, Gdx.graphics.getHeight() - 280, 55,50);
 
