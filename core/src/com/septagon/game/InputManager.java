@@ -363,14 +363,22 @@ public class InputManager implements InputProcessor
                     case Input.Keys.DOWN:
                         if(currentPausePosition == 3){ //If at the end of pause menu
                             currentState.getUiManager().setPausePosition(1);//Then go back to top
+                            System.out.println(currentState.getUiManager().getPausePosition());
+                            break;
                         } else {
                             currentState.getUiManager().setPausePosition(currentState.getUiManager().getPausePosition() + 1);
+                            System.out.println(currentState.getUiManager().getPausePosition());
+                            break;
                         }
                     case Input.Keys.UP:
                         if(currentPausePosition == 1){//If at the top of pause menu
                             currentState.getUiManager().setPausePosition(3);//Go to bottom
+                            System.out.println(currentState.getUiManager().getPausePosition());
+                            break;
                         } else {
                             currentState.getUiManager().setPausePosition(currentState.getUiManager().getPausePosition() - 1);
+                            System.out.println(currentState.getUiManager().getPausePosition());
+                            break;
                         }
                     //If enter pressed, perform action depending on where in the pause menu the user is
                     case Input.Keys.ENTER:

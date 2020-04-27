@@ -339,6 +339,7 @@ public class UIManager
         if (paused && resumeBox.contains(x, y)) {
             isNotPaused();
         } else if (paused && saveBox.contains(x, y)){
+            isNotPaused();
             SaveManager.makeNewSave(this.gameState);
         } else if (paused && exitBox.contains(x, y)) {
             this.stateManager.changeState(new MenuState(inputManager, font, stateManager, camera));
