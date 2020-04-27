@@ -41,6 +41,7 @@ public class Powerup extends Entity implements Json.Serializable{
      */
     public void powerupUpdate(GameState gameState){
         if(!inUse) {
+            curTile = gameState.getTileManager().getTileFromIndex(row+col);
             curTile.setOccupied(false);
             curTile.setMovable(true);
             for (Engine e : gameState.getEngines()) {
@@ -96,7 +97,9 @@ public class Powerup extends Entity implements Json.Serializable{
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
         this.textureId = jsonMap.get("textureId").asString();
-        this.texture = AssetManager.getTextureFromId(this.textureId);
+        if (textureId != null) {
+            this.texture = AssetManager.getTextureFromId(this.textureId);
+        }
         this.powerupValue = jsonMap.get("powerupValue").asInt();
         this.usedUp = jsonMap.get("usedUp").asBoolean();
         this.inUse = jsonMap.get("inUse").asBoolean();

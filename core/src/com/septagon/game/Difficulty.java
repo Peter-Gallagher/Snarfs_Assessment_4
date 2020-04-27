@@ -54,6 +54,18 @@ public class Difficulty {
         return 1f;
     }
 
+    public static int turnsToDestroyStation(){
+        switch(current){
+            case EASY:
+                return 35;
+            case MEDIUM:
+                return 30;
+            case HARD:
+                return 25;
+            default:
+                return 30;
+        }
+    }
     /**
      * Returns boolean of weather a minigame should trigger, value
      * has a different probability depending on current difficulty.

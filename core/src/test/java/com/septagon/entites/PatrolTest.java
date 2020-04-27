@@ -1,5 +1,6 @@
 package com.septagon.entites;
 
+import com.badlogic.gdx.utils.Json;
 import com.septagon.game.Game;
 import com.septagon.helperClasses.TileManager;
 import com.septagon.states.GameState;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,11 +40,7 @@ public class PatrolTest {
         mockedPatrol.width = 32;
         mockedPatrol.height = 32;
 
-
-
-
     }
-
 
     @Test //test for inRange function
     public void testInRange() {
@@ -74,9 +72,7 @@ public class PatrolTest {
         Engine testEngine1 = mock(Engine.class);
         GameState.bullets = mock(ArrayList.class);
 
-
         Mockito.doReturn(true).when(GameState.bullets).add(any(Bullet.class));
-
 
         testEngine1.col = 200;
         testEngine1.row = 200;
@@ -113,12 +109,6 @@ public class PatrolTest {
 
         assertEquals(8, testEngine1.health);
 
-
-
-
-
-
-
     }
 
     @Test //test for getDistanceToTarget
@@ -153,7 +143,6 @@ public class PatrolTest {
 
 
     }
-
 
     @Test // test for move
     public void testMove() {
@@ -190,20 +179,24 @@ public class PatrolTest {
 
     }
 
-
     @Test //test for constructor
     public void testConstructor() {
         Patrol testPatrol = new Patrol(1,1,null,10,2,4,2,new ArrayList<Tile>(), null, mock(TileManager.class));
         assertEquals(0, testPatrol.pathIndex);
-
-
-
     }
 
 
-
-
-
+    @Test
+    public void testCanSaveAndLoad(){
+        Json json = new Json();
+        Patrol expected = new Patrol(45, 11, null, 65, 3, 7,10, null, "Testing", null);
+        expected.takeDamage(9);
+        expected.pathIndex = 3;
+        String jsonPatrol = json.toJson(expected);
+        Patrol actual = json.fromJson(Patrol.class, jsonPatrol);
+        //Make sure all fields are equivalent
+        assertTrue(new ReflectionEquals(expected, "").matches(actual));
+    }
 
 
 }

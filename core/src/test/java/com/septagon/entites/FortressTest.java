@@ -1,9 +1,11 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.util.ArrayList;
 
@@ -102,7 +104,17 @@ class FortressTest {
         testF.initialise();
         testF.render(null);
 
+    }
 
+    @Test
+    public void testCanSaveAndLoad(){
+        Json json = new Json();
+        Fortress expected = new Fortress(30, 32, 256, 256, null, null, 300, 20, 18);
+        expected.setHealth(55);
+        String jsonFortress = json.toJson(expected);
+        Fortress actual = json.fromJson(Fortress.class, jsonFortress);
+        //Make sure all fields are equivalent
+        assertTrue(new ReflectionEquals(expected, "").matches(actual));
     }
 
 }

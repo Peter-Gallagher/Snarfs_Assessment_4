@@ -193,7 +193,7 @@ public class Engine extends Vehicle implements Json.Serializable
     public void setID(int id) { this.id = id; }
 
     public Engine(){
-        super(1, 1, "engineTexture1", 1,1,1,1);
+        super(1, 1, null, 1,1,1,1);
 
     }
 
@@ -227,7 +227,9 @@ public class Engine extends Vehicle implements Json.Serializable
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
         this.textureId = jsonMap.get("textureId").asString();
-        this.texture = AssetManager.getTextureFromId(this.textureId);
+        if (textureId != null) {
+            this.texture = AssetManager.getTextureFromId(this.textureId);
+        }
         this.setHealth(jsonMap.get("health").asInt());
         this.setMaxHealth(jsonMap.get("maxHealth").asInt());
         this.setDamage(jsonMap.get("damage").asInt());

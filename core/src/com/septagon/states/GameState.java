@@ -594,7 +594,7 @@ public class GameState extends State implements Json.Serializable
         strengthenFortresses();
 
         if(attackerManager.getTurnOfFirstAttack() != null){
-            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) == 30){
+            if ((turnsPassed - attackerManager.getTurnOfFirstAttack()) >= Difficulty.turnsToDestroyStation()){
                 destroyStation();
             }
         }
@@ -795,7 +795,7 @@ public class GameState extends State implements Json.Serializable
     }
 
     @Override
-    public void write(Json json) {
+    public void write(Json json) {//TODO: save station
         json.writeValue("turnsPassed", this.turnsPassed);
         json.writeValue("engines", this.engines);
         json.writeValue("fortresses", this.fortresses);

@@ -28,7 +28,6 @@ class StationTest {
         assertEquals(testS.y, 192);
         assertEquals(testS.width, 256);
         assertEquals(testS.height, 128);
-        assertEquals(testS.texture, null);
     }
 
 }

@@ -142,7 +142,7 @@ public class Patrol extends Vehicle implements Json.Serializable {
     }
 
     public Patrol(){
-        super(1, 1, "", 1, 1,1, 1);
+        super(1, 1, null, 1, 1,1, 1);
 
     }
     @Override
@@ -157,6 +157,7 @@ public class Patrol extends Vehicle implements Json.Serializable {
         json.writeValue("speed", getSpeed());
         json.writeValue("pathId", this.pathId);
         json.writeValue("hasDropped", this.hasDropped);
+        json.writeValue("pathIndex", this.pathIndex);
     }
 
     @Override
@@ -164,7 +165,9 @@ public class Patrol extends Vehicle implements Json.Serializable {
         this.setCol(jsonValue.get("col").asInt());
         this.setRow(jsonValue.get("row").asInt());
         this.textureId = jsonValue.get("textureId").asString();
-        this.texture = AssetManager.getTextureFromId(this.textureId);
+        if (textureId != null) {
+            this.texture = AssetManager.getTextureFromId(this.textureId);
+        }
         this.setHealth(jsonValue.get("health").asInt());
         this.setMaxHealth(jsonValue.get("maxHealth").asInt());
         this.setDamage(jsonValue.get("damage").asInt());
@@ -172,6 +175,7 @@ public class Patrol extends Vehicle implements Json.Serializable {
         this.setSpeed(jsonValue.get("speed").asInt());
         this.pathId = jsonValue.get("pathId").asString();
         this.hasDropped = jsonValue.get("hasDropped").asBoolean();
+        this.pathIndex = jsonValue.get("pathIndex").asInt();
         switch (this.pathId){
             case("path1"): this.path = GameState.path1; break;
             case("path2"): this.path = GameState.path2; break;

@@ -1,10 +1,13 @@
 package com.septagon.entites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Json;
+import com.septagon.helperClasses.AssetManager;
 import com.septagon.states.GameState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.util.ArrayList;
 
@@ -23,7 +26,7 @@ class EngineTest {
     @BeforeEach //A set up function for the tests
     public void setUp() {
         //Texture testTexture = new Teture(Gdx.files.internal("images/engine1.png"));
-        testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 5);
+        //testE = new Engine(1,1, null, 10, 2, 4, 2, 20, 5);
         testE = mock(Engine.class);
         testE.col = 1;
         testE.row = 1;
@@ -147,6 +150,7 @@ class EngineTest {
 
     @Test //A test for the checkInRange function
     public void testCheckInRange() throws  Exception {
+        //Texture test = AssetManager.getDefeatedStationTexture();
         Fortress testFortress1 = new Fortress(2, 2, 256, 256, null, null, 100, 20, 3);
         Fortress testFortress2 = new Fortress(2, 10, 256, 256, null, null, 100, 20, 3);
         when(testE.inRange(testFortress1)).thenCallRealMethod();
@@ -185,10 +189,20 @@ class EngineTest {
 
         assertEquals(98, fortress.health);
 
-
     }
 
-
+    @Test
+    public void testCanSaveAndLoad(){
+        Json json = new Json();
+        Engine expected = new Engine(15,23,null,62,86,10,5,150,1);
+        expected.takeDamage(5);
+        expected.setVolume(125);
+        expected.setMoved(true);
+        String jsonEngine = json.toJson(expected);
+        Engine loadedEngine = json.fromJson(Engine.class, jsonEngine);
+        //Make sure all fields are equivalent
+        assertTrue(new ReflectionEquals(expected, "").matches(loadedEngine));
+    }
 
 
 

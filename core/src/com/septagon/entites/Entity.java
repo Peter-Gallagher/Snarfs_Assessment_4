@@ -35,7 +35,9 @@ public abstract class Entity
         this.width = width;
         this.height = height;
         this.textureId = textureId;
-        this.texture = AssetManager.getTextureFromId(textureId);
+        if (this.textureId != null) {
+            this.texture = AssetManager.getTextureFromId(textureId);
+        }
     }
 
     /***

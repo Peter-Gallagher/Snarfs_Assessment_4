@@ -27,7 +27,9 @@ public class Fortress extends Attacker implements Json.Serializable
         super(col,row, width, height, textureId, health, damage, range);
         this.setDamage((int) (damage * Difficulty.getFortressDamageMod()));
         this.defeatedTextureId = defeatedTextureId;
-        this.defeatedTexture = AssetManager.getTextureFromId(defeatedTextureId);
+        if(this.defeatedTexture != null) {
+            this.defeatedTexture = AssetManager.getTextureFromId(defeatedTextureId);
+        }
     }
 
 
@@ -71,7 +73,7 @@ public class Fortress extends Attacker implements Json.Serializable
     public void setSelected(boolean selected) { this.selected = selected; }
 
     public Fortress(){
-        super(1, 1,1,1, "fortressMinisterTexture", 1,1,1);
+        super(1, 1,1,1, null, 1,1,1);
 
 
     }
@@ -85,7 +87,7 @@ public class Fortress extends Attacker implements Json.Serializable
         json.writeValue("defeatedTextureId", this.defeatedTextureId);
         json.writeValue("health", getHealth());
         json.writeValue("maxHealth", getMaxHealth());
-        json.writeValue("damage", getRange());
+        json.writeValue("damage", getDamage());
         json.writeValue("width", getWidth());
         json.writeValue("height", getHeight());
         json.writeValue("health", getHealth());
@@ -102,9 +104,11 @@ public class Fortress extends Attacker implements Json.Serializable
         this.setCol(jsonMap.get("col").asInt());
         this.setRow(jsonMap.get("row").asInt());
         this.textureId = jsonMap.get("textureId").asString();
-        this.texture = AssetManager.getTextureFromId(this.textureId);
         this.defeatedTextureId = jsonMap.get("defeatedTextureId").asString();
-        this.defeatedTexture = AssetManager.getTextureFromId(this.defeatedTextureId);
+        if (textureId != null) {
+            this.texture = AssetManager.getTextureFromId(this.textureId);
+            this.defeatedTexture = AssetManager.getTextureFromId(this.defeatedTextureId);
+        }
         this.setHealth(jsonMap.get("health").asInt());
         this.setMaxHealth(jsonMap.get("maxHealth").asInt());
         this.setDamage(jsonMap.get("damage").asInt());
