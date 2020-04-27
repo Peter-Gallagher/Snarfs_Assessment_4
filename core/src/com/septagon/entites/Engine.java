@@ -130,22 +130,22 @@ public class Engine extends Vehicle implements Json.Serializable
             poweredUp = true;
         }
         switch(powerID){
-            case(0): //Restores hp and volume to full
+            case(0): //Restores hp to full
                 if(toggle){
                     health = maxHealth;
-                    volume = maxVolume;
-                    powerupTurnsLeft[powerID] = 0; //This powerup isnt turn based, so it is instantly turned off
+                    powerupTurnsLeft[powerID] = 0; //This powerup isn't turn based, so it is instantly turned off
                 }
                 break;
-            case(1): //Increases the damage dealt by this Engine by 50%
+            case(1): //Restores volume to full
+                if(toggle){
+                    volume = maxVolume;
+                    powerupTurnsLeft[powerID] = 0; //This powerup isn't turn based, so it is instantly turned off
+                }
+                break;
+            case(2): //Increases the damage dealt by this Engine by 50%
                 if(toggle){
                     damage = (int) Math.ceil(baseDamage * 1.5);
                 } else { damage = baseDamage; }
-                break;
-            case(2): //Increases the range this Engine can attack at by 20%
-                if(toggle){
-                    range = (int) Math.ceil(baseRange * 1.2);
-                } else { range = baseRange; }
                 break;
             case(3): //Increases the range this Engine can move by 20%
                 if(toggle){

@@ -158,7 +158,22 @@ public class AttackerManager
             //if an engine has been previously pressed on, check on if a valid move has been pressed
             //and if so perform that move
             if (currentEngine != null) {
-                if (currentlyTouchedTile.isMovable() && !currentEngine.isMoved() && !currentEngine.isDead()) {
+                for(Powerup p : gameState.getEntityManager().getPowerups()){
+                    int xDis = Math.min(Math.abs(currentEngine.getCol() - p.getCol()), Math.abs(currentEngine.getCol() - p.getCol()));
+                    int yDis = Math.min(Math.abs(currentEngine.getRow() - p.getRow()), Math.abs(currentEngine.getRow() - p.getRow()));
+
+                    if (Math.sqrt((xDis * xDis) + (yDis * yDis)) <= currentEngine.getSpeed() && !currentEngine.isMoved() && !currentEngine.isDead()){
+                        for(Engine e :engines){
+                            if(e.getCol() == p.getCol() && e.getRow() == p.getRow()){
+                                gameState.getTileManager().getTileAtLocation(p.getCol(),p.getRow()).setMovable(false);
+                                break;
+                            } else {
+                                gameState.getTileManager().getTileAtLocation(p.getCol(), p.getRow()).setMovable(true);
+                            }
+                        }
+                    }
+                }
+                if ((currentlyTouchedTile.isMovable() || currentlyTouchedTile == gameState.getTileManager().getTileAtLocation(currentEngine.getCol(), currentEngine.getRow())) && !currentEngine.isMoved() && !currentEngine.isDead()) {
                     currentlyTouchedTile.setOccupied(true);
                     previouslyTouchedTile.setOccupied(false);
                     gameState.getTileManager().updateTileInAdjacencyList(previouslyTouchedTile.getIndex(), 1);/*This is new*/
@@ -166,8 +181,6 @@ public class AttackerManager
                     currentEngine.setY(currentlyTouchedTile.getY());
                     currentEngine.setMoved(true);
                     gameState.getEntityManager().movePowerup(currentEngine, gameState.getTileManager(), gameState);
-                } else if(currentlyTouchedTile.getCol() == currentEngine.getCol() && currentlyTouchedTile.getRow() == currentEngine.getRow()){
-                    currentEngine.setMoved(true);
                 }
             }
             previouslyTouchedTile = currentlyTouchedTile;
@@ -271,11 +284,12 @@ public class AttackerManager
             if (patrol.isDead()){
                 patrol.cleanup(gameState);
                 destroyedPatrols.add(patrol);
+                gameState.getTileManager().getTileAtLocation(patrol.getCol(),patrol.getRow()).setMovable(true);
             }
         }
 
         for (Patrol destroyedPatrol : destroyedPatrols) {
-            engines.remove(destroyedPatrol);
+            patrols.remove(destroyedPatrol);
         }
     }
 

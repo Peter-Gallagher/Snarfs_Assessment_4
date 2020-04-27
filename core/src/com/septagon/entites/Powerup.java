@@ -77,6 +77,9 @@ public class Powerup extends Entity implements Json.Serializable{
         super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, "powerup1");
     }
 
+    public boolean isUsedUp(){ return usedUp;}
+    public boolean isInUse(){return inUse;}
+
     @Override
     public void write(Json json) {
         json.writeValue("col", getCol());

@@ -68,8 +68,9 @@ public class EntityManager {
      */
     public void update()
     {
-        for(Entity entity: entities)
+        for(Entity entity: entities) {
             entity.update();
+        }
     }
     /***
      * Calls the render method for all entities in the game
@@ -89,7 +90,7 @@ public class EntityManager {
      */
     protected void dropPowerup(int row, int col, GameState gameState){
         int randInt = new Random().nextInt(5);
-        Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getRandPowerupId(), gameState, randInt);
+        Powerup powerup = new Powerup(col, row, 32, 32, AssetManager.getPowerup(randInt), gameState, randInt);
         powerups.add(powerup);
         entities.add(powerup);
     }

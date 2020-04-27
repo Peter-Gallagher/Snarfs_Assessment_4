@@ -154,7 +154,7 @@ public class GameState extends State implements Json.Serializable
             initializeFireEngines();}
         if (fortresses == null) {initializeFortresses();}
 
-        fireStation = new Station(72, 6, 256, 128, "fireStationTexture", 6);
+        fireStation = new Station(72, 6, 256, 128, "fireStationTexture", 4);
 
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
@@ -190,10 +190,10 @@ public class GameState extends State implements Json.Serializable
     /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 1500, 1);
-        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 1100, 2);
-        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 1300, 3);
-        Engine engine4 = new Engine(0,0, "engineTexture4", 110, 16, 14, 22, 1200, 4);
+        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 150, 1);
+        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 110, 2);
+        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 130, 3);
+        Engine engine4 = new Engine(0,0, "engineTexture4", 110, 16, 14, 22, 120, 4);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -461,6 +461,14 @@ public class GameState extends State implements Json.Serializable
     private void playerTurnUpdate(){
         //Call the update method for all entities in our game
         entityManager.update();
+
+        for(Powerup p : entityManager.getPowerups()){
+            if(!p.isInUse() && !p.isUsedUp()){
+
+            }
+            //tileManager.getTileAtLocation(p.getCol(), p.getRow()).setMovable(true);
+        }
+
 
         //If all the engines have been moved on the current turn, make it the enemies turn
         if (attackerManager.allEnginesMoved())

@@ -127,11 +127,10 @@ public class Patrol extends Vehicle implements Json.Serializable {
         if(!hasDropped) {
             hasDropped = true;
             setTexture(AssetManager.getNull());
-            gameState.getTileManager().getTileFromIndex(row+80*col);
+            gameState.getTileManager().getTileAtLocation(col, row).setMovable(true);
+            gameState.getTileManager().getTileAtLocation(col, row).setOccupied(false);
             gameState.getEntityManager().dropPowerup(col, row, gameState);
-            //16
-            this.setCol(62);
-            this.setRow(0);
+
 
         }
     }
