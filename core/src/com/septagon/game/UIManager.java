@@ -334,8 +334,6 @@ public class UIManager
     }
 
     public void checkPausedButtonClicked(float x, float y) {
-        GameData data = new GameData();
-        GameData gamedata = data.newGameData(gameState);
         if (paused && resumeBox.contains(x, y)) {
             isNotPaused();
         } else if (paused && saveBox.contains(x, y)){

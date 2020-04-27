@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.septagon.game.Difficulty;
-import com.septagon.game.GameData;
 import com.septagon.game.InputManager;
 import com.septagon.helperClasses.SaveManager;
 
@@ -188,7 +187,6 @@ public class MenuState extends State
      * @param y The y position of the input
      */
     public void checkIfClickedOption(float x, float y){
-        GameData data = new GameData();
         if(playBox.contains(x, y)){
             stateManager.changeState(new GameState(inputManager, font, stateManager, gameCamera));
         } else if(difficultyBox.contains(x, y)){

@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.septagon.entites.*;
 import com.septagon.game.Difficulty;
-import com.septagon.game.GameData;
 import com.septagon.game.InputManager;
 import com.septagon.game.UIManager;
 import com.septagon.helperClasses.AssetManager;
@@ -216,7 +214,6 @@ public class GameState extends State implements Json.Serializable
         engines.add(engine2);
         engines.add(engine3);
         engines.add(engine4);
-        System.out.println(engine1);
     }
 
     /***
@@ -432,7 +429,7 @@ public class GameState extends State implements Json.Serializable
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
         for (Bullet bullet : bullets)
         {
-            float deltaTime = 1 / 60f;
+            float deltaTime = 1 / 35f;
             bullet.update(deltaTime);
             if (bullet.remove)
                 bulletToRemove.add(bullet);
@@ -546,7 +543,7 @@ public class GameState extends State implements Json.Serializable
         else
         {
             counter++;
-            if(counter >= 0){
+            if(counter >= 5){
                 hasChangedFortress = false;
                 currentFortressIndex++;
                 counter = 0;
