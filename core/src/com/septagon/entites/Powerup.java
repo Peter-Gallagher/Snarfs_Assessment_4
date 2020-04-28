@@ -15,14 +15,15 @@ public class Powerup extends Entity implements Json.Serializable{
     private Tile curTile; //currentTile
 
 
-
-    /***
+    /**
      * Constructor that sets initial values for class members based on given input
-     * @param col
-     * @param row
-     * @param width
-     * @param height
-     * @param textureId
+     * @param row Map row to spawn the Powerup on
+     * @param col Map column to spawn the Powerup on
+     * @param width Width of the texture
+     * @param height Height of the texture
+     * @param textureId ID of the texture to find it in AssetManager
+     * @param gameState Current GameState
+     * @param randInt Random int between 0-4(inclusive) to determine the effect of the created Powerup
      */
     public Powerup(int row, int col, int width, int height, String textureId, GameState gameState, int randInt) {
         super(col, row, width, height, textureId);
@@ -36,8 +37,10 @@ public class Powerup extends Entity implements Json.Serializable{
     }
 
     /**
-     *
-     * @param gameState
+     * Checks if any Engines are on the same tile, if yes then applies powerup to them
+     *  and synchronises its position to the affected Engine.
+     *  Also toggles its texture to null when used up.
+     * @param gameState Current GameState
      */
     public void powerupUpdate(GameState gameState){
         if(!inUse) {
@@ -50,7 +53,7 @@ public class Powerup extends Entity implements Json.Serializable{
                     e.powerupsActive[powerupValue] = 1;
                     System.out.println("Powering up! " + powerupValue);
                     e.powerupTurnsLeft[powerupValue] = 5;
-                    e.updatePowerup(gameState.getEntityManager(), gameState.getTileManager(), gameState);
+                    e.updatePowerup();
 
                     //setTexture(AssetManager.getNull());
                     this.inUse = true;
@@ -73,14 +76,15 @@ public class Powerup extends Entity implements Json.Serializable{
             setTexture(AssetManager.getNull());
         }
     }
-
     public Powerup(){
         super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, "powerup1");
     }
 
+    //Getters
     public boolean isUsedUp(){ return usedUp;}
     public boolean isInUse(){return inUse;}
 
+    //Json Saving/Loading data
     @Override
     public void write(Json json) {
         json.writeValue("col", getCol());

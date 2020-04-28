@@ -193,10 +193,10 @@ public class GameState extends State implements Json.Serializable
     /*This changed*/
     private void initializeFireEngines(){
         //create all Fire Engine objects
-        Engine engine1 = new Engine(0,0, "engineTexture1", 150, 40, 7, 10, 150, 1);
-        Engine engine2 = new Engine(0,0, "engineTexture2", 80, 15, 15, 15, 110, 2);
-        Engine engine3 = new Engine(0,0, "engineTexture3", 90, 28, 13, 20, 130, 3);
-        Engine engine4 = new Engine(0,0, "engineTexture4", 110, 16, 14, 22, 120, 4);
+        Engine engine1 = new Engine(0,0, "engineTexture1", 15000, 40, 7, 10, 1500, 1);
+        Engine engine2 = new Engine(0,0, "engineTexture2", 8000, 15, 15, 15, 1100, 2);
+        Engine engine3 = new Engine(0,0, "engineTexture3", 9000, 28, 13, 20, 1300, 3);
+        Engine engine4 = new Engine(0,0, "engineTexture4", 11000, 16, 14, 22, 1200, 4);
 
         //Sets the engines positions so that they start from the fireStation
         engine1.setCol(77);
@@ -479,7 +479,7 @@ public class GameState extends State implements Json.Serializable
             this.changingTurn = true;
             changeTurnCounter = 0;
             for(Engine e : engines){
-                e.updatePowerup(entityManager, tileManager, this);
+                e.updatePowerup();
             }
         }
 

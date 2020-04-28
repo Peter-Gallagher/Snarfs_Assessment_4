@@ -158,6 +158,9 @@ public class AttackerManager
             //if an engine has been previously pressed on, check on if a valid move has been pressed
             //and if so perform that move
             if (currentEngine != null) {
+                //This loop is new for Assessment 4, as a fix for a bug mentioned in the Implementation Report.
+                //It allows a tile with a powerup on it which is in range of a fire engine to be moved to, when previously this
+                // was not possible without the user figuring out a way around it mid-game.
                 for(Powerup p : gameState.getEntityManager().getPowerups()){
                     int xDis = Math.min(Math.abs(currentEngine.getCol() - p.getCol()), Math.abs(currentEngine.getCol() - p.getCol()));
                     int yDis = Math.min(Math.abs(currentEngine.getRow() - p.getRow()), Math.abs(currentEngine.getRow() - p.getRow()));

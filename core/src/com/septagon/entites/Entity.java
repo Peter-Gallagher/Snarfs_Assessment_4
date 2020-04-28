@@ -54,7 +54,8 @@ public abstract class Entity
      * Basic render method that is used to draw the texture of the entity at its position
      * @param batch The batch which is used for rendering entities to the screen
      */
-    public void render(SpriteBatch batch) { batch.draw(this.texture, this.x, this.y, this.width, this.height); }
+    public void render(SpriteBatch batch) {
+        batch.draw(this.texture, this.x, this.y, this.width, this.height); }
 
     //Getters
     public int getX(){ return this.x;}

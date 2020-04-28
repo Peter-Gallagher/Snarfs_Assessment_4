@@ -97,9 +97,9 @@ public class Engine extends Vehicle implements Json.Serializable
 
     /**
      * Method called to check for powerups on Fire Engines every turn and handle them accordingly
-     * New for Assessment 4
+     *      * New for Assessment 4
      */
-    public void updatePowerup(EntityManager entityManager, TileManager tileManager, GameState gameState){
+    public void updatePowerup(){
         for(int i = 0; i < powerupsActive.length; i++){
            if(powerupsActive[i] == 1){
                if(powerupTurnsLeft[i] == 0){
