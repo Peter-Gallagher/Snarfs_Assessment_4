@@ -4,6 +4,11 @@ import java.util.Random;
 
 public class Difficulty {
 
+    /**
+     * ASSESSMENT 4
+     * Class that saves the current game difficulty as a static field
+     * and method to affect the difficulty of the game.
+     */
     public enum Difficulties{
         EASY,
         MEDIUM,
@@ -12,8 +17,13 @@ public class Difficulty {
 
     public static Difficulties current = Difficulties.MEDIUM; //Default difficulty
 
-    private Difficulty(){}
+    private Difficulty(){}//Do not initialize
 
+    /**
+     * Returns a float that the damage of a fortress can be times by
+     * to scale with difficulty
+     * @return Damage modifier
+     */
     public static float getFortressDamageMod(){
         switch (current){
             case EASY:
@@ -27,6 +37,10 @@ public class Difficulty {
         return 1f;
     }
 
+    /**
+     * Returns a float that the damage of Engines can be scaled by.
+     * @return Damage modifier
+     */
     public static float getEngineDamageMod(){
         switch (current){
             case EASY:
@@ -40,6 +54,10 @@ public class Difficulty {
         return 1f;
     }
 
+    /**
+     * Returns a float that the Engine volume can be scaled by.
+     * @return Volume modifier
+     */
     public static float getEngineVolumeMod(){
         switch(current){
             case EASY:
@@ -54,6 +72,9 @@ public class Difficulty {
         return 1f;
     }
 
+    /**
+     * Returns the amount of turns that should pass until the Station is destroyed.
+     */
     public static int turnsToDestroyStation(){
         switch(current){
             case EASY:
@@ -75,20 +96,19 @@ public class Difficulty {
         Random rand = new Random();
         switch (current){
             case EASY:
-                return rand.nextFloat() < 0.15f;
+                return rand.nextFloat() < 0.2f;
             case MEDIUM:
-                return rand.nextFloat() < 0.28f;
+                return rand.nextFloat() < 0.35f;
             case HARD:
-                return rand.nextFloat() < 0.4f;
+                return rand.nextFloat() < 0.6f;
         }
         System.err.println("Difficulty: " + current + " not configured for shouldTriggerMiniGame!");
         return true;
     }
 
-    public static void setCurrent(Difficulties difficulty){
-        current = difficulty;
-    }
-
+    /**
+     * Sets the difficulty to the next along, used in the main menu
+     */
     public static void nextDifficulty(){
         switch(current){
             case EASY:
@@ -105,6 +125,9 @@ public class Difficulty {
         }
     }
 
+    /**
+     * Sets the difficulty to the previous along, used in the main menu
+     */
     public static void previousDifficulty(){
         switch(current){
             case EASY:
@@ -120,7 +143,12 @@ public class Difficulty {
                 System.err.println("Difficulty not considered in previousDifficulty()!");
         }
     }
+
     public static Difficulties getCurrent(){
         return current;
+    }
+
+    public static void setCurrent(Difficulties difficulty){
+        current = difficulty;
     }
 }

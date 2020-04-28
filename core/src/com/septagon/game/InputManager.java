@@ -21,8 +21,6 @@ Class used to handle all inputs from the user
 
 public class InputManager implements InputProcessor
 {
-    private String savetest = "";//TODO: remove
-    private GameState gs;
 
     private boolean dragging;
     private OrthographicCamera camera;
@@ -313,7 +311,9 @@ public class InputManager implements InputProcessor
                             Difficulty.nextDifficulty();
                             break;
                         case 2:
+                            //Get the save currently showing in the menu, load it into game state
                             GameState loadedState = SaveManager.loadSave(currentState.getSaveList().get(currentState.saveIndex));
+                            //Set up references to stateManager, ect.
                             loadedState.setStateManager(this.stateManager);
                             loadedState.setCamera(this.camera);
                             loadedState.setInputManager(this);
@@ -342,18 +342,17 @@ public class InputManager implements InputProcessor
                 currentState.setPaused(!currentState.isPaused());
             }
 
-            //TODO: remove debug lines
             if(keycode == Input.Keys.S){
                 SaveManager.makeNewSave(currentState);
                 System.out.println("Saved!!");
             }
-            if(keycode == Input.Keys.L){
-                this.gs = SaveManager.loadMostRecentSave();
-                this.gs.setStateManager(this.stateManager);
-                this.gs.setInputManager(this);
-                this.gs.setCamera(this.camera);
-                this.stateManager.changeState(this.gs);
-            }
+//            if(keycode == Input.Keys.L){
+//                this.gs = SaveManager.loadMostRecentSave();
+//                this.gs.setStateManager(this.stateManager);
+//                this.gs.setInputManager(this);
+//                this.gs.setCamera(this.camera);
+//                this.stateManager.changeState(this.gs);
+//            }
 
 
             if(currentState.isPaused()){

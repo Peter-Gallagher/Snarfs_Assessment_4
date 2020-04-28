@@ -76,15 +76,30 @@ public class Powerup extends Entity implements Json.Serializable{
             setTexture(AssetManager.getNull());
         }
     }
-    public Powerup(){
-        super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, "powerup1");
-    }
+
+
 
     //Getters
     public boolean isUsedUp(){ return usedUp;}
     public boolean isInUse(){return inUse;}
 
-    //Json Saving/Loading data
+    /**
+     * ASSESSMENT 4
+     * Methods for libgdx serialization.
+     */
+
+    /**
+     * No parameter constructor for libgdx serialization.
+     * DO NOT use this outside of serialization.
+     */
+    public Powerup(){
+        super(0, 0, Tile.TILE_SIZE, Tile.TILE_SIZE, null);
+    }
+
+    /**
+     * Used to write the object to json.
+     * @param json
+     */
     @Override
     public void write(Json json) {
         json.writeValue("col", getCol());
@@ -96,6 +111,11 @@ public class Powerup extends Entity implements Json.Serializable{
         json.writeValue("engineID", this.engineID);
     }
 
+    /**
+     * Used to set fields from JsonValue object
+     * @param json
+     * @param jsonMap
+     */
     @Override
     public void read(Json json, JsonValue jsonMap) {
         this.setCol(jsonMap.get("col").asInt());

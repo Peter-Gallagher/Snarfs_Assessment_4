@@ -1,7 +1,11 @@
 package com.septagon.game;
 
 /**
-Class that is used for rendering and managing all the heads up display
+ * Class that is used for rendering and managing all the heads up display
+ *
+ * Save button was added in ASSESSMENT 4, as well as fixes to the ui
+ * so the arrow keys could be used correctly, and so exit only returned
+ * to the main menu
  */
 
 import com.badlogic.gdx.Gdx;

@@ -247,10 +247,6 @@ public class GameState extends State implements Json.Serializable
      */
     /*This is new*/
     private void initializePatrols() {
-        //create preset paths for patrols
-        ArrayList<Tile> path1 = initialisePath1();
-        ArrayList<Tile> path2 = initialisePath2();
-        ArrayList<Tile> path3 = initialisePath3();
         //create all Patrol objects
         Patrol patrol1 = new Patrol(10, 4, "creepyPatrol", 130, 20, 6, 5, this.path1, "path1", tileManager);
         Patrol patrol2 = new Patrol(44, 40, "creepyPatrol", 130, 20, 6, 5, this.path2, "path2", tileManager);
@@ -264,88 +260,6 @@ public class GameState extends State implements Json.Serializable
         patrols.add(patrol3);
 
     }
-
-    /***
-     * initialise the path to be taken by patrol1
-     * @return the node path of patrol1
-     */
-    protected ArrayList<Tile> initialisePath1(){
-
-        ArrayList<Tile> path1 = new ArrayList<>();
-
-        Tile tile1 = new Tile(10,18, null, false);
-        Tile tile2 = new Tile(19,18, null, false);
-        Tile tile3 = new Tile(19,33, null, false);
-        Tile tile4 = new Tile(19,43, null, false);
-
-        path1.add(tile1);
-        path1.add(tile2);
-        path1.add(tile3);
-        path1.add(tile4);
-        path1.add(tile3);
-        path1.add(tile2);
-
-        return path1;
-    }
-
-    /***
-     * initialise the path to be taken by patrol2
-     * @return the node path of patrol2
-     */
-    protected ArrayList<Tile> initialisePath2(){
-
-        ArrayList<Tile> path2 = new ArrayList<>();
-
-        Tile tile5 = new Tile(44,35, null, false);
-        Tile tile6 = new Tile(57,35, null, false);
-        Tile tile7 = new Tile(57,28, null, false);
-        Tile tile8 = new Tile(70,28, null, false);
-
-        path2.add(tile5);
-        path2.add(tile6);
-        path2.add(tile7);
-        path2.add(tile8);
-        path2.add(tile7);
-        path2.add(tile6);
-
-        return path2;
-    }
-
-    /***
-     * initialise the path to be taken by patrol3
-     * @return the node path of patrol3
-     */
-    protected ArrayList<Tile> initialisePath3(){
-
-        ArrayList<Tile> path3 = new ArrayList<>();
-
-        Tile tile9 = new Tile(37,2, null, false);
-        Tile tile10 = new Tile(50,2, null, false);
-        Tile tile11 = new Tile(45,12, null, false);
-        Tile tile12 = new Tile(45,18, null, false);
-        Tile tile13 = new Tile(57,18, null, false);
-        Tile tile14 = new Tile(57,22, null, false);
-        Tile tile15 = new Tile(64,22, null, false);
-        Tile tile16 = new Tile(64,27, null, false);
-
-        path3.add(tile9);
-        path3.add(tile10);
-        path3.add(tile11);
-        path3.add(tile12);
-        path3.add(tile13);
-        path3.add(tile14);
-        path3.add(tile15);
-        path3.add(tile16);
-        path3.add(tile15);
-        path3.add(tile14);
-        path3.add(tile13);
-        path3.add(tile12);
-        path3.add(tile11);
-        path3.add(tile10);
-
-        return path3;
-    }
-
 
     /***
      * Method to initialise the entity manager
@@ -786,6 +700,15 @@ public class GameState extends State implements Json.Serializable
 
     public ArrayList<Patrol> getPatrols() { return patrols; }
 
+    /**
+     * ASSESSMENT 4
+     * Methods for libgdx serialization.
+     */
+
+    /**
+     * No parameter constructor for libgdx serialization.
+     * DO NOT use this outside of serialization.
+     */
     public GameState(){
         super(null, null, StateID.GAME, null);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("GameFont.ttf"));
@@ -797,8 +720,13 @@ public class GameState extends State implements Json.Serializable
 
     }
 
+    /**
+     * Used to write the object to json.
+     * For use in SaveManager.
+     * @param json
+     */
     @Override
-    public void write(Json json) {//TODO: save station
+    public void write(Json json) {
         json.writeValue("turnsPassed", this.turnsPassed);
         json.writeValue("engines", this.engines);
         json.writeValue("fortresses", this.fortresses);
@@ -806,6 +734,12 @@ public class GameState extends State implements Json.Serializable
         json.writeValue("patrols", this.patrols);
     }
 
+    /**
+     * Used to build new GameState fields from a file.
+     * For use in SaveManager
+     * @param json
+     * @param jsonData
+     */
     @Override
     public void read(Json json, JsonValue jsonData) {
         JsonValue jsonEngines = jsonData.get("engines");

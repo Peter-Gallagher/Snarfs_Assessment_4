@@ -72,13 +72,23 @@ public class Fortress extends Attacker implements Json.Serializable
     //Setters
     public void setSelected(boolean selected) { this.selected = selected; }
 
+    /**
+     * ASSESSMENT 4
+     * Methods for libgdx serialization.
+     */
+
+    /**
+     * No parameter constructor for libgdx serialization.
+     * DO NOT use this outside of serialization.
+     */
     public Fortress(){
         super(1, 1,1,1, null, 1,1,1);
-
-
     }
 
-
+    /**
+     * Used to write the object to json.
+     * @param json
+     */
     @Override
     public void write(Json json) {
         json.writeValue("col", getCol());
@@ -98,6 +108,11 @@ public class Fortress extends Attacker implements Json.Serializable
 
     }
 
+    /**
+     * Used to set fields from JsonValue object
+     * @param json
+     * @param jsonMap
+     */
     @Override
     public void read(Json json, JsonValue jsonMap) {
         String test = jsonMap.toString();
