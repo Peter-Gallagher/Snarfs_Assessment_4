@@ -27,7 +27,7 @@ public class Fortress extends Attacker implements Json.Serializable
         super(col,row, width, height, textureId, health, damage, range);
         this.setDamage((int) (damage * Difficulty.getFortressDamageMod()));
         this.defeatedTextureId = defeatedTextureId;
-        if(this.defeatedTexture != null) {
+        if(this.defeatedTextureId != null) {
             this.defeatedTexture = AssetManager.getTextureFromId(defeatedTextureId);
         }
     }
