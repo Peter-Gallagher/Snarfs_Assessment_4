@@ -155,7 +155,10 @@ public class GameState extends State implements Json.Serializable
         if (fortresses == null) {initializeFortresses();}
 
         fireStation = new Station(72, 6, 256, 128, "fireStationTexture", 4);
-
+        //If we're loading and the station should be destroyed
+        if (turnsPassed >= Difficulty.turnsToDestroyStation()){
+            destroyStation();
+        }
         font.getData().setScale(Gdx.graphics.getWidth() / VP_WIDTH, Gdx.graphics.getHeight() / VP_HEIGHT);
 
         initializeUIManager();
